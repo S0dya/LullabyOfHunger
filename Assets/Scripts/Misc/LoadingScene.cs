@@ -9,8 +9,8 @@ using System.Linq;
 
 public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 {
-    [SerializeField] GameObject loadingScreen;
-    [SerializeField] Image loadingBarFill;
+    [SerializeField] GameObject LoadingScreen;
+    [SerializeField] Image LoadingBarFill;
 
     protected override void Awake()
     {
@@ -67,7 +67,6 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
     }
 
     //other methods
-    void ToggleLoadingScreen(bool toggle) => loadingScreen.SetActive(toggle);
-    
-    void SetFillAmount(float progress) => loadingBarFill.fillAmount = Mathf.Clamp01(progress / 0.9f);
+    void ToggleLoadingScreen(bool toggle) => LoadingScreen.SetActive(toggle);
+    void SetFillAmount(float progress) => LoadingBarFill.fillAmount = Mathf.Clamp01(progress / 0.9f);
 }

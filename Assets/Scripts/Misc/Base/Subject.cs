@@ -10,7 +10,7 @@ public abstract class Subject : MonoBehaviour
     List<IObserver> _observers = new List<IObserver>();
 
     //local
-    Dictionary<SubjectActions, UnityEvent> _actionDictionary = new Dictionary<SubjectActions, UnityEvent>();
+    Dictionary<EnumsActions, UnityEvent> _actionDictionary = new Dictionary<EnumsActions, UnityEvent>();
 
     protected virtual void Awake()
     {
@@ -22,20 +22,15 @@ public abstract class Subject : MonoBehaviour
 
     public void AddObserver(IObserver observer) => _observers.Add(observer);
     public void RemoveObserver(IObserver observer) => _observers.Remove(observer);
-    public void NotifyObservers(SubjectActions actionEnum)
+    public void NotifyObservers(EnumsActions actionEnum)
     {
         if (_actionDictionary.ContainsKey(actionEnum)) _actionDictionary[actionEnum].Invoke();
     }
 }
 
 [System.Serializable]
-class ActionsDictionary
+public class ActionsDictionary
 {
-    [SerializeField] public SubjectActions SubjectEnum;
+    [SerializeField] public EnumsActions SubjectEnum;
     [SerializeField] public UnityEvent Action;
-}
-
-public enum SubjectActions
-{
-    InputLookAt,
 }
