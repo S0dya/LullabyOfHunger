@@ -1,4 +1,5 @@
 public enum EnumsActions 
 {
-    InputLookAt,
+    OnStartAiming,
+    OnStopAiming,
 }

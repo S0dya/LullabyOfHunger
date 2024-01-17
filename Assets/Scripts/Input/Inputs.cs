@@ -28,24 +28,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             ""id"": ""72462321-4107-4cad-bd7d-269c9150a246"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""c656db24-f671-4fd9-a8bf-e61ee8271781"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Look"",
-                    ""type"": ""Value"",
-                    ""id"": ""764760b1-509b-4463-bb34-57abb84d4146"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""LookAt"",
                     ""type"": ""Value"",
                     ""id"": ""5242b132-15e1-4311-9e62-dd4b6696ad33"",
@@ -53,38 +35,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Run"",
-                    ""type"": ""Value"",
-                    ""id"": ""cb5ac3f3-2d43-49ca-826a-824dedc0e9d2"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Rotation"",
-                    ""type"": ""Button"",
-                    ""id"": ""68e54662-9c11-42dd-a040-7c88870bbc99"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""de9dd2eb-4baf-489e-a528-2993dfb8530b"",
-                    ""path"": ""<Pointer>/delta"",
-                    ""interactions"": """",
-                    ""processors"": ""ScaleVector2(x=0.05,y=0.05)"",
-                    ""groups"": """",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""9af4595c-8d28-49ca-827c-c7a23b9f47cd"",
@@ -95,54 +48,45 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""action"": ""LookAt"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""IsometricInput"",
+            ""id"": ""df222970-edfb-4d4a-9460-3fdfe358647b"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""10e255ad-a3b5-4ae3-a2df-a835c2cd4c49"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""b0fd5a97-ebde-4734-ba5b-a4215d789bed"",
-                    ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": """",
+                    ""name"": ""Rotation"",
+                    ""type"": ""Button"",
+                    ""id"": ""1b2d04a4-e083-4e76-907c-12c8ac8839bf"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Run"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Value"",
+                    ""id"": ""8a64b36a-e457-46fa-881c-77848ddb9dce"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
                 {
                     ""name"": ""1D Axis"",
-                    ""id"": ""327ce1e2-48c7-4cd5-9499-0c8dfa94c7b4"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rotation"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""Negative"",
-                    ""id"": ""3ffea356-36d8-4472-9f9e-798722aa7243"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rotation"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Positive"",
-                    ""id"": ""94dbff67-d8e7-4e85-8971-070c8465ba58"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rotation"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""1D Axis"",
-                    ""id"": ""a8aac128-ec4b-4c24-8b59-cbe064ba8c57"",
+                    ""id"": ""0c3c4a2e-6d67-478c-89b3-16106a53c93c"",
                     ""path"": ""1DAxis(minValue=-0.5)"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -153,7 +97,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""positive"",
-                    ""id"": ""e294b639-4450-4544-b9dc-82f375dc9bb6"",
+                    ""id"": ""e7fe01ed-0438-488e-bab8-764200941d13"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -164,7 +108,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""negative"",
-                    ""id"": ""65d4caad-0e59-4320-8b97-776c1f4f9cb1"",
+                    ""id"": ""491d3bbd-57db-43d4-bc46-589eed8389b9"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -172,6 +116,98 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""c41e6af9-f785-4987-884f-eb81dc849900"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""b46fee00-b99b-4af0-b08d-a8ac9060fa61"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""a82ce684-6804-45ec-8e32-a1f4917a0d1d"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5786308b-28a7-4613-9694-bd7515845d12"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""FirstPersonInput"",
+            ""id"": ""68cf310e-5714-4010-8b95-e5e387ac0954"",
+            ""actions"": [
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Value"",
+                    ""id"": ""5e317b3d-9f2b-458b-8961-eef5013e1959"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""35b369e4-4724-4838-aec4-e6630f2cc398"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3f87bc21-beb7-4cd6-9824-81ecc890a19a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""659df79c-927f-496e-a74c-793f6c494c85"",
+                    ""path"": ""<Pointer>/delta"",
+                    ""interactions"": """",
+                    ""processors"": ""ScaleVector2(x=0.05,y=0.05)"",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -180,11 +216,16 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
 }");
         // Input
         m_Input = asset.FindActionMap("Input", throwIfNotFound: true);
-        m_Input_Move = m_Input.FindAction("Move", throwIfNotFound: true);
-        m_Input_Look = m_Input.FindAction("Look", throwIfNotFound: true);
         m_Input_LookAt = m_Input.FindAction("LookAt", throwIfNotFound: true);
-        m_Input_Run = m_Input.FindAction("Run", throwIfNotFound: true);
-        m_Input_Rotation = m_Input.FindAction("Rotation", throwIfNotFound: true);
+        // IsometricInput
+        m_IsometricInput = asset.FindActionMap("IsometricInput", throwIfNotFound: true);
+        m_IsometricInput_Move = m_IsometricInput.FindAction("Move", throwIfNotFound: true);
+        m_IsometricInput_Rotation = m_IsometricInput.FindAction("Rotation", throwIfNotFound: true);
+        m_IsometricInput_Run = m_IsometricInput.FindAction("Run", throwIfNotFound: true);
+        // FirstPersonInput
+        m_FirstPersonInput = asset.FindActionMap("FirstPersonInput", throwIfNotFound: true);
+        m_FirstPersonInput_Fire = m_FirstPersonInput.FindAction("Fire", throwIfNotFound: true);
+        m_FirstPersonInput_Look = m_FirstPersonInput.FindAction("Look", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -246,20 +287,12 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     // Input
     private readonly InputActionMap m_Input;
     private List<IInputActions> m_InputActionsCallbackInterfaces = new List<IInputActions>();
-    private readonly InputAction m_Input_Move;
-    private readonly InputAction m_Input_Look;
     private readonly InputAction m_Input_LookAt;
-    private readonly InputAction m_Input_Run;
-    private readonly InputAction m_Input_Rotation;
     public struct InputActions
     {
         private @Inputs m_Wrapper;
         public InputActions(@Inputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Input_Move;
-        public InputAction @Look => m_Wrapper.m_Input_Look;
         public InputAction @LookAt => m_Wrapper.m_Input_LookAt;
-        public InputAction @Run => m_Wrapper.m_Input_Run;
-        public InputAction @Rotation => m_Wrapper.m_Input_Rotation;
         public InputActionMap Get() { return m_Wrapper.m_Input; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -269,40 +302,16 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_InputActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_InputActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
-            @Look.started += instance.OnLook;
-            @Look.performed += instance.OnLook;
-            @Look.canceled += instance.OnLook;
             @LookAt.started += instance.OnLookAt;
             @LookAt.performed += instance.OnLookAt;
             @LookAt.canceled += instance.OnLookAt;
-            @Run.started += instance.OnRun;
-            @Run.performed += instance.OnRun;
-            @Run.canceled += instance.OnRun;
-            @Rotation.started += instance.OnRotation;
-            @Rotation.performed += instance.OnRotation;
-            @Rotation.canceled += instance.OnRotation;
         }
 
         private void UnregisterCallbacks(IInputActions instance)
         {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
-            @Look.started -= instance.OnLook;
-            @Look.performed -= instance.OnLook;
-            @Look.canceled -= instance.OnLook;
             @LookAt.started -= instance.OnLookAt;
             @LookAt.performed -= instance.OnLookAt;
             @LookAt.canceled -= instance.OnLookAt;
-            @Run.started -= instance.OnRun;
-            @Run.performed -= instance.OnRun;
-            @Run.canceled -= instance.OnRun;
-            @Rotation.started -= instance.OnRotation;
-            @Rotation.performed -= instance.OnRotation;
-            @Rotation.canceled -= instance.OnRotation;
         }
 
         public void RemoveCallbacks(IInputActions instance)
@@ -320,12 +329,135 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         }
     }
     public InputActions @Input => new InputActions(this);
+
+    // IsometricInput
+    private readonly InputActionMap m_IsometricInput;
+    private List<IIsometricInputActions> m_IsometricInputActionsCallbackInterfaces = new List<IIsometricInputActions>();
+    private readonly InputAction m_IsometricInput_Move;
+    private readonly InputAction m_IsometricInput_Rotation;
+    private readonly InputAction m_IsometricInput_Run;
+    public struct IsometricInputActions
+    {
+        private @Inputs m_Wrapper;
+        public IsometricInputActions(@Inputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_IsometricInput_Move;
+        public InputAction @Rotation => m_Wrapper.m_IsometricInput_Rotation;
+        public InputAction @Run => m_Wrapper.m_IsometricInput_Run;
+        public InputActionMap Get() { return m_Wrapper.m_IsometricInput; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(IsometricInputActions set) { return set.Get(); }
+        public void AddCallbacks(IIsometricInputActions instance)
+        {
+            if (instance == null || m_Wrapper.m_IsometricInputActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_IsometricInputActionsCallbackInterfaces.Add(instance);
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Rotation.started += instance.OnRotation;
+            @Rotation.performed += instance.OnRotation;
+            @Rotation.canceled += instance.OnRotation;
+            @Run.started += instance.OnRun;
+            @Run.performed += instance.OnRun;
+            @Run.canceled += instance.OnRun;
+        }
+
+        private void UnregisterCallbacks(IIsometricInputActions instance)
+        {
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Rotation.started -= instance.OnRotation;
+            @Rotation.performed -= instance.OnRotation;
+            @Rotation.canceled -= instance.OnRotation;
+            @Run.started -= instance.OnRun;
+            @Run.performed -= instance.OnRun;
+            @Run.canceled -= instance.OnRun;
+        }
+
+        public void RemoveCallbacks(IIsometricInputActions instance)
+        {
+            if (m_Wrapper.m_IsometricInputActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IIsometricInputActions instance)
+        {
+            foreach (var item in m_Wrapper.m_IsometricInputActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_IsometricInputActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public IsometricInputActions @IsometricInput => new IsometricInputActions(this);
+
+    // FirstPersonInput
+    private readonly InputActionMap m_FirstPersonInput;
+    private List<IFirstPersonInputActions> m_FirstPersonInputActionsCallbackInterfaces = new List<IFirstPersonInputActions>();
+    private readonly InputAction m_FirstPersonInput_Fire;
+    private readonly InputAction m_FirstPersonInput_Look;
+    public struct FirstPersonInputActions
+    {
+        private @Inputs m_Wrapper;
+        public FirstPersonInputActions(@Inputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Fire => m_Wrapper.m_FirstPersonInput_Fire;
+        public InputAction @Look => m_Wrapper.m_FirstPersonInput_Look;
+        public InputActionMap Get() { return m_Wrapper.m_FirstPersonInput; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(FirstPersonInputActions set) { return set.Get(); }
+        public void AddCallbacks(IFirstPersonInputActions instance)
+        {
+            if (instance == null || m_Wrapper.m_FirstPersonInputActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_FirstPersonInputActionsCallbackInterfaces.Add(instance);
+            @Fire.started += instance.OnFire;
+            @Fire.performed += instance.OnFire;
+            @Fire.canceled += instance.OnFire;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
+        }
+
+        private void UnregisterCallbacks(IFirstPersonInputActions instance)
+        {
+            @Fire.started -= instance.OnFire;
+            @Fire.performed -= instance.OnFire;
+            @Fire.canceled -= instance.OnFire;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
+        }
+
+        public void RemoveCallbacks(IFirstPersonInputActions instance)
+        {
+            if (m_Wrapper.m_FirstPersonInputActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IFirstPersonInputActions instance)
+        {
+            foreach (var item in m_Wrapper.m_FirstPersonInputActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_FirstPersonInputActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public FirstPersonInputActions @FirstPersonInput => new FirstPersonInputActions(this);
     public interface IInputActions
     {
-        void OnMove(InputAction.CallbackContext context);
-        void OnLook(InputAction.CallbackContext context);
         void OnLookAt(InputAction.CallbackContext context);
-        void OnRun(InputAction.CallbackContext context);
+    }
+    public interface IIsometricInputActions
+    {
+        void OnMove(InputAction.CallbackContext context);
         void OnRotation(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
+    }
+    public interface IFirstPersonInputActions
+    {
+        void OnFire(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
     }
 }

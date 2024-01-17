@@ -1,36 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Events;
 using UnityEngine;
+using UnityEngine.Events;
 
-public abstract class Subject : MonoBehaviour
+public class Subject : MonoBehaviour
 {
     [SerializeField] ActionsDictionary[] ActionsDictionaries;
 
-    List<IObserver> _observers = new List<IObserver>();
-
     //local
-    Dictionary<EnumsActions, UnityEvent> _actionDictionary = new Dictionary<EnumsActions, UnityEvent>();
+    Dictionary<EnumsActions, Action> _actionDictionary = new Dictionary<EnumsActions, Action>();
+
+    public void AddAction(EnumsActions enumAction, Action action) => _actionDictionary.Add(enumAction, action);
 
     protected virtual void Awake()
     {
         foreach (ActionsDictionary kvp in ActionsDictionaries)
         {
-            _actionDictionary.Add(kvp.SubjectEnum, kvp.Action);
+            EventToAction wrapper = new EventToAction();
+            wrapper.WrapEvent(kvp.Event);
+
+            _actionDictionary.Add(kvp.ObserverEnum, wrapper.InvokeEvent);
         }
     }
 
-    public void AddObserver(IObserver observer) => _observers.Add(observer);
-    public void RemoveObserver(IObserver observer) => _observers.Remove(observer);
-    public void NotifyObservers(EnumsActions actionEnum)
+    protected virtual void OnEnable()
+    {
+        Observer.Instance.AddObserver(this);
+    }
+    protected virtual void OnDisable()
+    {
+        Observer.Instance.RemoveObserver(this);
+    }
+
+    public void PerformAction(EnumsActions actionEnum)
     {
         if (_actionDictionary.ContainsKey(actionEnum)) _actionDictionary[actionEnum].Invoke();
     }
-}
-
-[System.Serializable]
-public class ActionsDictionary
-{
-    [SerializeField] public EnumsActions SubjectEnum;
-    [SerializeField] public UnityEvent Action;
 }

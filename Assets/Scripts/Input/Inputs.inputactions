@@ -6,24 +6,6 @@
             "id": "72462321-4107-4cad-bd7d-269c9150a246",
             "actions": [
                 {
-                    "name": "Move",
-                    "type": "Value",
-                    "id": "c656db24-f671-4fd9-a8bf-e61ee8271781",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Look",
-                    "type": "Value",
-                    "id": "764760b1-509b-4463-bb34-57abb84d4146",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "LookAt",
                     "type": "Value",
                     "id": "5242b132-15e1-4311-9e62-dd4b6696ad33",
@@ -31,38 +13,9 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Run",
-                    "type": "Value",
-                    "id": "cb5ac3f3-2d43-49ca-826a-824dedc0e9d2",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Rotation",
-                    "type": "Button",
-                    "id": "68e54662-9c11-42dd-a040-7c88870bbc99",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "de9dd2eb-4baf-489e-a528-2993dfb8530b",
-                    "path": "<Pointer>/delta",
-                    "interactions": "",
-                    "processors": "ScaleVector2(x=0.05,y=0.05)",
-                    "groups": "",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "9af4595c-8d28-49ca-827c-c7a23b9f47cd",
@@ -73,54 +26,45 @@
                     "action": "LookAt",
                     "isComposite": false,
                     "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "IsometricInput",
+            "id": "df222970-edfb-4d4a-9460-3fdfe358647b",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "10e255ad-a3b5-4ae3-a2df-a835c2cd4c49",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
-                    "name": "",
-                    "id": "b0fd5a97-ebde-4734-ba5b-a4215d789bed",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
+                    "name": "Rotation",
+                    "type": "Button",
+                    "id": "1b2d04a4-e083-4e76-907c-12c8ac8839bf",
+                    "expectedControlType": "Button",
                     "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
+                {
+                    "name": "Run",
+                    "type": "Value",
+                    "id": "8a64b36a-e457-46fa-881c-77848ddb9dce",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
                 {
                     "name": "1D Axis",
-                    "id": "327ce1e2-48c7-4cd5-9499-0c8dfa94c7b4",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotation",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "Negative",
-                    "id": "3ffea356-36d8-4472-9f9e-798722aa7243",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Positive",
-                    "id": "94dbff67-d8e7-4e85-8971-070c8465ba58",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "1D Axis",
-                    "id": "a8aac128-ec4b-4c24-8b59-cbe064ba8c57",
+                    "id": "0c3c4a2e-6d67-478c-89b3-16106a53c93c",
                     "path": "1DAxis(minValue=-0.5)",
                     "interactions": "",
                     "processors": "",
@@ -131,7 +75,7 @@
                 },
                 {
                     "name": "positive",
-                    "id": "e294b639-4450-4544-b9dc-82f375dc9bb6",
+                    "id": "e7fe01ed-0438-488e-bab8-764200941d13",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -142,7 +86,7 @@
                 },
                 {
                     "name": "negative",
-                    "id": "65d4caad-0e59-4320-8b97-776c1f4f9cb1",
+                    "id": "491d3bbd-57db-43d4-bc46-589eed8389b9",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
@@ -150,6 +94,98 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "c41e6af9-f785-4987-884f-eb81dc849900",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Negative",
+                    "id": "b46fee00-b99b-4af0-b08d-a8ac9060fa61",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "a82ce684-6804-45ec-8e32-a1f4917a0d1d",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "5786308b-28a7-4613-9694-bd7515845d12",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "FirstPersonInput",
+            "id": "68cf310e-5714-4010-8b95-e5e387ac0954",
+            "actions": [
+                {
+                    "name": "Fire",
+                    "type": "Value",
+                    "id": "5e317b3d-9f2b-458b-8961-eef5013e1959",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "35b369e4-4724-4838-aec4-e6630f2cc398",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3f87bc21-beb7-4cd6-9824-81ecc890a19a",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "659df79c-927f-496e-a74c-793f6c494c85",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "ScaleVector2(x=0.05,y=0.05)",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

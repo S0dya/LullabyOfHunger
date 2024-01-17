@@ -13,12 +13,19 @@ public class Player: Subject
 
     public Vector2 RotateSmoothness;
 
+    public Vector2 LookRotationLimit;
+
     [Header("Other")]
     [SerializeField] CharacterController Cc;
     [SerializeField] Animator Animator;
 
+    [SerializeField] GameObject CinemachineCameraTargetObj;
+    [SerializeField] Camera FirstPersonCamera;
+
     //local
     Inputs _input;
+    InputActionMap _isometricInput;
+    InputActionMap _firstPersonInput;   
 
     //gravity
     Vector3 _gravity;
@@ -42,14 +49,23 @@ public class Player: Subject
     //other
     float _deltaTime;
 
+    bool _isAiming;
+
+    Vector2 _lookDirection;
+
     //cors
     Coroutine _moveCor;
     Coroutine _rotateCor;
+
+    Coroutine _returnLookDirectionCor;
 
     //serialization
     protected override void Awake()
     {
         base.Awake();
+
+        AddAction(EnumsActions.OnStartAiming, StartAiming);
+        AddAction(EnumsActions.OnStopAiming, StopAiming);
 
         AssignInput();
     }
@@ -57,17 +73,23 @@ public class Player: Subject
     {
         _input = new Inputs();
 
-        _input.Input.Move.performed += ctx => OnMove(ctx.ReadValue<float>(), MoveSmoothness[0]);
-        _input.Input.Move.canceled += ctx => OnMove(0, MoveSmoothness[1]);
-
-        _input.Input.Rotation.performed += ctx => OnRotate(ctx.ReadValue<float>(), RotateSmoothness[0]);
-        _input.Input.Rotation.canceled += ctx => OnRotate(0, RotateSmoothness[1]);
-
-        _input.Input.Run.performed += ctx => OnRun(RunSpeed);
-        _input.Input.Run.canceled += ctx => OnRun(WalkSpeed);
+        _isometricInput = _input.IsometricInput;
+        _firstPersonInput = _input.FirstPersonInput;
+        _firstPersonInput.Disable();
 
         _input.Input.LookAt.performed += ctx => OnStartAiming();
         _input.Input.LookAt.canceled += ctx => OnStopAiming();
+
+        _input.IsometricInput.Move.performed += ctx => OnMove(ctx.ReadValue<float>(), MoveSmoothness[0]);
+        _input.IsometricInput.Move.canceled += ctx => OnMove(0, MoveSmoothness[1]);
+
+        _input.IsometricInput.Rotation.performed += ctx => OnRotate(ctx.ReadValue<float>(), RotateSmoothness[0]);
+        _input.IsometricInput.Rotation.canceled += ctx => OnRotate(0, RotateSmoothness[1]);
+
+        _input.IsometricInput.Run.performed += ctx => OnRun(RunSpeed);
+        _input.IsometricInput.Run.canceled += ctx => OnRun(WalkSpeed);
+
+        _input.FirstPersonInput.Look.performed += ctx => OnAim(ctx.ReadValue<Vector2>());
     }
 
     void Start()
@@ -75,8 +97,18 @@ public class Player: Subject
         _movementSpeed = WalkSpeed;
     }
 
-    void OnEnable() => _input.Enable();
-    void OnDisable() => _input.Disable();
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+     
+        _input.Enable();
+    }
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+     
+        _input.Disable();
+    }
 
     //input
     void OnMove(float direction, float smoothSpeed)
@@ -103,12 +135,18 @@ public class Player: Subject
 
     void OnStartAiming()
     {
-
+        Observer.Instance.NotifyObservers(EnumsActions.OnStartAiming);
     }
 
     void OnStopAiming()
     {
+        Observer.Instance.NotifyObservers(EnumsActions.OnStopAiming);
+    }
 
+    void OnAim(Vector2 direction)
+    {
+        _lookDirection = new Vector2(Mathf.Clamp(_lookDirection.x + direction.x, -LookRotationLimit.x, LookRotationLimit.x), 
+            Mathf.Clamp(_lookDirection.y + direction.y, -LookRotationLimit.y, LookRotationLimit.y));
     }
 
     //update
@@ -134,11 +172,52 @@ public class Player: Subject
         transform.rotation = Quaternion.Euler(0.0f, transform.eulerAngles.y + _curRotationDirection * (1 - Mathf.Clamp01(GetAbs(_curMovementSpeed) / RunSpeed)), 0.0f);
 
         Cc.Move((transform.forward.normalized * (_curMovementSpeed) + _gravity) * _deltaTime);
+
+        if (_isAiming) CinemachineCameraTargetObj.transform.localRotation = Quaternion.Euler(-_lookDirection.y, _lookDirection.x, 0.0f);
     }
 
     //cors
+    IEnumerator SmoothReturnLookDirectionCor()
+    {
+        while (Vector2.Distance(_lookDirection, Vector2.zero) > 0.1f)
+        {
+            _lookDirection = Vector2.Lerp(_lookDirection, Vector2.zero, 1.5f * _deltaTime) ;
+
+            yield return null;
+        }
+
+        _lookDirection = Vector2.zero;
+    }
+
+    //actions
+    public void StartAiming()
+    {
+        if (_returnLookDirectionCor != null) StopCoroutine(_returnLookDirectionCor);
+
+        ToggleAiming(true);
+
+        _isometricInput.Disable();
+        _firstPersonInput.Enable();
+    }
+    public void StopAiming()
+    {
+
+        if (_returnLookDirectionCor != null) StopCoroutine(_returnLookDirectionCor);
+        _returnLookDirectionCor = StartCoroutine(SmoothReturnLookDirectionCor());
+
+        ToggleAiming(false);
+
+        _isometricInput.Enable();
+        _firstPersonInput.Disable();
+    }
 
     //other methods
+    void ToggleAiming(bool toggle)
+    {
+        _isAiming = toggle;
+        FirstPersonCamera.enabled = toggle;
+    }
+
     float GetLerpVal(float curValue, float targetValue, float threshold, float smoothTime)
     {
         return GetAbs(targetValue - curValue) > threshold ? Mathf.Lerp(curValue, targetValue, smoothTime * _deltaTime) : targetValue;
