@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-1)]
 public class Observer : SingletonMonobehaviour<Observer>
 {
     List<Subject> _subjects = new List<Subject>();

@@ -15,14 +15,16 @@ public class Player: Subject
 
     public Vector2 LookRotationLimit;
 
-    [Header("Other")]
-    [SerializeField] CharacterController Cc;
-    [SerializeField] Animator Animator;
+    
 
-    [SerializeField] GameObject CinemachineCameraTargetObj;
+    [Header("Other")]
+    [SerializeField] GameObject FirstPersonCameraObj;
     [SerializeField] Camera FirstPersonCamera;
 
     //local
+    CharacterController Cc;
+    Animator Animator;
+    
     Inputs _input;
     InputActionMap _isometricInput;
     InputActionMap _firstPersonInput;   
@@ -63,6 +65,9 @@ public class Player: Subject
     protected override void Awake()
     {
         base.Awake();
+
+        Cc = GetComponent<CharacterController>();
+        Animator = GetComponent<Animator>();
 
         AddAction(EnumsActions.OnStartAiming, StartAiming);
         AddAction(EnumsActions.OnStopAiming, StopAiming);
@@ -173,7 +178,7 @@ public class Player: Subject
 
         Cc.Move((transform.forward.normalized * (_curMovementSpeed) + _gravity) * _deltaTime);
 
-        if (_isAiming) CinemachineCameraTargetObj.transform.localRotation = Quaternion.Euler(-_lookDirection.y, _lookDirection.x, 0.0f);
+        if (_isAiming) FirstPersonCameraObj.transform.localRotation = Quaternion.Euler(-_lookDirection.y, _lookDirection.x, 0.0f);
     }
 
     //cors
