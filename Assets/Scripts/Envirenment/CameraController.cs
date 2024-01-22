@@ -10,8 +10,8 @@ public class CameraController : Subject
     {
         base.Awake();
 
-        AddAction(EnumsActions.OnStartAiming, StartAiming);
-        AddAction(EnumsActions.OnStopAiming, StopAiming);
+        AddAction(EnumsActions.OnStartLooking, StartLooking);
+        AddAction(EnumsActions.OnStopLooking, StopLooking);
     }
 
     void Start()
@@ -20,18 +20,18 @@ public class CameraController : Subject
     }
 
     //actions
-    public void StartAiming()
+    public void StartLooking()
     {
-        ToggleAiming(false);
+        ToggleLooking(false);
     }
 
-    public void StopAiming()
+    public void StopLooking()
     {
-        ToggleAiming(true);
+        ToggleLooking(true);
     }
 
     //other methods
-    void ToggleAiming(bool toggle)
+    void ToggleLooking(bool toggle)
     {
         IsometricCamera.enabled = toggle;
     }

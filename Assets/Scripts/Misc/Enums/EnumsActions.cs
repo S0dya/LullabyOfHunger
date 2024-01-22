@@ -1,5 +1,7 @@
 public enum EnumsActions 
 {
-    OnStartAiming,
-    OnStopAiming,
+    OnStartLooking,
+    OnStopLooking,
+
+    OnFire,
 }

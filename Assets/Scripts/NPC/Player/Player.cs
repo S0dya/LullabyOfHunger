@@ -18,8 +18,8 @@ public class Player: Subject
     public Vector2 RotateSmoothness;
 
     [Header("FOV")]
-    public Vector2 LookRotationLimit;
-
+    public int[] LookRotationOffsetX = new int[2];
+    public int[] LookRotationOffsetY = new int[2];
 
     [Header("rigging")]
     [SerializeField] Rig LookingRig;
@@ -42,12 +42,15 @@ public class Player: Subject
     InputActionMap _isometricInput;
     InputActionMap _firstPersonInput;   
 
+    //general 
+    float _curDurability = 2;
+
+    //animator
+    int _animIDMotionSpeed;
+
     //gravity
     Vector3 _gravity;
     float _gravityForce = 9.81f;
-
-    //general 
-    float _curDurability = 2; 
 
     //movement
     float _targetSpeed;
@@ -72,15 +75,19 @@ public class Player: Subject
     float _curAimingRigWeight;
 
     Vector3 _randomAimingOffsetPos;
+    Vector2 _cameraAimingOffset;
 
     //other
     float _deltaTime;
     
-    bool _isAiming;
-    bool _canAim;
+    bool _isLooking;
+    bool _canLook;
 
+    bool _isAiming;
+    bool _canShoot = true;
 
     //cons
+    /*
     Vector2 LookDirection
     {
         get { return _lookDirection; }
@@ -91,6 +98,7 @@ public class Player: Subject
             ChangeLooking();
         }
     }
+    */
 
     //cors
     Coroutine _moveCor;
@@ -110,8 +118,11 @@ public class Player: Subject
         Cc = GetComponent<CharacterController>();
         Animator = GetComponent<Animator>();
 
-        AddAction(EnumsActions.OnStartAiming, StartAiming);
-        AddAction(EnumsActions.OnStopAiming, StopAiming);
+        _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+
+        AddAction(EnumsActions.OnStartLooking, StartLooking);
+        AddAction(EnumsActions.OnStopLooking, StopLooking);
+        AddAction(EnumsActions.OnFire, Shoot);
 
         AssignInput();
     }
@@ -123,8 +134,8 @@ public class Player: Subject
         _firstPersonInput = _input.FirstPersonInput;
         _firstPersonInput.Disable();
 
-        _input.Input.LookAt.performed += ctx => OnStartAiming();
-        _input.Input.LookAt.canceled += ctx => OnStopAiming();
+        _input.Input.LookAt.performed += ctx => OnStartLooking();
+        _input.Input.LookAt.canceled += ctx => Observer.Instance.NotifyObservers(EnumsActions.OnStopLooking);
 
         _input.IsometricInput.Move.performed += ctx => OnMove(ctx.ReadValue<float>(), MoveSmoothness[0]);
         _input.IsometricInput.Move.canceled += ctx => OnMove(0, MoveSmoothness[1]);
@@ -135,12 +146,15 @@ public class Player: Subject
         _input.IsometricInput.Run.performed += ctx => OnRun(RunSpeed);
         _input.IsometricInput.Run.canceled += ctx => OnRun(WalkSpeed);
 
-        _input.FirstPersonInput.Look.performed += ctx => OnAim(ctx.ReadValue<Vector2>());
+        _input.FirstPersonInput.Look.performed += ctx => OnLook(ctx.ReadValue<Vector2>());
+
+        _input.FirstPersonInput.Fire.performed += ctx => OnFire();
     }
 
     void Start()
     {
         _movementSpeed = WalkSpeed;
+        _cameraAimingOffset = new Vector2(Screen.width / 2, Screen.height / 2);
 
         StartCoroutine(DelayAimCor());
     }
@@ -181,25 +195,38 @@ public class Player: Subject
         ChangeTargetSpeed();
     }
 
-    void OnStartAiming()
+    void OnStartLooking()
     {
-        if (_canAim)
+        if (_canLook)
         {
-            Observer.Instance.NotifyObservers(EnumsActions.OnStartAiming);
+            Observer.Instance.NotifyObservers(EnumsActions.OnStartLooking);
 
-            _canAim = false;
+            _canLook = false;
         }
     }
 
-    void OnStopAiming()
+    void OnLook(Vector2 direction)
     {
-        Observer.Instance.NotifyObservers(EnumsActions.OnStopAiming);
+        _lookDirection = new Vector2(Mathf.Clamp(_lookDirection.x + direction.x, -LookRotationOffsetX[0], LookRotationOffsetX[1]), 
+            Mathf.Clamp(_lookDirection.y + direction.y, -LookRotationOffsetY[0], LookRotationOffsetY[1]));
     }
 
-    void OnAim(Vector2 direction)
+    void OnFire()
     {
-        LookDirection = new Vector2(Mathf.Clamp(LookDirection.x + direction.x, -LookRotationLimit.x, LookRotationLimit.x), 
-            Mathf.Clamp(LookDirection.y + direction.y, -LookRotationLimit.y, LookRotationLimit.y));
+        if (_isAiming)
+        {
+            if (_canShoot) Observer.Instance.NotifyObservers(EnumsActions.OnFire);
+        }
+        else
+        {
+            StopCor(_smoothAimingHandCor);
+            _smoothAimingHandCor = StartCoroutine(SmoothAimingHandCor());
+
+            StopCor(_dereaseWeightOfHandCor);
+            _increaseWeightOfHandCor = StartCoroutine(IncreaseWeightOfHandCor());
+
+            _isAiming = true;
+        }
     }
 
     //update
@@ -210,7 +237,7 @@ public class Player: Subject
         Gravity();
         MoveRotate();
 
-        Animator.SetFloat("MotionSpeed", _curMovementSpeed);
+        Animator.SetFloat(_animIDMotionSpeed, _curMovementSpeed);
     }
     void Gravity()
     {
@@ -226,39 +253,48 @@ public class Player: Subject
 
         Cc.Move((transform.forward.normalized * (_curMovementSpeed) + _gravity) * _deltaTime);
 
-        if (_isAiming) FirstPersonCameraTranform.localRotation = Quaternion.Euler(-LookDirection.y, LookDirection.x, 0.0f);
+        if (_isLooking)
+        {
+            FirstPersonCameraTranform.localRotation = Quaternion.Euler(-_lookDirection.y, _lookDirection.x, 0.0f);
+        
+            if (Physics.Raycast(FirstPersonCamera.ScreenPointToRay(_lookDirection + _cameraAimingOffset), out RaycastHit hit)) LookingTargetTransform.position = hit.point;
+            else LookingTargetTransform.position = FirstPersonCameraTranform.position + FirstPersonCameraTranform.forward * 2;//myb remove later
+
+            //AimingHandTargetTransform.rotation = Quaternion.LookRotation(AimingHandTargetTransform.position - FirstPersonCameraTranform.position);
+        }
     }
 
-    //rigging
-    void ChangeLooking()
+    //gun
+    void Shoot()
     {
-        LookingTargetTransform.position = FirstPersonCameraTranform.position + FirstPersonCameraTranform.forward * 3;
+
     }
+
 
     //cors
     IEnumerator SmoothReturnLookDirectionCor()
     {
-        _curLookDirectionDistance = GetDistance(LookDirection, Vector2.zero);
+        _curLookDirectionDistance = GetDistance(_lookDirection, Vector2.zero);
         float firstDistance = _curLookDirectionDistance;
 
         while (_curLookDirectionDistance > 0.1f)
         {
-            LookDirection = Vector2.Lerp(LookDirection, Vector2.zero, 1.5f * _deltaTime);
+            _lookDirection = Vector2.Lerp(_lookDirection, Vector2.zero, 1.5f * _deltaTime);
             LookingRig.weight = Mathf.Clamp01(_curLookDirectionDistance / firstDistance);
 
-            _curLookDirectionDistance = GetDistance(LookDirection, Vector2.zero);
+            _curLookDirectionDistance = GetDistance(_lookDirection, Vector2.zero);
 
             yield return null;
         }
 
-        LookDirection = Vector2.zero; LookingRig.weight = 0;
+        _lookDirection = Vector2.zero; LookingRig.weight = 0;
     }
 
     IEnumerator SmoothAimingHandCor()
     {
         while (true)
         {
-            _randomAimingOffsetPos = LookingTargetTransform.position + GetRandomPos(0.1f);
+            _randomAimingOffsetPos = LookingTargetTransform.position + GetRandomVector2(0.1f);
             _curHandAimingDistance = GetDistance(AimingHandTargetTransform.position, _randomAimingOffsetPos);
 
             while (_curHandAimingDistance > 0.1f && _curHandAimingDistance < 0.2f)//change later
@@ -300,27 +336,21 @@ public class Player: Subject
     {
         yield return new WaitForSeconds(AimDelayDuration);
 
-        _canAim = true;
+        _canLook = true;
     }
 
     //actions
-    public void StartAiming()
+    public void StartLooking()
     {
         StopCor(_returnLookDirectionCor);
 
-        StopCor(_smoothAimingHandCor);
-        _smoothAimingHandCor = StartCoroutine(SmoothAimingHandCor());
-
-        StopCor(_dereaseWeightOfHandCor);
-        _increaseWeightOfHandCor = StartCoroutine(IncreaseWeightOfHandCor());
-
         LookingRig.weight = 1.0f;
-        ToggleAiming(true);
+        ToggleLooking(true);
 
         _isometricInput.Disable();
         _firstPersonInput.Enable();
     }
-    public void StopAiming()
+    public void StopLooking()
     {
         StopCor(_returnLookDirectionCor);
         _returnLookDirectionCor = StartCoroutine(SmoothReturnLookDirectionCor());
@@ -331,16 +361,17 @@ public class Player: Subject
 
         StartCoroutine(DelayAimCor());
 
-        ToggleAiming(false);
+        ToggleLooking(false);
+        _isAiming = false;
 
         _isometricInput.Enable();
         _firstPersonInput.Disable();
     }
 
     //other methods
-    void ToggleAiming(bool toggle)
+    void ToggleLooking(bool toggle)
     {
-        _isAiming = toggle;
+        _isLooking = toggle;
         FirstPersonCamera.enabled = toggle;
     }
 
@@ -359,9 +390,14 @@ public class Player: Subject
         return Vector2.Distance(distance0, distance1);
     }
 
-    Vector3 GetRandomPos(float offset)
+    Vector3 GetRandomVector3(float offset)
     {
         return new Vector3(GetRandomFloat(offset), GetRandomFloat(offset), GetRandomFloat(offset));
+    }
+
+    Vector3 GetRandomVector2(float offset)
+    {
+        return new Vector2(GetRandomFloat(offset), GetRandomFloat(offset));
     }
 
     float GetRandomFloat(float offset)
