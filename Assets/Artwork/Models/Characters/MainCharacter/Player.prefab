@@ -498,7 +498,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 327601492514406256, guid: 39003facd303e204a8a429bbe96150de, type: 3}
+  - {fileID: 2100000, guid: 2470fbaa5b4a92d4ba09b4a5e403aed0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1577,7 +1577,8 @@ MonoBehaviour:
   AimDelayDuration: 0.5
   MoveSmoothness: {x: 2, y: 4}
   RotateSmoothness: {x: 1.5, y: 5}
-  LookRotationLimit: {x: 60, y: 50}
+  LookRotationOffsetX: 0000000000000000
+  LookRotationOffsetY: 0000000000000000
   LookingRig: {fileID: 1580324751}
   AimingRig: {fileID: 4170880571244627983}
   LookingTargetTransform: {fileID: 0}
