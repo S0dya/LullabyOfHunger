@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : Subject
+public class IsometricCameraController : Subject
 {
     [SerializeField] Camera IsometricCamera;
 

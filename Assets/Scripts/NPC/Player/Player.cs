@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Animations.Rigging;
-using UnityEngine.Animations;
 
 public class Player: Subject
 {
@@ -12,6 +10,7 @@ public class Player: Subject
     public float RunSpeed = 4;
 
     public float Durability = 4;
+    public float AimDelayDuration = 0.5f;
 
     [Header("smoothness of animation, 0 - performed, 1 - canceled")]
     public Vector2 MoveSmoothness;
@@ -21,38 +20,25 @@ public class Player: Subject
     public int[] LookRotationOffsetX = new int[2];
     public int[] LookRotationOffsetY = new int[2];
 
-    [Header("gun")]
-    public float AimDelayDuration = 0.5f;
-
-    [Range(0, 1.2f)] public float GunRecoilPower = 0.5f;
-    public float GunRecoilSpeed = 20;
-    public float GunRecoilReturnSpeed = 10;
-
-    [Header("rigging")]
-    [SerializeField] Rig LookingRig;
-    [SerializeField] Rig AimingRig;
-    [SerializeField] AimConstraint HandAimConstraint;
-
-    [SerializeField] Transform LookingTargetTransform;
-    [SerializeField] Transform RecoilTargetTransform;
-    
-    [SerializeField] Transform AimingHandTargetTransform;
-    [SerializeField] Transform AimingHandgunOriginTransform;
+    [Header("Targets")]
+    public Transform LookingTargetTransform;
 
     [Header("Other")]
     [SerializeField] Transform FirstPersonCameraTranform;
     [SerializeField] Camera FirstPersonCamera;
 
     //local
-    CharacterController Cc;
-    Animator Animator;
+    RiggingController _riggingController;
+    InteractionCamera _interactionCamera;
+    CharacterController _cc;
+    Animator _animator;
     
     Inputs _input;
     InputActionMap _isometricInput;
     InputActionMap _firstPersonInput;   
 
     //general 
-    float _curDurability = 2;
+    //float _curDurability = 2;
 
     //animator
     int _animIDMotionSpeed;
@@ -75,16 +61,9 @@ public class Player: Subject
     float _curRotationDirection;
 
     float _curRotateSmoothness;
-
-    Vector2 _lookDirection;
-    float _curLookDirectionDistance;
-
-    //hand&aiming
-    float _curHandAimingDistance;
-    float _curAimingRigWeight;
-
-    Vector3 _randomAimingOffsetPos;
-    Vector2 _cameraAimingOffset;
+    
+    //input
+    [HideInInspector] public Vector2 _lookDirection;
 
     //other
     float _deltaTime;
@@ -95,40 +74,18 @@ public class Player: Subject
     bool _isAiming;
     bool _canShoot = true;
 
-    //cons
-    /*
-    Vector2 LookDirection
-    {
-        get { return _lookDirection; }
-        set
-        {
-            _lookDirection = value;
-
-            ChangeLooking();
-        }
-    }
-    */
-
-    //cors
-    Coroutine _moveCor;
-    Coroutine _rotateCor;
-
-    Coroutine _returnLookDirectionCor;
-    Coroutine _smoothAimingHandCor;
-    Coroutine _recoilVisualizsationCor;
-
-    Coroutine _increaseWeightOfHandCor;
-    Coroutine _dereaseWeightOfHandCor;
-
     //serialization
     protected override void Awake()
     {
         base.Awake();
 
-        Cc = GetComponent<CharacterController>();
-        Animator = GetComponent<Animator>();
+        _riggingController = GetComponent<RiggingController>();
+        _cc = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
+        _interactionCamera = GameObject.FindGameObjectWithTag("InteractionCamera").GetComponent<InteractionCamera>();
 
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+
 
         AddAction(EnumsActions.OnStartLooking, StartLooking);
         AddAction(EnumsActions.OnStopLooking, StopLooking);
@@ -164,7 +121,6 @@ public class Player: Subject
     void Start()
     {
         _movementSpeed = WalkSpeed;
-        _cameraAimingOffset = new Vector2(Screen.width / 2, Screen.height / 2);
 
         StartCoroutine(DelayAimCor());
     }
@@ -229,11 +185,7 @@ public class Player: Subject
         }
         else
         {
-            StopCor(_smoothAimingHandCor);
-            _smoothAimingHandCor = StartCoroutine(SmoothAimingHandCor());
-
-            StopCor(_dereaseWeightOfHandCor);
-            _increaseWeightOfHandCor = StartCoroutine(IncreaseWeightOfHandCor());
+            _riggingController.StartAiming();
 
             _isAiming = true;
         }
@@ -247,11 +199,11 @@ public class Player: Subject
         Gravity();
         MoveRotate();
 
-        Animator.SetFloat(_animIDMotionSpeed, _curMovementSpeed);
+        _animator.SetFloat(_animIDMotionSpeed, _curMovementSpeed);
     }
     void Gravity()
     {
-        if (Cc.isGrounded) _gravity.y = 0;
+        if (_cc.isGrounded) _gravity.y = 0;
         else _gravity.y -= _gravityForce * _deltaTime;
     }
     void MoveRotate()
@@ -259,16 +211,15 @@ public class Player: Subject
         _curMovementSpeed = GetLerpVal(_curMovementSpeed, _targetSpeed, 0.1f, _curMoveSmoothness);
         _curRotationDirection = GetLerpVal(_curRotationDirection, _targetRotation, 0.05f, _curRotateSmoothness);
 
+        _cc.Move((transform.forward.normalized * (_curMovementSpeed) + _gravity) * _deltaTime);
         transform.rotation = Quaternion.Euler(0.0f, transform.eulerAngles.y + _curRotationDirection * (1 - Mathf.Clamp01(GetAbs(_curMovementSpeed) / RunSpeed)), 0.0f);
-
-        Cc.Move((transform.forward.normalized * (_curMovementSpeed) + _gravity) * _deltaTime);
 
         if (_isLooking)
         {
             FirstPersonCameraTranform.localRotation = Quaternion.Euler(-_lookDirection.y, _lookDirection.x, 0.0f);
         
             //if (Physics.Raycast(FirstPersonCamera.ScreenPointToRay(_lookDirection + _cameraAimingOffset), out RaycastHit hit)) LookingTargetTransform.position = hit.point;
-            LookingTargetTransform.position = GetPos(FirstPersonCameraTranform) + FirstPersonCameraTranform.forward * 2f;//myb remove later
+            LookingTargetTransform.position = FirstPersonCameraTranform.position + FirstPersonCameraTranform.forward * 2f;//myb remove later
 
             //AimingHandTargetTransform.position = (GetPos(FirstPersonCameraTranform) + (GetPos(LookingTargetTransform) - GetPos(FirstPersonCameraTranform)).normalized * 2);
             //AimingHandTargetTransform.rotation = Quaternion.LookRotation(AimingHandTargetTransform.position - FirstPersonCameraTranform.position);
@@ -278,78 +229,9 @@ public class Player: Subject
     //gun
     void Shoot()
     {
-        StopCor(_recoilVisualizsationCor);
-        _recoilVisualizsationCor = StartCoroutine(RecoilVisualizsationCor());
     }
-
 
     //cors
-    IEnumerator SmoothReturnLookDirectionCor()
-    {
-        _curLookDirectionDistance = GetDistance(_lookDirection, Vector2.zero);
-        float firstDistance = _curLookDirectionDistance;
-
-        while (_curLookDirectionDistance > 0.1f)
-        {
-            _lookDirection = Vector2.Lerp(_lookDirection, Vector2.zero, 1.5f * _deltaTime);
-            LookingRig.weight = Mathf.Clamp01(_curLookDirectionDistance / firstDistance);
-
-            _curLookDirectionDistance = GetDistance(_lookDirection, Vector2.zero);
-
-            yield return null;
-        }
-
-        _lookDirection = Vector2.zero; LookingRig.weight = 0;
-    }
-
-    IEnumerator SmoothAimingHandCor()
-    {
-        while (true)
-        {
-            _randomAimingOffsetPos = GetPos(LookingTargetTransform) + GetRandomVector3(0.1f);
-            _curHandAimingDistance = GetDistance(GetPos(AimingHandTargetTransform), _randomAimingOffsetPos);
-
-            while (_curHandAimingDistance > 0.1f && _curHandAimingDistance < 0.2f)//change later
-            {
-                AimingHandTargetTransform.position = Vector3.Lerp(GetPos(AimingHandTargetTransform), _randomAimingOffsetPos, 1.5f * _deltaTime);
-                _curHandAimingDistance = GetDistance(GetPos(AimingHandTargetTransform), _randomAimingOffsetPos);
-
-                yield return null;
-            }
-
-            yield return null;
-        }
-    }
-
-    IEnumerator RecoilVisualizsationCor()
-    {
-        yield return StartCoroutine(SmoothlyLerpLocalPosCor(RecoilTargetTransform, (Vector2)GetLocalPos(RecoilTargetTransform) + Vector2.up * GunRecoilPower + GetRandomVector2(0.05f), 0.3f, GunRecoilSpeed));
-        yield return StartCoroutine(SmoothlyLerpLocalPosCor(RecoilTargetTransform, Vector2.zero, 0.1f, GunRecoilReturnSpeed));
-    }
-
-    IEnumerator IncreaseWeightOfHandCor()
-    {
-        while (AimingRig.weight < 1f)
-        {
-            HandAimConstraint.weight = AimingRig.weight = Mathf.Lerp(AimingRig.weight, 1.05f, _curDurability * _deltaTime);
-
-            yield return null;
-        }
-
-        AimingRig.weight = 1;
-    }
-    IEnumerator DecreaseWeightOfHandCor()
-    {
-        while (AimingRig.weight > 0)
-        {
-            HandAimConstraint.weight = AimingRig.weight = Mathf.Lerp(AimingRig.weight, -0.05f, Durability * _deltaTime);
-
-            yield return null;
-        }
-
-        AimingRig.weight = 0;
-    }
-
     IEnumerator DelayAimCor()
     {
         yield return new WaitForSeconds(AimDelayDuration);
@@ -360,9 +242,6 @@ public class Player: Subject
     //actions
     public void StartLooking()
     {
-        StopCor(_returnLookDirectionCor);
-
-        LookingRig.weight = 1.0f;
         ToggleLooking(true);
 
         _isometricInput.Disable();
@@ -370,13 +249,6 @@ public class Player: Subject
     }
     public void StopLooking()
     {
-        StopCor(_returnLookDirectionCor);
-        _returnLookDirectionCor = StartCoroutine(SmoothReturnLookDirectionCor());
-        StopCor(_smoothAimingHandCor);
-
-        StopCor(_increaseWeightOfHandCor);
-        _dereaseWeightOfHandCor = StartCoroutine(DecreaseWeightOfHandCor());
-
         StartCoroutine(DelayAimCor());
 
         ToggleLooking(false);
@@ -397,60 +269,10 @@ public class Player: Subject
     {
         return GetAbs(targetValue - curValue) > threshold ? Mathf.Lerp(curValue, targetValue, smoothTime * _deltaTime) : targetValue;
     }
-
     float GetAbs(float val)
     {
         return Mathf.Abs(val);
     }
 
-    Vector3 GetPos(Transform transform)
-    {
-        return transform.position;
-    }
-    Vector3 GetLocalPos(Transform transform)
-    {
-        return transform.localPosition;
-    }
-
-
-    float GetDistance(Vector2 distance0, Vector2 distance1)
-    {
-        return Vector2.Distance(distance0, distance1);
-    }
-
-    Vector3 GetRandomVector3(float offset)
-    {
-        return new Vector3(GetRandomFloat(offset), GetRandomFloat(offset), GetRandomFloat(offset));
-    }
-
-    Vector2 GetRandomVector2(float offset)
-    {
-        return new Vector2(GetRandomFloat(offset), GetRandomFloat(offset));
-    }
-
-    float GetRandomFloat(float offset)
-    {
-        return Random.Range(-offset, offset);
-    }
-
-    void StopCor(Coroutine cor) 
-    {
-        if (cor != null) StopCoroutine(cor);
-    }
-
     void ChangeTargetSpeed() => _targetSpeed = _curMovementDirection * _movementSpeed;
-
-    //other cors
-    IEnumerator SmoothlyLerpLocalPosCor(Transform transf, Vector2 endPos, float offsetDistance, float addSpeed)
-    {
-        float curDistance = GetDistance(GetLocalPos(transf), endPos);
-
-        while (curDistance > offsetDistance)
-        {
-            transf.localPosition = Vector2.Lerp(GetLocalPos(transf), endPos, addSpeed * _deltaTime);
-            curDistance = GetDistance(GetLocalPos(transf), endPos);
-
-            yield return null;
-        }
-    }
 }
