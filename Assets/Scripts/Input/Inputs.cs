@@ -35,6 +35,15 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Value"",
+                    ""id"": ""aadd64c2-d96e-457c-b178-86274265aa08"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -46,6 +55,17 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LookAt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1cdfeff0-abe0-43d7-851c-e694617c4ea9"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -217,6 +237,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         // Input
         m_Input = asset.FindActionMap("Input", throwIfNotFound: true);
         m_Input_LookAt = m_Input.FindAction("LookAt", throwIfNotFound: true);
+        m_Input_Reload = m_Input.FindAction("Reload", throwIfNotFound: true);
         // IsometricInput
         m_IsometricInput = asset.FindActionMap("IsometricInput", throwIfNotFound: true);
         m_IsometricInput_Move = m_IsometricInput.FindAction("Move", throwIfNotFound: true);
@@ -288,11 +309,13 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Input;
     private List<IInputActions> m_InputActionsCallbackInterfaces = new List<IInputActions>();
     private readonly InputAction m_Input_LookAt;
+    private readonly InputAction m_Input_Reload;
     public struct InputActions
     {
         private @Inputs m_Wrapper;
         public InputActions(@Inputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @LookAt => m_Wrapper.m_Input_LookAt;
+        public InputAction @Reload => m_Wrapper.m_Input_Reload;
         public InputActionMap Get() { return m_Wrapper.m_Input; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -305,6 +328,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @LookAt.started += instance.OnLookAt;
             @LookAt.performed += instance.OnLookAt;
             @LookAt.canceled += instance.OnLookAt;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         private void UnregisterCallbacks(IInputActions instance)
@@ -312,6 +338,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @LookAt.started -= instance.OnLookAt;
             @LookAt.performed -= instance.OnLookAt;
             @LookAt.canceled -= instance.OnLookAt;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         public void RemoveCallbacks(IInputActions instance)
@@ -448,6 +477,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     public interface IInputActions
     {
         void OnLookAt(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
     public interface IIsometricInputActions
     {

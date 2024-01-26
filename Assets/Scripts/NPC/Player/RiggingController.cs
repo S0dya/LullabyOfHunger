@@ -17,12 +17,19 @@ public class RiggingController : Subject
     [Header("rigging")]
     [SerializeField] Rig LookingRig;
     [SerializeField] Rig AimingRig;
-    [SerializeField] AimConstraint HandAimConstraint;
+    [SerializeField] AimConstraint ArmRig;
+    [SerializeField] Rig ReloadingRig;
+
+    [SerializeField] MultiAimConstraint macHead;
+    [SerializeField] MultiAimConstraint macChest;
 
     [SerializeField] Transform RecoilTargetTransform;
 
     [SerializeField] Transform AimingHandTargetTransform;
 
+    [Header("reloading")]
+    [SerializeField] GameObject GunHandObj;
+    [SerializeField] GameObject GunReloadObj;
 
     //local
     Player player;
@@ -62,9 +69,15 @@ public class RiggingController : Subject
 
         player = GetComponent<Player>();
 
-        AddAction(EnumsActions.OnStartLooking, StartLooking);
-        AddAction(EnumsActions.OnStopLooking, StopLooking);
+        AddAction(EnumsActions.OnSwitchToFirstPerson, ToFirstPersonView);
+        AddAction(EnumsActions.OnSwitchToIsometric, ToIsometricView);
+        AddAction(EnumsActions.OnSwitchToInteraction, ToInteractionView);
+        AddAction(EnumsActions.OnReload, ReloadingRigging);
+
         AddAction(EnumsActions.OnFire, VisualiseRecoil);
+
+        AddAction(EnumsActions.OnInteractionGrab, InteractionGrab);
+        AddAction(EnumsActions.OnInteractionRelease, InteractionRelease);
     }
 
     void Start()
@@ -74,6 +87,21 @@ public class RiggingController : Subject
     }
 
     //actions
+    void ToFirstPersonView()
+    {
+        StartLooking();
+    }
+    void ToIsometricView()
+    {
+        StopLooking();
+    }
+    void ToInteractionView()
+    {
+        AimingRig.weight = 1;
+
+        StartLooking();
+    }
+
     public void StartAiming()
     {
         StopCor(_smoothAimingHandCor);
@@ -83,10 +111,45 @@ public class RiggingController : Subject
         _increaseWeightOfHandCor = StartCoroutine(IncreaseWeightOfHandCor());
     }
 
+    public void StartLooking()
+    {
+        StopCor(_returnLookDirectionCor);
+
+        LookingRig.weight = 1.0f;
+    }
+    public void StopLooking()
+    {
+        StopCor(_returnLookDirectionCor);
+        _returnLookDirectionCor = StartCoroutine(SmoothReturnLookDirectionCor());
+        StopCor(_smoothAimingHandCor);
+
+        StopCor(_increaseWeightOfHandCor);
+        _dereaseWeightOfHandCor = StartCoroutine(DecreaseWeightOfHandCor());
+    }
+
     void VisualiseRecoil()
     {
         StopCor(_recoilVisualizsationCor);
         _recoilVisualizsationCor = StartCoroutine(RecoilVisualizsationCor());
+    }
+
+    void ReloadingRigging()
+    {
+        //multiAimConstraint.data.sourceWeights[1] = 0f;
+
+        ReloadingRig.weight = 1;
+        GunHandObj.SetActive(false);
+        GunReloadObj.SetActive(true);
+    }
+
+    void InteractionGrab()
+    {
+
+    }
+
+    void InteractionRelease()
+    {
+
     }
 
     //cors
@@ -137,40 +200,23 @@ public class RiggingController : Subject
     {
         while (AimingRig.weight < 1f)
         {
-            HandAimConstraint.weight = AimingRig.weight = Mathf.Lerp(AimingRig.weight, 1.05f, _curDurability * Time.deltaTime);
+            ArmRig.weight = AimingRig.weight = Mathf.Lerp(AimingRig.weight, 1.05f, _curDurability * Time.deltaTime);
 
             yield return null;
         }
 
-        AimingRig.weight = 1;
+        ArmRig.weight = AimingRig.weight = 1;
     }
     IEnumerator DecreaseWeightOfHandCor()
     {
         while (AimingRig.weight > 0)
         {
-            HandAimConstraint.weight = AimingRig.weight = Mathf.Lerp(AimingRig.weight, -0.05f, Durability * Time.deltaTime);
+            ArmRig.weight = AimingRig.weight = Mathf.Lerp(AimingRig.weight, -0.05f, Durability * Time.deltaTime);
 
             yield return null;
         }
 
-        AimingRig.weight = 0;
-    }
-
-    //actions
-    public void StartLooking()
-    {
-        StopCor(_returnLookDirectionCor);
-
-        LookingRig.weight = 1.0f;
-    }
-    public void StopLooking()
-    {
-        StopCor(_returnLookDirectionCor);
-        _returnLookDirectionCor = StartCoroutine(SmoothReturnLookDirectionCor());
-        StopCor(_smoothAimingHandCor);
-
-        StopCor(_increaseWeightOfHandCor);
-        _dereaseWeightOfHandCor = StartCoroutine(DecreaseWeightOfHandCor());
+        ArmRig.weight = AimingRig.weight = 0;
     }
 
     //other methods

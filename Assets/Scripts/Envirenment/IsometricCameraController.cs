@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class IsometricCameraController : Subject
 {
-    [SerializeField] Camera IsometricCamera;
+    //local
+    Camera IsometricCamera;
 
     protected override void Awake()
     {
         base.Awake();
 
-        AddAction(EnumsActions.OnStartLooking, StartLooking);
-        AddAction(EnumsActions.OnStopLooking, StopLooking);
+        IsometricCamera = GetComponent<Camera>();
+
+        AddAction(EnumsActions.OnSwitchToIsometric, StartRendering);
+        AddAction(EnumsActions.OnSwitchToFirstPerson, StopRendering);
+        AddAction(EnumsActions.OnSwitchToInteraction, StopRendering);
     }
 
     void Start()
@@ -20,18 +24,18 @@ public class IsometricCameraController : Subject
     }
 
     //actions
-    public void StartLooking()
+    public void StartRendering()
     {
-        ToggleLooking(false);
+        ToggleRendering(true);
     }
 
-    public void StopLooking()
+    public void StopRendering()
     {
-        ToggleLooking(true);
+        ToggleRendering(false);
     }
 
     //other methods
-    void ToggleLooking(bool toggle)
+    void ToggleRendering(bool toggle)
     {
         IsometricCamera.enabled = toggle;
     }

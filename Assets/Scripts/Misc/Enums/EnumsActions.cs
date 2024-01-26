@@ -1,9 +1,12 @@
 public enum EnumsActions 
 {
-    OnStartLooking,
-    OnStopLooking,
-    OnStartInteractionView,
-    OnStopInteractionView,
+    OnSwitchToFirstPerson,
+    OnSwitchToIsometric,
+    OnSwitchToInteraction,
 
     OnFire,
+    OnReload,
+
+    OnInteractionGrab,
+    OnInteractionRelease,
 }

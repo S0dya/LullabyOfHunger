@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,16 +13,24 @@ public class Player: Subject
     public float Durability = 4;
     public float AimDelayDuration = 0.5f;
 
+    public float SensitivityInReloading = 0.5f;
+
     [Header("smoothness of animation, 0 - performed, 1 - canceled")]
     public Vector2 MoveSmoothness;
     public Vector2 RotateSmoothness;
 
     [Header("FOV")]
-    public int[] LookRotationOffsetX = new int[2];
-    public int[] LookRotationOffsetY = new int[2];
+    public float[] LookRotationOffset = new float[4];
+    public float[] ReloadingOffset = new float[4];
 
-    [Header("Targets")]
+    public float ReloadingZOffset;
+
+    [Header("targets")]
     public Transform LookingTargetTransform;
+    public Transform ReloadingTargetTransform;
+
+    [Header("interaction camera")]
+    [SerializeField] Transform ReloadingTrasf;
 
     [Header("Other")]
     [SerializeField] Transform FirstPersonCameraTranform;
@@ -29,13 +38,13 @@ public class Player: Subject
 
     //local
     RiggingController _riggingController;
-    InteractionCamera _interactionCamera;
+    InteractionCameraController _interactionCameraController;
     CharacterController _cc;
     Animator _animator;
     
     Inputs _input;
+    InputActionMap _firstPersonInput;
     InputActionMap _isometricInput;
-    InputActionMap _firstPersonInput;   
 
     //general 
     //float _curDurability = 2;
@@ -61,9 +70,14 @@ public class Player: Subject
     float _curRotationDirection;
 
     float _curRotateSmoothness;
-    
+
+    float[] _curOffsetMouseInput;
+
     //input
     [HideInInspector] public Vector2 _lookDirection;
+
+    //actions
+    Action<Vector2> HandleMouseDeltaInput;
 
     //other
     float _deltaTime;
@@ -74,6 +88,9 @@ public class Player: Subject
     bool _isAiming;
     bool _canShoot = true;
 
+    bool _isInteracting;
+    bool _isReloading;
+
     //serialization
     protected override void Awake()
     {
@@ -82,14 +99,18 @@ public class Player: Subject
         _riggingController = GetComponent<RiggingController>();
         _cc = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
-        _interactionCamera = GameObject.FindGameObjectWithTag("InteractionCamera").GetComponent<InteractionCamera>();
+        _interactionCameraController = GameObject.FindGameObjectWithTag("InteractionCameraController").GetComponent<InteractionCameraController>();
 
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+        HandleMouseDeltaInput = OnLook;
 
 
-        AddAction(EnumsActions.OnStartLooking, StartLooking);
-        AddAction(EnumsActions.OnStopLooking, StopLooking);
         AddAction(EnumsActions.OnFire, Shoot);
+        AddAction(EnumsActions.OnReload, Reload);
+
+        AddAction(EnumsActions.OnSwitchToFirstPerson, ToFirstPersonView);
+        AddAction(EnumsActions.OnSwitchToIsometric, ToIsometricView);
+        AddAction(EnumsActions.OnSwitchToInteraction, ToInteractionView);
 
         AssignInput();
     }
@@ -99,10 +120,11 @@ public class Player: Subject
 
         _isometricInput = _input.IsometricInput;
         _firstPersonInput = _input.FirstPersonInput;
-        _firstPersonInput.Disable();
 
-        _input.Input.LookAt.performed += ctx => OnStartLooking();
-        _input.Input.LookAt.canceled += ctx => Observer.Instance.NotifyObservers(EnumsActions.OnStopLooking);
+        _input.Input.LookAt.performed += ctx => OnRightMousePerformed();
+        _input.Input.LookAt.canceled += ctx => OnRightMouseCanceled();
+
+        _input.Input.Reload.performed += ctx => OnStartReloading();
 
         _input.IsometricInput.Move.performed += ctx => OnMove(ctx.ReadValue<float>(), MoveSmoothness[0]);
         _input.IsometricInput.Move.canceled += ctx => OnMove(0, MoveSmoothness[1]);
@@ -113,7 +135,7 @@ public class Player: Subject
         _input.IsometricInput.Run.performed += ctx => OnRun(RunSpeed);
         _input.IsometricInput.Run.canceled += ctx => OnRun(WalkSpeed);
 
-        _input.FirstPersonInput.Look.performed += ctx => OnLook(ctx.ReadValue<Vector2>());
+        _input.FirstPersonInput.Look.performed += ctx => HandleMouseDeltaInput.Invoke(ctx.ReadValue<Vector2>());
 
         _input.FirstPersonInput.Fire.performed += ctx => OnFire();
     }
@@ -121,6 +143,7 @@ public class Player: Subject
     void Start()
     {
         _movementSpeed = WalkSpeed;
+        _firstPersonInput.Disable();
 
         StartCoroutine(DelayAimCor());
     }
@@ -161,24 +184,49 @@ public class Player: Subject
         ChangeTargetSpeed();
     }
 
-    void OnStartLooking()
+    void OnRightMousePerformed()
     {
-        if (_canLook)
+        if (_isReloading)
         {
-            Observer.Instance.NotifyObservers(EnumsActions.OnStartLooking);
+            Observer.Instance.NotifyObservers(EnumsActions.OnInteractionGrab);
+        }
+        else
+        {
+            if (_canLook)
+            {
+                Observer.Instance.NotifyObservers(EnumsActions.OnSwitchToFirstPerson);
 
-            _canLook = false;
+                _canLook = false;
+            }
+        }
+    }
+    void OnRightMouseCanceled()
+    {
+        if (_isReloading)
+        {
+            Observer.Instance.NotifyObservers(EnumsActions.OnInteractionRelease);
+        }
+        else
+        {
+            Observer.Instance.NotifyObservers(EnumsActions.OnSwitchToIsometric);
         }
     }
 
     void OnLook(Vector2 direction)
     {
-        _lookDirection = new Vector2(Mathf.Clamp(_lookDirection.x + direction.x, -LookRotationOffsetX[0], LookRotationOffsetX[1]), 
-            Mathf.Clamp(_lookDirection.y + direction.y, -LookRotationOffsetY[0], LookRotationOffsetY[1]));
+        _lookDirection = new Vector2(Mathf.Clamp(_lookDirection.x + direction.x, -LookRotationOffset[0], LookRotationOffset[1]), 
+            Mathf.Clamp(_lookDirection.y + direction.y, -LookRotationOffset[2], LookRotationOffset[3]));
+    }
+    void OnReloadLook(Vector2 direction)
+    {
+        _lookDirection = new Vector2(Mathf.Clamp(_lookDirection.x + direction.x * SensitivityInReloading, -ReloadingOffset[0], ReloadingOffset[1]),
+            Mathf.Clamp(_lookDirection.y + direction.y * SensitivityInReloading, -ReloadingOffset[2], ReloadingOffset[3]));
     }
 
     void OnFire()
     {
+        if (_isReloading) return;
+        
         if (_isAiming)
         {
             if (_canShoot) Observer.Instance.NotifyObservers(EnumsActions.OnFire);
@@ -191,13 +239,21 @@ public class Player: Subject
         }
     }
 
+    void OnStartReloading()
+    {
+        if (!_isReloading) Observer.Instance.NotifyObservers(EnumsActions.OnReload);
+    }
+
     //update
     void Update()
     {
         _deltaTime = Time.deltaTime;
 
+        Debug.Log(transform.forward);
+
         Gravity();
         MoveRotate();
+        HandleInteraction();
 
         _animator.SetFloat(_animIDMotionSpeed, _curMovementSpeed);
     }
@@ -213,22 +269,25 @@ public class Player: Subject
 
         _cc.Move((transform.forward.normalized * (_curMovementSpeed) + _gravity) * _deltaTime);
         transform.rotation = Quaternion.Euler(0.0f, transform.eulerAngles.y + _curRotationDirection * (1 - Mathf.Clamp01(GetAbs(_curMovementSpeed) / RunSpeed)), 0.0f);
-
+    }
+    void HandleInteraction()
+    {
         if (_isLooking)
         {
             FirstPersonCameraTranform.localRotation = Quaternion.Euler(-_lookDirection.y, _lookDirection.x, 0.0f);
-        
+
             //if (Physics.Raycast(FirstPersonCamera.ScreenPointToRay(_lookDirection + _cameraAimingOffset), out RaycastHit hit)) LookingTargetTransform.position = hit.point;
             LookingTargetTransform.position = FirstPersonCameraTranform.position + FirstPersonCameraTranform.forward * 2f;//myb remove later
 
             //AimingHandTargetTransform.position = (GetPos(FirstPersonCameraTranform) + (GetPos(LookingTargetTransform) - GetPos(FirstPersonCameraTranform)).normalized * 2);
             //AimingHandTargetTransform.rotation = Quaternion.LookRotation(AimingHandTargetTransform.position - FirstPersonCameraTranform.position);
         }
-    }
-
-    //gun
-    void Shoot()
-    {
+        else if (_isReloading)
+        {
+            //LookingTargetTransform.position = transform.position + Quaternion.Euler(0, _lookDirection.y, _lookDirection.x) * new Vector3 (1, 1, ReloadingZOffset);
+            //LookingTargetTransform.position = transform.position + new Vector3(_lookDirection.x, _lookDirection.y, 0) +  * ReloadingZOffset;
+            ReloadingTargetTransform.localPosition = new Vector3(_lookDirection.x, _lookDirection.y, 0);
+        }
     }
 
     //cors
@@ -240,29 +299,57 @@ public class Player: Subject
     }
 
     //actions
-    public void StartLooking()
+    void ToFirstPersonView()
     {
-        ToggleLooking(true);
+        ToggleInput(_firstPersonInput, _isometricInput);
+        ToggleRendering(true);
 
-        _isometricInput.Disable();
-        _firstPersonInput.Enable();
+        _isLooking = true;
     }
-    public void StopLooking()
+    void ToIsometricView()
     {
+        ToggleInput(_isometricInput, _firstPersonInput);
+        ToggleRendering(false);
+
         StartCoroutine(DelayAimCor());
-
         ToggleLooking(false);
-        _isAiming = false;
+    }
+    void ToInteractionView()
+    {
+        ToggleInput(_firstPersonInput, _isometricInput);
+        ToggleRendering(false);
+        ToggleLooking(false);
+    }
 
-        _isometricInput.Enable();
-        _firstPersonInput.Disable();
+    void Shoot()
+    {
+
+    }
+
+    void Reload()
+    {
+        _isReloading = true;
+
+
+
+        HandleMouseDeltaInput = OnReloadLook;
+        _curOffsetMouseInput = ReloadingOffset;
+        _interactionCameraController.SetCameraTransform(ReloadingTrasf);
+        Observer.Instance.NotifyObservers(EnumsActions.OnSwitchToInteraction);
     }
 
     //other methods
-    void ToggleLooking(bool toggle)
+    void ToggleRendering(bool toggle)
     {
-        _isLooking = toggle;
         FirstPersonCamera.enabled = toggle;
+    }
+
+    void ToggleLooking(bool toggle) => _isAiming = _isLooking = toggle;
+
+    void ToggleInput(InputActionMap toEnabled, InputActionMap toDisabled)
+    {
+        toEnabled.Enable();
+        toDisabled.Disable();
     }
 
     float GetLerpVal(float curValue, float targetValue, float threshold, float smoothTime)
