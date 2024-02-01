@@ -6,8 +6,12 @@ public enum EnumsActions
 
     OnFire,
     OnReload,
-    OnReloadingStop,
+    OnStopReloading,
+    OnRecieverReloaded,
 
     OnInteractionGrab,
     OnInteractionRelease,
+
+    OnStoppedAiming,
+    OnTakeMagFromBag,
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - InteractionCameraController
   - ItemsParent
+  - EffectsParent
   layers:
   - Default
   - TransparentFX

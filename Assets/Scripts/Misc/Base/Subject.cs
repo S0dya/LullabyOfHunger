@@ -37,4 +37,9 @@ public class Subject : MonoBehaviour
     {
         if (_actionDictionary.ContainsKey(actionEnum)) _actionDictionary[actionEnum].Invoke();
     }
+
+    public void NotifyObserver(EnumsActions actionEnum)
+    {
+        Observer.Instance.NotifyObservers(actionEnum);
+    }
 }

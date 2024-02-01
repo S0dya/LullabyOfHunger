@@ -38,6 +38,7 @@ public class Player: Subject
 
     //local
     RiggingController _riggingController;
+    GunController _gunController;
     InteractionCameraController _interactionCameraController;
     CharacterController _cc;
     Animator _animator;
@@ -86,10 +87,9 @@ public class Player: Subject
     bool _canLook;
 
     bool _isAiming;
-    bool _canShoot = true;
 
-    bool _isInteracting;
     bool _isReloading;
+    bool _canReload = true;
 
     //serialization
     protected override void Awake()
@@ -97,6 +97,7 @@ public class Player: Subject
         base.Awake();
 
         _riggingController = GetComponent<RiggingController>();
+        _gunController = GetComponent<GunController>();
         _cc = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _interactionCameraController = GameObject.FindGameObjectWithTag("InteractionCameraController").GetComponent<InteractionCameraController>();
@@ -104,18 +105,22 @@ public class Player: Subject
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         HandleMouseDeltaInput = OnLook;
 
-
         AddAction(EnumsActions.OnFire, Shoot);
+
         AddAction(EnumsActions.OnReload, Reload);
+        AddAction(EnumsActions.OnStopReloading, StopReloading);
 
         AddAction(EnumsActions.OnSwitchToFirstPerson, ToFirstPersonView);
         AddAction(EnumsActions.OnSwitchToIsometric, ToIsometricView);
         AddAction(EnumsActions.OnSwitchToInteraction, ToInteractionView);
 
-        AssignInput();
+        AddAction(EnumsActions.OnStoppedAiming, StoppedAiming);
+
     }
-    void AssignInput()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+
         _input = new Inputs();
 
         _isometricInput = _input.IsometricInput;
@@ -124,7 +129,7 @@ public class Player: Subject
         _input.Input.LookAt.performed += ctx => OnRightMousePerformed();
         _input.Input.LookAt.canceled += ctx => OnRightMouseCanceled();
 
-        _input.Input.Reload.performed += ctx => OnStartReloading();
+        _input.Input.Reload.performed += ctx => OnReload();
 
         _input.IsometricInput.Move.performed += ctx => OnMove(ctx.ReadValue<float>(), MoveSmoothness[0]);
         _input.IsometricInput.Move.canceled += ctx => OnMove(0, MoveSmoothness[1]);
@@ -138,6 +143,32 @@ public class Player: Subject
         _input.FirstPersonInput.Look.performed += ctx => HandleMouseDeltaInput.Invoke(ctx.ReadValue<Vector2>());
 
         _input.FirstPersonInput.Fire.performed += ctx => OnFire();
+
+        _input.Enable();
+    }
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        _input.Input.LookAt.performed -= ctx => OnRightMousePerformed();
+        _input.Input.LookAt.canceled -= ctx => OnRightMouseCanceled();
+
+        _input.Input.Reload.performed -=ctx => OnReload();
+
+        _input.IsometricInput.Move.performed -=ctx => OnMove(ctx.ReadValue<float>(), MoveSmoothness[0]);
+        _input.IsometricInput.Move.canceled -=ctx => OnMove(0, MoveSmoothness[1]);
+
+        _input.IsometricInput.Rotation.performed -=ctx => OnRotate(ctx.ReadValue<float>(), RotateSmoothness[0]);
+        _input.IsometricInput.Rotation.canceled -=ctx => OnRotate(0, RotateSmoothness[1]);
+
+        _input.IsometricInput.Run.performed -=ctx => OnRun(RunSpeed);
+        _input.IsometricInput.Run.canceled -=ctx => OnRun(WalkSpeed);
+
+        _input.FirstPersonInput.Look.performed -=ctx => HandleMouseDeltaInput.Invoke(ctx.ReadValue<Vector2>());
+
+        _input.FirstPersonInput.Fire.performed -=ctx => OnFire();
+
+        _input.Disable();
     }
 
     void Start()
@@ -146,19 +177,6 @@ public class Player: Subject
         _firstPersonInput.Disable();
 
         StartCoroutine(DelayAimCor());
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-     
-        _input.Enable();
-    }
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-     
-        _input.Disable();
     }
 
     //input
@@ -188,15 +206,15 @@ public class Player: Subject
     {
         if (_isReloading)
         {
-            Observer.Instance.NotifyObservers(EnumsActions.OnInteractionGrab);
+            NotifyObserver(EnumsActions.OnInteractionGrab);
         }
         else
         {
             if (_canLook)
             {
-                Observer.Instance.NotifyObservers(EnumsActions.OnSwitchToFirstPerson);
+                NotifyObserver(EnumsActions.OnSwitchToFirstPerson);
 
-                _canLook = false;
+                _canLook = false; _canReload = false;
             }
         }
     }
@@ -204,11 +222,11 @@ public class Player: Subject
     {
         if (_isReloading)
         {
-            Observer.Instance.NotifyObservers(EnumsActions.OnInteractionRelease);
+            NotifyObserver(EnumsActions.OnInteractionRelease);
         }
         else
         {
-            Observer.Instance.NotifyObservers(EnumsActions.OnSwitchToIsometric);
+            NotifyObserver(EnumsActions.OnSwitchToIsometric);
         }
     }
 
@@ -229,7 +247,7 @@ public class Player: Subject
         
         if (_isAiming)
         {
-            if (_canShoot) Observer.Instance.NotifyObservers(EnumsActions.OnFire);
+            if (_gunController._curBulletsAmount > 0) NotifyObserver(EnumsActions.OnFire);
         }
         else
         {
@@ -239,9 +257,10 @@ public class Player: Subject
         }
     }
 
-    void OnStartReloading()
+    void OnReload()
     {
-        if (!_isReloading) Observer.Instance.NotifyObservers(EnumsActions.OnReload);
+        if (!_isReloading && _canReload) NotifyObserver(EnumsActions.OnReload);
+        else if (_isReloading) NotifyObserver(EnumsActions.OnStopReloading);
     }
 
     //update
@@ -249,11 +268,9 @@ public class Player: Subject
     {
         _deltaTime = Time.deltaTime;
 
-        Debug.Log(transform.forward);
-
         Gravity();
         MoveRotate();
-        HandleInteraction();
+        HandleMouse();
 
         _animator.SetFloat(_animIDMotionSpeed, _curMovementSpeed);
     }
@@ -270,14 +287,14 @@ public class Player: Subject
         _cc.Move((transform.forward.normalized * (_curMovementSpeed) + _gravity) * _deltaTime);
         transform.rotation = Quaternion.Euler(0.0f, transform.eulerAngles.y + _curRotationDirection * (1 - Mathf.Clamp01(GetAbs(_curMovementSpeed) / RunSpeed)), 0.0f);
     }
-    void HandleInteraction()
+    void HandleMouse()
     {
         if (_isLooking)
         {
             FirstPersonCameraTranform.localRotation = Quaternion.Euler(-_lookDirection.y, _lookDirection.x, 0.0f);
 
             //if (Physics.Raycast(FirstPersonCamera.ScreenPointToRay(_lookDirection + _cameraAimingOffset), out RaycastHit hit)) LookingTargetTransform.position = hit.point;
-            LookingTargetTransform.position = FirstPersonCameraTranform.position + FirstPersonCameraTranform.forward * 2f;//myb remove later
+            LookingTargetTransform.position = FirstPersonCameraTranform.position + FirstPersonCameraTranform.forward * 2f;
 
             //AimingHandTargetTransform.position = (GetPos(FirstPersonCameraTranform) + (GetPos(LookingTargetTransform) - GetPos(FirstPersonCameraTranform)).normalized * 2);
             //AimingHandTargetTransform.rotation = Quaternion.LookRotation(AimingHandTargetTransform.position - FirstPersonCameraTranform.position);
@@ -326,14 +343,27 @@ public class Player: Subject
 
     void Reload()
     {
+        _lookDirection = _gunController.GetHandOriginPos();
+
         _isReloading = true;
-
-
 
         HandleMouseDeltaInput = OnReloadLook;
         _curOffsetMouseInput = ReloadingOffset;
         _interactionCameraController.SetCameraTransform(ReloadingTrasf);
-        Observer.Instance.NotifyObservers(EnumsActions.OnSwitchToInteraction);
+        NotifyObserver(EnumsActions.OnSwitchToInteraction);
+    }
+    void StopReloading()
+    {
+        _isReloading = false;
+
+        HandleMouseDeltaInput = OnLook;
+        _curOffsetMouseInput = LookRotationOffset;
+        NotifyObserver(EnumsActions.OnSwitchToIsometric);
+    }
+
+    void StoppedAiming()
+    {
+        _canReload = true;
     }
 
     //other methods
