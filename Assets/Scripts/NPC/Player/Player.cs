@@ -284,9 +284,7 @@ public class Player: Subject
         }
         else if (_isReloading)
         {
-            //LookingTargetTransform.position = transform.position + Quaternion.Euler(0, _lookDirection.y, _lookDirection.x) * new Vector3 (1, 1, ReloadingZOffset);
-            //LookingTargetTransform.position = transform.position + new Vector3(_lookDirection.x, _lookDirection.y, 0) +  * ReloadingZOffset;
-            ReloadingTargetTransform.localPosition = new Vector3(_lookDirection.x, _lookDirection.y, 0);
+            ReloadingTargetTransform.localPosition = new Vector3(-_lookDirection.x, _lookDirection.y, ReloadingZOffset);
         }
     }
 

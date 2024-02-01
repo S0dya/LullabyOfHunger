@@ -6,6 +6,7 @@ public enum EnumsActions
 
     OnFire,
     OnReload,
+    OnReloadingStop,
 
     OnInteractionGrab,
     OnInteractionRelease,

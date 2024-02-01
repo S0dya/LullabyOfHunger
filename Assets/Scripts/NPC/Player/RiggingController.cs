@@ -19,20 +19,33 @@ public class RiggingController : Subject
     [SerializeField] Rig AimingRig;
     [SerializeField] AimConstraint ArmRig;
     [SerializeField] Rig ReloadingRig;
+    [SerializeField] Rig FingersRig;
 
-    [SerializeField] MultiAimConstraint macHead;
-    [SerializeField] MultiAimConstraint macChest;
+    [SerializeField] MultiAimConstraint MacHead;
+    [SerializeField] MultiAimConstraint MacChest;
+    [SerializeField] TwoBoneIKConstraint TbikcArm;
 
     [SerializeField] Transform RecoilTargetTransform;
-
     [SerializeField] Transform AimingHandTargetTransform;
 
     [Header("reloading")]
+    [SerializeField] Transform HandTransform;
+
     [SerializeField] GameObject GunHandObj;
+    [SerializeField] GameObject MagHandObj;
+    [SerializeField] GameObject EmptyMagHandObj;
     [SerializeField] GameObject GunReloadObj;
+
+    [SerializeField] Transform MagsBagTransform;
+
+    [SerializeField] GameObject EmptyMagPrefab;
+    [SerializeField] GameObject FullMagPrefab;
 
     //local
     Player player;
+
+    Transform GunReloadTransform;
+    Transform ItemsParent;
 
     //general
     float _curDurability = 2;
@@ -52,6 +65,11 @@ public class RiggingController : Subject
     Vector3 _randomAimingOffsetPos;
     Vector2 _cameraAimingOffset;
 
+    //reloading
+    bool _gunHasMag = true;
+
+    bool _isHoldingFullMag;
+    bool _isHoldingEmptyMag;
 
     //cors
     Coroutine _returnLookDirectionCor;
@@ -72,7 +90,8 @@ public class RiggingController : Subject
         AddAction(EnumsActions.OnSwitchToFirstPerson, ToFirstPersonView);
         AddAction(EnumsActions.OnSwitchToIsometric, ToIsometricView);
         AddAction(EnumsActions.OnSwitchToInteraction, ToInteractionView);
-        AddAction(EnumsActions.OnReload, ReloadingRigging);
+        AddAction(EnumsActions.OnReload, StartReloading);
+        AddAction(EnumsActions.OnReloadingStop, StopReloading);
 
         AddAction(EnumsActions.OnFire, VisualiseRecoil);
 
@@ -84,6 +103,8 @@ public class RiggingController : Subject
     {
         _cameraAimingOffset = new Vector2(Screen.width / 2, Screen.height / 2);
 
+        GunReloadTransform = GunReloadObj.transform;
+        ItemsParent = GameObject.FindGameObjectWithTag("ItemsParent").transform;
     }
 
     //actions
@@ -133,23 +154,84 @@ public class RiggingController : Subject
         _recoilVisualizsationCor = StartCoroutine(RecoilVisualizsationCor());
     }
 
-    void ReloadingRigging()
+    void StartReloading()
     {
-        //multiAimConstraint.data.sourceWeights[1] = 0f;
+        SetMacWeights(MacHead, 0, 0.7f);
+        SetMacWeights(MacChest, 0, 0.1f);
+        TbikcArm.data.target = player.ReloadingTargetTransform;
 
+        AimingRig.weight = 0;
         ReloadingRig.weight = 1;
-        GunHandObj.SetActive(false);
-        GunReloadObj.SetActive(true);
+        ToggleGO(GunHandObj, false);
+        ToggleGO(GunReloadObj, true);
+    }
+    void StopReloading()
+    {
+        SetMacWeights(MacHead, 0.7f, 0);
+        SetMacWeights(MacChest, 0.1f, 0);
+        TbikcArm.data.target = player.LookingTargetTransform;
+
+        ReloadingRig.weight = 0;
+        ToggleGO(GunHandObj, true);
+        ToggleGO(GunReloadObj, false);
     }
 
     void InteractionGrab()
     {
+        FingersRig.weight = 0;
 
+        if (GetDistance(GetPos(HandTransform), GetPos(MagsBagTransform)) < 0.3f)
+        {
+            TakeMagFromBag();
+        }
+        else if (GetDistance(GetPos(HandTransform), GetPos(GunReloadTransform)) < 0.3f)
+        {
+            if (_gunHasMag) TakeMagFromGun();
+        }
     }
 
     void InteractionRelease()
     {
+        FingersRig.weight = 1;
 
+        if (_isHoldingFullMag && GetDistance(GetPos(HandTransform), GetPos(GunReloadTransform)) < 0.3f)
+        {
+            if (_gunHasMag) TakeMagFromGun();
+        }
+        else if (_isHoldingFullMag || _isHoldingEmptyMag)
+        {
+            DropMag();
+        }
+    }
+
+    //reloading methods
+    void TakeMagFromBag()
+    {
+        _isHoldingFullMag = true;
+
+        ToggleGO(MagHandObj, true);
+    }
+
+    void TakeMagFromGun()
+    {
+        _isHoldingEmptyMag = true;
+        _gunHasMag = false;
+
+        ToggleGO(MagHandObj, true);
+    }
+
+    void DropMag()
+    {
+        Instantiate(_isHoldingEmptyMag ? EmptyMagPrefab : FullMagPrefab, HandTransform.position, HandTransform.rotation, ItemsParent);
+
+        ToggleGO(MagHandObj, false);
+    }
+
+    void PutMagInGun()
+    {
+        _gunHasMag = true;
+
+        Observer.Instance.NotifyObservers(EnumsActions.OnReloadingStop);
     }
 
     //cors
@@ -250,6 +332,19 @@ public class RiggingController : Subject
     void StopCor(Coroutine cor)
     {
         if (cor != null) StopCoroutine(cor);
+    }
+
+    void SetMacWeights(MultiAimConstraint mac, float weight0, float weight1)
+    {
+        var sources = mac.data.sourceObjects;
+        sources.SetWeight(0, weight0);
+        sources.SetWeight(1, weight1);
+        mac.data.sourceObjects = sources;
+    }
+
+    void ToggleGO(GameObject GO, bool toggle)
+    {
+        GO.SetActive(toggle);
     }
 
     //other cors
