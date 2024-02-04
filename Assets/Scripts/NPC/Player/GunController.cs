@@ -83,6 +83,16 @@ public class GunController : Subject
         if (Physics.Raycast(ShootingTransform.position, ShootingTransform.forward, out RaycastHit hit))
         {
             Instantiate(BulletTrackPrefab, hit.point, hit.transform.rotation, _effectsParent);
+
+            Enemy enemy = hit.collider.GetComponentInParent<Enemy>();
+
+            if (enemy != null)
+            {
+                Vector3 force = (hit.point - ShootingTransform.position).normalized;
+                force.y = 0;
+
+                enemy.Push(force, hit.point);
+            }
         }
 
         Animator.Play(_curBulletsAmount == 0 ? _animIDShootLast : _animIDShoot);
