@@ -11,6 +11,11 @@ public class Observer : SingletonMonobehaviour<Observer>
     public void RemoveObserver(Subject subject) => _subjects.Remove(subject);
     public void NotifyObservers(EnumsActions actionEnum)
     {
-        foreach (Subject subject in _subjects) subject.PerformAction(actionEnum);
+        foreach (Subject subject in _subjects)
+        {
+            //if (subject == null) continue;
+
+            subject.PerformAction(actionEnum);
+        }
     }
 }

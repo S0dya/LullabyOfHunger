@@ -23,7 +23,6 @@ public class RiggingController : Subject
 
     [SerializeField] MultiAimConstraint MacHead;
     [SerializeField] MultiAimConstraint MacChest;
-    [SerializeField] TwoBoneIKConstraint TbikcArm;
 
     [Header("targets")]
     [SerializeField] Transform RecoilTargetTransform;
@@ -135,7 +134,6 @@ public class RiggingController : Subject
     {
         SetMacWeights(MacHead, 0, 0.7f);
         SetMacWeights(MacChest, 0, 0.1f);
-        TbikcArm.data.target = player.ReloadingTargetTransform;
         _isReloading = true;
 
         AimingRig.weight = 0;
@@ -145,7 +143,6 @@ public class RiggingController : Subject
     {
         SetMacWeights(MacHead, 0.7f, 0);
         SetMacWeights(MacChest, 0.1f, 0);
-        TbikcArm.data.target = player.LookingTargetTransform;
         _isReloading = false;
 
         FingersRig.weight = ReloadingRig.weight = 0;

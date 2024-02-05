@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +7,6 @@ public class Enemy : Subject
 {
     [Header("Settings")]
     public float MovementSpeed = 2.5f;
-
 
     //local
     NavMeshAgent _agent;
@@ -30,8 +28,8 @@ public class Enemy : Subject
         set { if (_agent.destination != value) _agent.destination = value; }
     }
 
-    //ragdoll
-    List<Rigidbody> _rbs;
+    //bools
+    bool _seesPlayer;
 
     protected override void Awake()
     {
@@ -45,27 +43,16 @@ public class Enemy : Subject
         _movementSpeed = MovementSpeed;
 
         _curDestination = transform;
-
-        _rbs = new List<Rigidbody>(GetComponentsInChildren<Rigidbody>());
     }
 
-    protected override void OnEnable()
+    void Start()
     {
-        base.OnEnable();
-
-        //foreach (var rb in _rbs) rb.isKinematic = true;
-    }
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-
-        foreach (var rb in _rbs) rb.isKinematic = false;
+        _curDestination = LevelManager.Instance.playerTransf;
     }
 
     void Update()
     {
         Destination = _curDestination.position;
-
 
         if (Vector3.Distance(transform.position, Destination) < MovementSpeed)
         {
@@ -73,7 +60,6 @@ public class Enemy : Subject
 
             _animator.SetFloat(_animIDMotionSpeed, _movementSpeed);
         }
-
     }
 
     //triggers
@@ -84,21 +70,25 @@ public class Enemy : Subject
             _curDestination = LevelManager.Instance.playerTransf;
         }
     }
-
-    //outside methods
-    public void Push(Vector3 force, Vector3 pos)
+    
+    //other methods
+    void ToggleSeeingPlayer(bool toggle)
     {
-        Die();
-        Rigidbody nearest = _rbs.OrderBy(rb => Vector3.Distance(rb.position, pos)).First();
-
-        nearest.AddForceAtPosition(force, pos, ForceMode.Impulse);
+        _seesPlayer = toggle;
     }
 
+    //outside methods
     public void Die()
     {
-        _animator.enabled = false;
-        _agent.enabled = false;
+        _animator.enabled = _agent.enabled = this.enabled = false;
+    }
 
-        Destroy(this);
+    public void PlayerNoticed()
+    {
+        ToggleSeeingPlayer(true);
+    }
+    public void PlayerLost()
+    {
+        ToggleSeeingPlayer(false);
     }
 }

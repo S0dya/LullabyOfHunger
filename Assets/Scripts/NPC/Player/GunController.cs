@@ -84,14 +84,14 @@ public class GunController : Subject
         {
             Instantiate(BulletTrackPrefab, hit.point, hit.transform.rotation, _effectsParent);
 
-            Enemy enemy = hit.collider.GetComponentInParent<Enemy>();
+            var enemyAnimationController = hit.collider.GetComponentInParent<EnemyAnimationController>();
 
-            if (enemy != null)
+            if (enemyAnimationController != null)
             {
                 Vector3 force = (hit.point - ShootingTransform.position).normalized;
                 force.y = 0;
 
-                enemy.Push(force, hit.point);
+                enemyAnimationController.Push(force, hit.point);
             }
         }
 
