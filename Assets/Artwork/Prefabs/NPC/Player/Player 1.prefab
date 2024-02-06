@@ -2646,7 +2646,7 @@ GameObject:
   - component: {fileID: 6383316791308113856}
   - component: {fileID: 3639284547723076759}
   - component: {fileID: 6383316791308113859}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player 1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2709,6 +2709,7 @@ MonoBehaviour:
   ReloadingTrasf: {fileID: 7468859583158244898}
   FirstPersonCameraTranform: {fileID: 7468859583128614573}
   FirstPersonCamera: {fileID: 7468859582824472630}
+  HeadMesh: {fileID: 5958406288040960164}
   _lookDirection: {x: 0, y: 0}
 --- !u!114 &1570008092663848483
 MonoBehaviour:
@@ -2729,7 +2730,7 @@ MonoBehaviour:
   GunRecoilReturnSpeed: 10
   LookingRig: {fileID: 7468859583956585333}
   AimingRig: {fileID: 6793479858399581429}
-  ArmRig: {fileID: 4469195002786443849}
+  HandRig: {fileID: 4469195002786443849}
   ReloadingRig: {fileID: 7468859583317066354}
   FingersRig: {fileID: 7468859582889753009}
   MacHead: {fileID: 7468859583417275702}
@@ -3293,7 +3294,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7468859582824472625}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.04, y: 0.045, z: -0.147}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4520,7 +4521,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7468859583953533081}
   m_Layer: 0
-  m_Name: HandOrigin
+  m_Name: ArmOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4534,7 +4535,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7468859583953533080}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.25, y: 0.892, z: 0.079}
+  m_LocalPosition: {x: -0.194, y: 1.231, z: -0.0004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4751,7 +4752,7 @@ MonoBehaviour:
     m_Mid: {fileID: 1520565712042466403}
     m_Tip: {fileID: 2021238923954740881}
     m_Target: {fileID: 0}
-    m_Hint: {fileID: 0}
+    m_Hint: {fileID: 7468859583953533081}
     m_TargetPositionWeight: 0.8
     m_TargetRotationWeight: 0
     m_HintWeight: 1

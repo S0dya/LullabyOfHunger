@@ -5,12 +5,18 @@ using UnityEngine;
 public class LevelManager : SingletonMonobehaviour<LevelManager>
 {
 
-    //local inheriting
-    [HideInInspector] public Transform playerTransf;
+    //local 
+    Transform playerTransf;
 
     void Start()
     {
         playerTransf = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
+
+    //outside methods
+    public Transform GetPlayerTransform()
+    {
+        return playerTransf;
+    }
 }

@@ -8,10 +8,13 @@ using UnityEngine.Animations;
 
 public class EnemyAnimationController : MonoBehaviour
 {
+    [Header("settings")]
+    public float LookingSpeed;
+
     [Header("rigging")]
     [SerializeField] Rig LookingRig;
     [SerializeField] Rig ArmsRig;
-    [SerializeField] AimConstraint[] Acshands = new AimConstraint[2];
+    //[SerializeField] AimConstraint[] AcsHands = new AimConstraint[2];
 
     [SerializeField] MultiAimConstraint[] MacsLooking = new MultiAimConstraint[2];
     [SerializeField] TwoBoneIKConstraint[] TbikcsArms = new TwoBoneIKConstraint[2];
@@ -19,8 +22,14 @@ public class EnemyAnimationController : MonoBehaviour
     //local
     Enemy _enemy;
 
+    //anim
+    
     //ragdoll
     List<Rigidbody> _rbs;
+
+    //cors
+    Coroutine _increaseWeightOfLookingCor;
+    Coroutine _decreaseWeightOfLookingCor;
 
     void Awake()
     {
@@ -48,8 +57,49 @@ public class EnemyAnimationController : MonoBehaviour
     }
 
     //cors
+    IEnumerator IncreaseWeightOfLookingCor()
+    {
+        while (LookingRig.weight < 1f)
+        {
+            LookingRig.weight = Mathf.Lerp(LookingRig.weight, 1.05f, LookingSpeed * Time.deltaTime);
+
+            yield return null;
+        }
+
+        LookingRig.weight = 1;
+    }
+    IEnumerator DecreaseWeightOfLookingCor()
+    {
+        while (LookingRig.weight > 0)
+        {
+            LookingRig.weight = Mathf.Lerp(LookingRig.weight, -0.05f, LookingSpeed * Time.deltaTime);
+
+            yield return null;
+        }
+
+        LookingRig.weight = 0;
+    }
 
     //outside methods
+    public void IncreaseHandsWeight(float distanceWeight)
+    {
+        //Debug.Log(distanceWeight);
+        ArmsRig.weight = distanceWeight;
+    }
+
+    public void LookAtPlayer()
+    {
+        StopCor(_decreaseWeightOfLookingCor);
+        StopCor(_increaseWeightOfLookingCor);
+        _increaseWeightOfLookingCor = StartCoroutine(IncreaseWeightOfLookingCor());
+    }
+    public void StopLookAtPlayer()
+    {
+        StopCor(_increaseWeightOfLookingCor);
+        StopCor(_decreaseWeightOfLookingCor);
+        _decreaseWeightOfLookingCor = StartCoroutine(DecreaseWeightOfLookingCor());
+    }
+
     public void Push(Vector3 force, Vector3 pos)
     {
         Rigidbody nearest = _rbs.OrderBy(rb => Vector3.Distance(rb.position, pos)).First();
@@ -68,6 +118,11 @@ public class EnemyAnimationController : MonoBehaviour
     }
 
     //other methods
+    void StopCor(Coroutine cor)
+    {
+        if (cor != null) StopCoroutine(cor);
+    }
+
     void ToggleKinematic(bool toggle)
     {
         foreach (var rb in _rbs) rb.isKinematic = toggle;

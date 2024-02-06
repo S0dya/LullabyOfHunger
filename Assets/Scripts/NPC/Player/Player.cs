@@ -36,6 +36,8 @@ public class Player: Subject
     [SerializeField] Transform FirstPersonCameraTranform;
     [SerializeField] Camera FirstPersonCamera;
 
+    [SerializeField] SkinnedMeshRenderer HeadMesh;
+
     //local
     RiggingController _riggingController;
     GunController _gunController;
@@ -370,6 +372,7 @@ public class Player: Subject
     void ToggleRendering(bool toggle)
     {
         FirstPersonCamera.enabled = toggle;
+        HeadMesh.enabled = !toggle;
     }
 
     void ToggleLooking(bool toggle) => _isAiming = _isLooking = toggle;

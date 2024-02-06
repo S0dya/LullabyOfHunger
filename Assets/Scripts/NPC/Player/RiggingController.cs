@@ -17,7 +17,7 @@ public class RiggingController : Subject
     [Header("rigging")]
     [SerializeField] Rig LookingRig;
     [SerializeField] Rig AimingRig;
-    [SerializeField] AimConstraint ArmRig;
+    [SerializeField] AimConstraint HandRig;
     [SerializeField] Rig ReloadingRig;
     [SerializeField] Rig FingersRig;
 
@@ -48,6 +48,13 @@ public class RiggingController : Subject
 
     Vector3 _randomAimingOffsetPos;
     Vector2 _cameraAimingOffset;
+
+    //cons
+    float ArmWeight
+    {
+        get { return AimingRig.weight; }
+        set { AimingRig.weight = value; HandRig.weight = value; }
+    }
 
     //cors
     Coroutine _returnLookDirectionCor;
@@ -203,25 +210,25 @@ public class RiggingController : Subject
 
     IEnumerator IncreaseWeightOfHandCor()
     {
-        while (AimingRig.weight < 1f)
+        while (ArmWeight < 1f)
         {
-            ArmRig.weight = AimingRig.weight = Mathf.Lerp(AimingRig.weight, 1.05f, _curDurability * Time.deltaTime);
+            ArmWeight = Mathf.Lerp(ArmWeight, 1.05f, _curDurability * Time.deltaTime);
 
             yield return null;
         }
 
-        ArmRig.weight = AimingRig.weight = 1;
+        ArmWeight = 1;
     }
     IEnumerator DecreaseWeightOfHandCor()
     {
-        while (AimingRig.weight > 0)
+        while (ArmWeight > 0)
         {
-            ArmRig.weight = AimingRig.weight = Mathf.Lerp(AimingRig.weight, -0.05f, Durability * Time.deltaTime);
+            ArmWeight = Mathf.Lerp(ArmWeight, -0.05f, Durability * Time.deltaTime);
 
             yield return null;
         }
 
-        ArmRig.weight = AimingRig.weight = 0;
+        ArmWeight = 0;
 
         NotifyObserver(EnumsActions.OnStoppedAiming);
     }
