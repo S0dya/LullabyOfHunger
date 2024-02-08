@@ -11,6 +11,8 @@ public class Enemy : Subject
 
     public float TimeBeforeFollowingPlayer = 1;
 
+
+
     //local
     NavMeshAgent _agent;
     Animator _animator;
@@ -61,6 +63,7 @@ public class Enemy : Subject
     void Start()
     {
         _maxSpeed = _agent.speed;
+
     }
 
     void Update()
@@ -118,7 +121,7 @@ public class Enemy : Subject
         _enemyAnimationController.StopLookAtPlayer();
         ToggleSeeingPlayer(false);
     }
-    
+
     public void Die()
     {
         _animator.enabled = _agent.enabled = this.enabled = false;

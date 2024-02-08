@@ -19,11 +19,14 @@ public class EnemyAnimationController : MonoBehaviour
     [SerializeField] MultiAimConstraint[] MacsLooking = new MultiAimConstraint[2];
     [SerializeField] TwoBoneIKConstraint[] TbikcsArms = new TwoBoneIKConstraint[2];
 
+    [Header("Editor")]
+    public BodyPart[] BodyParts;
+
     //local
     Enemy _enemy;
 
     //anim
-    
+
     //ragdoll
     List<Rigidbody> _rbs;
 
@@ -100,29 +103,57 @@ public class EnemyAnimationController : MonoBehaviour
         _decreaseWeightOfLookingCor = StartCoroutine(DecreaseWeightOfLookingCor());
     }
 
-    public void Push(Vector3 force, Vector3 pos)
+    public void Shot(Vector3 force, Vector3 pos)
     {
-        Rigidbody nearest = _rbs.OrderBy(rb => Vector3.Distance(rb.position, pos)).First();
+        var nearestBodyPart = BodyParts.OrderBy(bodyPart => Vector3.Distance(bodyPart.BodyPartRb.position, pos)).First();
 
-        this.enabled = false;
-        nearest.AddForceAtPosition(force * 100, pos, ForceMode.Impulse);
+        nearestBodyPart.ShootsAmount--;
 
-        StartCoroutine(DelayCor(_enemy.Die));
+        if (nearestBodyPart.ShootsAmount == 0)
+        {
+            Push(force, pos);
+
+            StartCoroutine(DelayCor(_enemy.Die));
+        }
+        else
+        {
+            VisualiseDamageOnShot(nearestBodyPart.BodyPartEnum);
+        }
     }
 
-    IEnumerator DelayCor(Action action)//myb move to game manager
+    void Push(Vector3 force, Vector3 pos)
+    {
+        var nearestRb = _rbs.OrderBy(rb => Vector3.Distance(rb.position, pos)).First();
+        
+        this.enabled = false;
+        nearestRb.AddForceAtPosition(force * 100, pos, ForceMode.Impulse);
+    }
+
+    void VisualiseDamageOnShot(EnumsBodyParts enumBodyPart)
+    {
+
+        switch(enumBodyPart)
+        {
+            case EnumsBodyParts.Spine:
+
+                break;
+
+            default: break;
+        }
+
+    }
+
+    //other methods
+    IEnumerator DelayCor(Action action)
     {
         yield return null;
 
         action.Invoke();
     }
-
-    //other methods
     void StopCor(Coroutine cor)
     {
         if (cor != null) StopCoroutine(cor);
     }
-
     void ToggleKinematic(bool toggle)
     {
         foreach (var rb in _rbs) rb.isKinematic = toggle;

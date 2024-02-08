@@ -91,7 +91,7 @@ public class GunController : Subject
                 Vector3 force = (hit.point - ShootingTransform.position).normalized;
                 force.y = 0;
 
-                enemyAnimationController.Push(force, hit.point);
+                enemyAnimationController.Shot(force, hit.point);
             }
         }
 
