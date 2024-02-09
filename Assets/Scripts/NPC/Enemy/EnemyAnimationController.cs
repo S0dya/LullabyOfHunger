@@ -108,6 +108,7 @@ public class EnemyAnimationController : MonoBehaviour
         var nearestBodyPart = BodyParts.OrderBy(bodyPart => Vector3.Distance(bodyPart.BodyPartRb.position, pos)).First();
 
         nearestBodyPart.ShootsAmount--;
+        nearestBodyPart.BodyPartConstraint.constraintActive = true;
 
         if (nearestBodyPart.ShootsAmount == 0)
         {

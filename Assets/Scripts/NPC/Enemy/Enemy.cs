@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class Enemy : Subject
 {
+    [SerializeField] Transform[] testtrs;
+    int curI = 0;
+
     [Header("Settings")]
     public float ArmsDistance = 2.5f;
     public float ArmsDistanceOffset = -1f;
@@ -58,6 +61,8 @@ public class Enemy : Subject
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
 
         _curDestination = transform;
+        //TEST
+        _curDestination = testtrs[curI % 2];
     }
 
     void Start()
@@ -72,6 +77,14 @@ public class Enemy : Subject
 
         _curDistanceToTarget = Vector3.Distance(transform.position, Destination);
         _animator.SetFloat(_animIDMotionSpeed, _agent.velocity.magnitude);
+
+        //test
+        if (Vector3.Distance(transform.position, Destination) < 0.3f)
+        {
+            _curDestination = testtrs[curI%2];
+            curI++;
+        }
+
 
         if (_seesPlayer)
         {

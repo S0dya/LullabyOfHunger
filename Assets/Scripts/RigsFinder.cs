@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Animations;
 
 //#if UNITY_EDITOR
 
@@ -27,15 +28,19 @@ public class RigsFinder : Editor
 
     BodyPart[] GetRigs(Transform EnemyAnimationControllerTransf, BodyPart[] bodyParts)
     {
-        foreach (Transform transf in EnemyAnimationControllerTransf)
+        var allTransforms = GetAllTransforms(new List<Transform>(), EnemyAnimationControllerTransf);
+
+        foreach (Transform transf in allTransforms)
         {
             foreach (var bodyPart in bodyParts)
             {
                 if (transf.gameObject.name.Contains(bodyPart.BodyPartName))
                 {
                     var rb = transf.gameObject.GetComponent<Rigidbody>();
+                    var ac = transf.gameObject.GetComponent<AimConstraint>();
 
                     bodyPart.BodyPartRb = rb;
+                    bodyPart.BodyPartConstraint = ac;
 
                     Debug.Log(transf.gameObject.name);
                 }
@@ -43,6 +48,18 @@ public class RigsFinder : Editor
         }
 
         return bodyParts;
+    }
+
+    List<Transform> GetAllTransforms(List<Transform> cur, Transform parent)
+    {
+        foreach (Transform transf in parent)
+        {
+            cur.Add(transf);
+
+            cur = GetAllTransforms(cur, transf);
+        }
+
+        return cur;
     }
 }
 
