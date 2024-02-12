@@ -8,6 +8,9 @@ public class GunController : Subject
     public int BulletsInMagazine = 7;
     public int MagsAmount = 6;
 
+    public float GunInteractionDistance = 0.17f;
+    public float MagInteractionDistance = 0.12f;
+
     [Header("gun")]
     [SerializeField] Transform ShootingTransform;
 
@@ -114,18 +117,18 @@ public class GunController : Subject
 
     void InteractionGrab()
     {
-        if (GetDistance(GetPos(HandTransform), GetPos(MagsBagTransform)) < 0.12f)
+        if (GetDistance(GetPos(HandTransform), GetPos(MagsBagTransform)) < MagInteractionDistance)
         {
             TakeMagFromBag();
         }
-        else if (GetDistance(GetPos(HandTransform), GetPos(_gunReloadTransform)) < 0.17f)
+        else if (GetDistance(GetPos(HandTransform), GetPos(_gunReloadTransform)) < GunInteractionDistance)
         {
             if (_gunHasMag) TakeMagFromGun();
         }
     }
     void InteractionRelease()
     {
-        if (_isHoldingFullMag && !_gunHasMag && GetDistance(GetPos(HandTransform), GetPos(_gunReloadTransform)) < 0.17f)
+        if (_isHoldingFullMag && !_gunHasMag && GetDistance(GetPos(HandTransform), GetPos(_gunReloadTransform)) < GunInteractionDistance)
         {
             PutMagInGun();
         }
