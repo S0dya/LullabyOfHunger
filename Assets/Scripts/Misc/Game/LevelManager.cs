@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-1)]
 public class LevelManager : SingletonMonobehaviour<LevelManager>
 {
-
-    //local 
+    //local
     Transform playerTransf;
 
     void Start()

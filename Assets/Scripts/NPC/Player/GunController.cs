@@ -11,12 +11,17 @@ public class GunController : Subject
     public float GunInteractionDistance = 0.17f;
     public float MagInteractionDistance = 0.12f;
 
+    public float ShotEffectTime;
+
     [Header("gun")]
     [SerializeField] Transform ShootingTransform;
 
     [SerializeField] GameObject BulletTrackPrefab;
     
     [SerializeField] Animator Animator;
+
+    [Header("Effects")]
+    [SerializeField] GameObject ShotEffect;
 
     [Header("reloading")]
     [SerializeField] Transform HandTransform;
@@ -34,12 +39,13 @@ public class GunController : Subject
     [SerializeField] GameObject FullMagPrefab;
 
     //local
-
     Transform _gunReloadTransform;
     Transform _emptyMagHandTransf;
 
     Transform _itemsParent;
     Transform _effectsParent;
+
+    Light _shotLight;
 
     //gun
     [HideInInspector] public int _curBulletsAmount = 8;
@@ -55,12 +61,17 @@ public class GunController : Subject
     bool _isHoldingFullMag;
     bool _isHoldingEmptyMag;
 
+    //cors 
+    Coroutine _visualiseShotCor;
+
     protected override void Awake()
     {
         base.Awake();
 
         _gunReloadTransform = GunReloadObj.transform;
         _emptyMagHandTransf = EmptyMagHandObj.transform;
+
+        _shotLight = GunHandObj.GetComponentInChildren<Light>();
 
         _itemsParent = GameObject.FindGameObjectWithTag("ItemsParent").transform;
         _effectsParent = GameObject.FindGameObjectWithTag("EffectsParent").transform;
@@ -99,6 +110,9 @@ public class GunController : Subject
         }
 
         Animator.Play(_curBulletsAmount == 0 ? _animIDShootLast : _animIDShoot);
+
+        if (_visualiseShotCor != null) StopCoroutine(_visualiseShotCor);
+        _visualiseShotCor = StartCoroutine(VisualiseShotCor());
     }
 
     //reloading
@@ -189,6 +203,17 @@ public class GunController : Subject
         ToggleGO(_isHoldingEmptyMag ? EmptyMagHandObj : MagHandObj, false);
         _isHoldingEmptyMag = _isHoldingFullMag = false;
     }
+
+    //cors
+    IEnumerator VisualiseShotCor()
+    {
+        Instantiate(ShotEffect, ShootingTransform.position, Quaternion.identity, _effectsParent);
+
+        _shotLight.enabled = true;
+        yield return new WaitForSeconds(ShotEffectTime);
+        _shotLight.enabled = false;
+    }
+
 
     //other methods 
     float GetDistance(Vector2 distance0, Vector2 distance1)

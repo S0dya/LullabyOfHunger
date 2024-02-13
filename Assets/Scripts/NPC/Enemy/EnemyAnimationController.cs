@@ -30,6 +30,9 @@ public class EnemyAnimationController : MonoBehaviour
     //ragdoll
     List<Rigidbody> _rbs;
 
+    //threshold
+    BodyPart _curNearestBodyPart;
+
     //cors
     Coroutine _increaseWeightOfLookingCor;
     Coroutine _decreaseWeightOfLookingCor;
@@ -105,20 +108,20 @@ public class EnemyAnimationController : MonoBehaviour
 
     public void Shot(Vector3 force, Vector3 pos)
     {
-        var nearestBodyPart = BodyParts.OrderBy(bodyPart => Vector3.Distance(bodyPart.BodyPartRb.position, pos)).First();
+        _curNearestBodyPart = BodyParts.OrderBy(bodyPart => Vector3.Distance(bodyPart.BodyPartRb.position, pos)).First();
 
-        nearestBodyPart.ShootsAmount--;
-        nearestBodyPart.BodyPartConstraint.constraintActive = true;
+        _curNearestBodyPart.ShootsAmount--;
+        _curNearestBodyPart.BodyPartConstraint.constraintActive = true;
 
-        if (nearestBodyPart.ShootsAmount == 0)
+        if (_curNearestBodyPart.ShootsAmount == 0)
         {
             Push(force, pos);
 
-            StartCoroutine(DelayCor(_enemy.Die));
+            _enemy.Die();
         }
         else
         {
-            VisualiseDamageOnShot(nearestBodyPart.BodyPartEnum);
+            VisualiseDamageOnShot(_curNearestBodyPart.BodyPartEnum);
         }
     }
 
@@ -141,16 +144,9 @@ public class EnemyAnimationController : MonoBehaviour
 
             default: break;
         }
-
     }
 
     //other methods
-    IEnumerator DelayCor(Action action)
-    {
-        yield return null;
-
-        action.Invoke();
-    }
     void StopCor(Coroutine cor)
     {
         if (cor != null) StopCoroutine(cor);

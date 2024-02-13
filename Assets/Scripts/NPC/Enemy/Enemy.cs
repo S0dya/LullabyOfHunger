@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,8 @@ public class Enemy : Subject
 
     public float TimeBeforeFollowingPlayer = 1;
 
-
+    [Header("other")]
+    [SerializeField] Transform CameraFollowTransf;
 
     //local
     NavMeshAgent _agent;
@@ -85,7 +87,6 @@ public class Enemy : Subject
             curI++;
         }
 
-
         if (_seesPlayer)
         {
             _curDirection = (Destination - transform.position).normalized;
@@ -115,6 +116,18 @@ public class Enemy : Subject
     void StartFollowingPlayer()
     {
         _curDestination = LevelManager.Instance.GetPlayerTransform();
+
+        IsometricCameraManager.Instance.NewPositionForCameraFollow(CameraFollowTransf, this);
+    }
+    IEnumerator DelayCor(Action action)
+    {
+        yield return null;
+
+        action.Invoke();
+    }
+    void ToggleOffEnemy()
+    {
+        _animator.enabled = _agent.enabled = this.enabled = false;
     }
 
     //outside methods
@@ -137,6 +150,8 @@ public class Enemy : Subject
 
     public void Die()
     {
-        _animator.enabled = _agent.enabled = this.enabled = false;
+        IsometricCameraManager.Instance.RemoveEnemyFollow(CameraFollowTransf);
+
+        StartCoroutine(DelayCor(ToggleOffEnemy));
     }
 }

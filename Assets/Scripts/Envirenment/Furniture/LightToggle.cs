@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class LightToggle : MonoBehaviour
 {
-    [SerializeField] Light Light;
-    [Range(0, 1)] [SerializeField] float Chance;
+    [Header("settings")]
+    [SerializeField] bool TurnedOn = true;
+    [Range(0, 1)][SerializeField] float Chance = 0.5f;
 
-    [Header("Random time between toggles")]
+    [Header("random time between toggles")]
     [SerializeField] float MinTime = 0.01f;
     [SerializeField] float MaxTime = 10;
+
+    [Header("other")]
+    [SerializeField] Light Light;
 
     //local
     float _minTimeToTurnOn;
@@ -19,7 +23,7 @@ public class LightToggle : MonoBehaviour
 
     void Start()
     {
-        if (Chance > Random.value)
+        if (TurnedOn && Chance > Random.value)
         {
             _toggleCor = StartCoroutine(ToggleCor());
 
