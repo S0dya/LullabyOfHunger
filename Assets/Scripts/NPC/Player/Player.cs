@@ -10,6 +10,7 @@ public class Player: Subject
     [Header("main settings")]
     public float WalkSpeed = 2;
     public float RunSpeed = 4;
+    public float RotationSpeed = 6;
 
     public float Durability = 4;
     public float AimDelayDuration = 0.5f;
@@ -292,7 +293,7 @@ public class Player: Subject
         _curRotationDirection = GetLerpVal(_curRotationDirection, _targetRotation, 0.05f, _curRotateSmoothness);
 
         _cc.Move((transform.forward.normalized * (_curMovementSpeed) + _gravity) * _deltaTime);
-        transform.rotation = Quaternion.Euler(0.0f, transform.eulerAngles.y + _curRotationDirection * (1 - Mathf.Clamp01(GetAbs(_curMovementSpeed) / RunSpeed)), 0.0f);
+        transform.rotation = Quaternion.Euler(0.0f, transform.eulerAngles.y + _curRotationDirection * (1 - Mathf.Clamp01(GetAbs(_curMovementSpeed) / RotationSpeed)), 0.0f);
     }
     void HandleMouse()
     {

@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1681809840
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1681809841}
+  m_Layer: 0
+  m_Name: HandTargetForInteraction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1681809841
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681809840}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.000128, y: 0.002226, z: 0.000065}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8694620062050071828}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &175036906474647107
 GameObject:
   m_ObjectHideFlags: 0
@@ -2311,6 +2342,7 @@ Transform:
   - {fileID: 5106693096492807119}
   - {fileID: 7088589589227272030}
   - {fileID: 7088589589217760922}
+  - {fileID: 1681809841}
   m_Father: {fileID: 8196479318970824678}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 8.040724, y: 15.495736, z: 3.6374636}
@@ -2447,7 +2479,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: -6123012145142390367, guid: 69223c7a6c7fd94499f069b7f3ebed33, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 2ef78600537b4c34a9e369e9b29dce76, type: 2}
   m_Bones:
   - {fileID: 3837302638644274437}
   - {fileID: 3935232307608386863}
@@ -5753,11 +5785,12 @@ MonoBehaviour:
   ActionsDictionaries: []
   WalkSpeed: 3
   RunSpeed: 5
+  RotationSpeed: 5.5
   Durability: 4
   AimDelayDuration: 0.5
   SensitivityInReloading: 0.025
-  MoveSmoothness: {x: 2, y: 4}
-  RotateSmoothness: {x: 1.5, y: 5}
+  MoveSmoothness: {x: 3, y: 2.5}
+  RotateSmoothness: {x: 7, y: 9}
   LookRotationOffset:
   - 30
   - 30
@@ -5768,7 +5801,7 @@ MonoBehaviour:
   - 0.25
   - -1
   - 1.25
-  ReloadingZOffset: 0.2
+  ReloadingZOffset: 0.22
   ShakeDuration: 0.2
   ShakeRotation: {x: 1, y: 1, z: 1}
   LookingTargetTransform: {fileID: 0}
@@ -5792,8 +5825,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActionsDictionaries: []
   Durability: 4
-  GunRecoilPower: 0.5
-  GunRecoilSpeed: 20
+  GunRecoilPower: 0.7
+  GunRecoilSpeed: 30
   GunRecoilReturnSpeed: 10
   LookingRig: {fileID: 7088589589397670185}
   AimingRig: {fileID: 7088589590061443852}
@@ -5820,13 +5853,16 @@ MonoBehaviour:
   BulletsInMagazine: 7
   MagsAmount: 6
   GunInteractionDistance: 0.2
-  MagInteractionDistance: 0.12
+  MagInteractionDistance: 0.215
   ShotEffectTime: 0.05
   ShootingTransform: {fileID: 7088589589256090655}
   BulletTrackPrefab: {fileID: 1533007024535889412, guid: 3ca6867f233ac2a4b832905e426253b6, type: 3}
   Animator: {fileID: 7088589589217760921}
+  RayCollidingLayer:
+    serializedVersion: 2
+    m_Bits: 5377
   ShotEffect: {fileID: 2599464581111520670, guid: befe5685c82b11d4c967562b941c9f03, type: 3}
-  HandTransform: {fileID: 8694620062050071828}
+  HandTargetTransform: {fileID: 1681809841}
   HandOriginTransform: {fileID: 7088589589090509199}
   GunHandObj: {fileID: 2580878106836059025}
   MagHandObj: {fileID: 1470888400477616644}

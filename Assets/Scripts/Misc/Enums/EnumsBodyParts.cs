@@ -4,9 +4,13 @@ public enum EnumsBodyParts
 
     Spine,
 
+    LeftArm,
     LeftHand,
+    RightArm,
     RightHand,
 
+    LeftUpLeg,
     LeftLeg,
+    RightUpLeg,
     RightLeg,
 }

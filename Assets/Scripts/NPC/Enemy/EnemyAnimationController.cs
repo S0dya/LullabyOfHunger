@@ -22,8 +22,13 @@ public class EnemyAnimationController : MonoBehaviour
     [Header("Editor")]
     public BodyPart[] BodyParts;
 
+    [Header("Effects")]
+    [SerializeField] GameObject BloodShedEffect;
+
     //local
     Enemy _enemy;
+
+    Transform _effectsParent;
 
     //anim
 
@@ -45,6 +50,12 @@ public class EnemyAnimationController : MonoBehaviour
 
         _rbs = new List<Rigidbody>(GetComponentsInChildren<Rigidbody>());
     }
+
+    void Start()
+    {
+        _effectsParent = GameObject.FindGameObjectWithTag("EffectsParent").transform;
+    }
+
     void SetupRigs()
     {
         foreach (var macLooking in MacsLooking) macLooking.data.sourceObjects = GetAssignedWeightArr("PlayerHeadTarget");
@@ -109,20 +120,23 @@ public class EnemyAnimationController : MonoBehaviour
     public void Shot(Vector3 force, Vector3 pos)
     {
         _curNearestBodyPart = BodyParts.OrderBy(bodyPart => Vector3.Distance(bodyPart.BodyPartRb.position, pos)).First();
-
-        _curNearestBodyPart.ShootsAmount--;
-        _curNearestBodyPart.BodyPartConstraint.constraintActive = true;
-
+        
         if (_curNearestBodyPart.ShootsAmount == 0)
         {
             Push(force, pos);
 
             _enemy.Die();
+
+            Invoke("ToggleKinematic", 10f);
+
+            return;
         }
-        else
-        {
-            VisualiseDamageOnShot(_curNearestBodyPart.BodyPartEnum);
-        }
+        else BodyDamageOnShot(_curNearestBodyPart.BodyPartEnum);
+        
+        _curNearestBodyPart.ShootsAmount--;
+        _curNearestBodyPart.BodyPartConstraint.constraintActive = true;
+
+        Instantiate(BloodShedEffect, pos, Quaternion.identity, _effectsParent);
     }
 
     void Push(Vector3 force, Vector3 pos)
@@ -133,7 +147,7 @@ public class EnemyAnimationController : MonoBehaviour
         nearestRb.AddForceAtPosition(force * 100, pos, ForceMode.Impulse);
     }
 
-    void VisualiseDamageOnShot(EnumsBodyParts enumBodyPart)
+    void BodyDamageOnShot(EnumsBodyParts enumBodyPart)
     {
 
         switch(enumBodyPart)
@@ -155,6 +169,7 @@ public class EnemyAnimationController : MonoBehaviour
     {
         foreach (var rb in _rbs) rb.isKinematic = toggle;
     }
+    void ToggleKinematic() => ToggleKinematic(true);
 
     WeightedTransformArray GetAssignedWeightArr(string tag)
     {

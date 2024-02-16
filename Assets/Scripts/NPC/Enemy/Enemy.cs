@@ -18,6 +18,8 @@ public class Enemy : Subject
     [Header("other")]
     [SerializeField] Transform CameraFollowTransf;
 
+    [SerializeField] GameObject EnemyTriggers;
+
     //local
     NavMeshAgent _agent;
     Animator _animator;
@@ -128,6 +130,8 @@ public class Enemy : Subject
     void ToggleOffEnemy()
     {
         _animator.enabled = _agent.enabled = this.enabled = false;
+
+        EnemyTriggers.SetActive(false);
     }
 
     //outside methods

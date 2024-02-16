@@ -39,8 +39,8 @@ public class RigsFinder : Editor
                     var rb = transf.gameObject.GetComponent<Rigidbody>();
                     var ac = transf.gameObject.GetComponent<AimConstraint>();
 
-                    bodyPart.BodyPartRb = rb;
-                    bodyPart.BodyPartConstraint = ac;
+                    if (rb != null) bodyPart.BodyPartRb = rb;
+                    if (ac != null) bodyPart.BodyPartConstraint = ac;
 
                     Debug.Log(transf.gameObject.name);
                 }

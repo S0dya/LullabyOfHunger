@@ -20,11 +20,13 @@ public class GunController : Subject
     
     [SerializeField] Animator Animator;
 
+    [SerializeField] LayerMask RayCollidingLayer;
+
     [Header("Effects")]
     [SerializeField] GameObject ShotEffect;
 
     [Header("reloading")]
-    [SerializeField] Transform HandTransform;
+    [SerializeField] Transform HandTargetTransform;
     [SerializeField] Transform HandOriginTransform;
 
     [SerializeField] GameObject GunHandObj;
@@ -94,19 +96,21 @@ public class GunController : Subject
     {
         _curBulletsAmount--;
 
-        if (Physics.Raycast(ShootingTransform.position, ShootingTransform.forward, out RaycastHit hit))
+        if (Physics.Raycast(ShootingTransform.position, ShootingTransform.forward, out RaycastHit hit, 1000, RayCollidingLayer))
         {
-            Instantiate(BulletTrackPrefab, hit.point, Quaternion.identity, hit.collider.transform);
-
             var enemyAnimationController = hit.collider.GetComponentInParent<EnemyAnimationController>();
 
             if (enemyAnimationController != null)
             {
-                Vector3 force = (hit.point - ShootingTransform.position).normalized;
-                force.y = 0;
+                Vector3 force = (hit.point - ShootingTransform.position).normalized; force.y = 0;
 
                 enemyAnimationController.Shot(force, hit.point);
             }
+            else
+            {
+                Instantiate(BulletTrackPrefab, hit.point, Quaternion.identity, hit.collider.transform);
+            }
+
         }
 
         Animator.Play(_curBulletsAmount == 0 ? _animIDShootLast : _animIDShoot);
@@ -131,18 +135,18 @@ public class GunController : Subject
 
     void InteractionGrab()
     {
-        if (GetDistance(GetPos(HandTransform), GetPos(MagsBagTransform)) < MagInteractionDistance)
+        if (GetDistance(GetPos(HandTargetTransform), GetPos(MagsBagTransform)) < MagInteractionDistance)
         {
             TakeMagFromBag();
         }
-        else if (GetDistance(GetPos(HandTransform), GetPos(_gunReloadTransform)) < GunInteractionDistance)
+        else if (GetDistance(GetPos(HandTargetTransform), GetPos(_gunReloadTransform)) < GunInteractionDistance)
         {
             if (_gunHasMag) TakeMagFromGun();
         }
     }
     void InteractionRelease()
     {
-        if (_isHoldingFullMag && !_gunHasMag && GetDistance(GetPos(HandTransform), GetPos(_gunReloadTransform)) < GunInteractionDistance)
+        if (_isHoldingFullMag && !_gunHasMag && GetDistance(GetPos(HandTargetTransform), GetPos(_gunReloadTransform)) < GunInteractionDistance)
         {
             PutMagInGun();
         }
@@ -162,7 +166,7 @@ public class GunController : Subject
     //reloading methods
     void TakeMagFromBag()
     {
-        if (MagsAmount < 0) return;
+        if (MagsAmount <= 0) return;
 
         MagsAmount--;
         NotifyObserver(EnumsActions.OnTakeMagFromBag);
@@ -216,9 +220,9 @@ public class GunController : Subject
 
 
     //other methods 
-    float GetDistance(Vector2 distance0, Vector2 distance1)
+    float GetDistance(Vector3 distance0, Vector3 distance1)
     {
-        return Vector2.Distance(distance0, distance1);
+        return Vector3.Distance(distance0, distance1);
     }
     
     Vector3 GetPos(Transform transform)

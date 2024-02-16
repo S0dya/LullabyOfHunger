@@ -41,7 +41,7 @@ public class IsometricCameraManager : SingletonMonobehaviour<IsometricCameraMana
     }
 
     void MoveCamera(Transform followTransf) => _vCam.Follow = followTransf;
-    void MoveCamera() => _vCam.Follow = _curCameraPosTransf;
+    void MoveCamera() => MoveCamera(_curCameraPosTransf);
 
 
     //cors
