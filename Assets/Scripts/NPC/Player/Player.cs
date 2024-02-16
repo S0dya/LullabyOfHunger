@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class Player: Subject
 {
@@ -25,6 +26,10 @@ public class Player: Subject
 
     public float ReloadingZOffset;
 
+    [Header("Shake")]
+    public float ShakeDuration = 0.2f;
+    public Vector3 ShakeRotation = Vector3.one;
+
     [Header("targets")]
     public Transform LookingTargetTransform;
     public Transform ReloadingTargetTransform;
@@ -36,7 +41,7 @@ public class Player: Subject
     [SerializeField] Transform FirstPersonCameraTranform;
     [SerializeField] Camera FirstPersonCamera;
 
-    [SerializeField] SkinnedMeshRenderer HeadMesh;
+    [SerializeField] GameObject HeadObj;
 
     //local
     RiggingController _riggingController;
@@ -340,7 +345,8 @@ public class Player: Subject
 
     void Shoot()
     {
-
+        FirstPersonCamera.DOComplete();
+        FirstPersonCamera.DOShakeRotation(ShakeDuration, ShakeRotation);
     }
 
     void Reload()
@@ -372,7 +378,7 @@ public class Player: Subject
     void ToggleRendering(bool toggle)
     {
         FirstPersonCamera.enabled = toggle;
-        HeadMesh.enabled = !toggle;
+        HeadObj.SetActive(!toggle);
     }
 
     void ToggleLooking(bool toggle) => _isAiming = _isLooking = toggle;

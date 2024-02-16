@@ -14,26 +14,34 @@ public class EnemyVision : MonoBehaviour
     //local
     Enemy enemy;
 
+    Transform _playerTransf;
+
     //threshold 
     Vector3 _directionToPlayer;
 
     float _angleToPlayer;
+    float _distanceToPlayer;
 
     void Awake()
     {
-        VisionAngle *= 0.5f;
-
         enemy = GetComponentInParent<Enemy>();
+    }
+
+    void Start()
+    {
+        _playerTransf = LevelManager.Instance.GetPlayerTransform();
     }
 
     void OnTriggerStay(Collider collision)
     {
-        _directionToPlayer = collision.transform.position - HeadTransform.position;
+
+        _directionToPlayer = _playerTransf.position - HeadTransform.position;
         _directionToPlayer.y = 0f;
 
         _angleToPlayer = Vector3.Angle(HeadTransform.forward, _directionToPlayer);
+        _distanceToPlayer = Vector3.Distance(_playerTransf.position, transform.position);
 
-        if (_angleToPlayer <= VisionAngle && !Physics.Raycast(HeadTransform.position, _directionToPlayer, ObstacleLayer))
+        if (_angleToPlayer <= VisionAngle && !Physics.Raycast(HeadTransform.position, _directionToPlayer, _distanceToPlayer, ObstacleLayer))
             enemy.PlayerNoticed();
         else
         {

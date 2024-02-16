@@ -96,7 +96,7 @@ public class GunController : Subject
 
         if (Physics.Raycast(ShootingTransform.position, ShootingTransform.forward, out RaycastHit hit))
         {
-            Instantiate(BulletTrackPrefab, hit.point, hit.transform.rotation, _effectsParent);
+            Instantiate(BulletTrackPrefab, hit.point, Quaternion.identity, hit.collider.transform);
 
             var enemyAnimationController = hit.collider.GetComponentInParent<EnemyAnimationController>();
 
