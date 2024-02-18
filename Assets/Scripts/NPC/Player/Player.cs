@@ -35,6 +35,9 @@ public class Player: Subject
     public Transform LookingTargetTransform;
     public Transform ReloadingTargetTransform;
 
+    [Header("Animation & sound")]
+    public float MinimumSpeedToPlayFootStepSound = 1;
+
     [Header("interaction camera")]
     [SerializeField] Transform ReloadingTrasf;
 
@@ -311,6 +314,12 @@ public class Player: Subject
         {
             ReloadingTargetTransform.localPosition = new Vector3(-_lookDirection.x, _lookDirection.y, ReloadingZOffset);
         }
+    }
+
+    //animation&sound
+    public void PlayFootStep()
+    {
+        if (GetAbs(_curMovementSpeed) > MinimumSpeedToPlayFootStepSound) AudioManager.Instance.PlayOneShot("PlayerFootSteps");
     }
 
     //cors

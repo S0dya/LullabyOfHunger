@@ -19,18 +19,38 @@ public class LightToggle : MonoBehaviour
     float _minTimeToTurnOn;
     float _maxTimeToTurnOn;
 
+    //bool
+    bool _lights;
+
+    //cor
     Coroutine _toggleCor;
 
-    void Start()
+    void Awake()
     {
         if (TurnedOn && Chance > Random.value)
         {
-            _toggleCor = StartCoroutine(ToggleCor());
+            _lights = true;
 
             _minTimeToTurnOn = MinTime / 10;
             _maxTimeToTurnOn = MaxTime / 10;
         }
     }
+
+    void OnEnable()
+    {
+        if (_lights)
+        {
+            _toggleCor = StartCoroutine(ToggleCor());
+        }
+    }
+    void OnDisable()
+    {
+        if (_lights)
+        {
+            if (_toggleCor != null) StopCoroutine(_toggleCor);
+        }
+    }
+
 
     IEnumerator ToggleCor()
     {

@@ -33,7 +33,7 @@ public class Subject : MonoBehaviour
         Observer.Instance.RemoveObserver(this);
     }
 
-    public void PerformAction(EnumsActions actionEnum)
+    public virtual void PerformAction(EnumsActions actionEnum)
     {
         if (_actionDictionary.ContainsKey(actionEnum)) _actionDictionary[actionEnum].Invoke();
     }

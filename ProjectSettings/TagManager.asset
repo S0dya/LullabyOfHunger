@@ -19,7 +19,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - PlayerDistanceTrigger
   - Obstacle
   - 
   - Enemy
@@ -28,6 +28,7 @@ TagManager:
   - 
   - CameraPositionChanger
   - 
+  - DistanceToggle
   - 
   - 
   - 
@@ -36,8 +37,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - PostProcessing
   - 
   - 
   - 

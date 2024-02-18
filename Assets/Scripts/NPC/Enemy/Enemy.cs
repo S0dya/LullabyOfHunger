@@ -20,6 +20,9 @@ public class Enemy : Subject
 
     [SerializeField] GameObject EnemyTriggers;
 
+    [Header("Animation & sound")]
+    public float MinimumSpeedToPlayFootStepSound = 1;
+
     //local
     NavMeshAgent _agent;
     Animator _animator;
@@ -99,6 +102,12 @@ public class Enemy : Subject
             _enemyAnimationController.IncreaseHandsWeight(_clampedDistance);
             _agent.speed = _maxSpeed - Mathf.Clamp(_clampedDistance, 0, 1);
         }
+    }
+
+    //animation&sound
+    public void PlayFootStep()
+    {
+        if (_agent.velocity.magnitude > MinimumSpeedToPlayFootStepSound) AudioManager.Instance.PlayOneShot("EnemyLongFootSteps", transform.position);
     }
 
     //triggers
