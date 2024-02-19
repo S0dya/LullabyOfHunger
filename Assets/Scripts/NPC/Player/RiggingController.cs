@@ -77,6 +77,9 @@ public class RiggingController : Subject
         AddAction(EnumsActions.OnSwitchToFirstPerson, ToFirstPersonView);
         AddAction(EnumsActions.OnSwitchToIsometric, ToIsometricView);
         AddAction(EnumsActions.OnSwitchToInteraction, ToInteractionView);
+
+        AddAction(EnumsActions.OnAim, StartAiming);
+
         AddAction(EnumsActions.OnReload, StartReloading);
         AddAction(EnumsActions.OnStopReloading, StopReloading);
 

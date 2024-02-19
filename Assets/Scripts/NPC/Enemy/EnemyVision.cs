@@ -34,7 +34,6 @@ public class EnemyVision : MonoBehaviour
 
     void OnTriggerStay(Collider collision)
     {
-
         _directionToPlayer = _playerTransf.position - HeadTransform.position;
         _directionToPlayer.y = 0f;
 

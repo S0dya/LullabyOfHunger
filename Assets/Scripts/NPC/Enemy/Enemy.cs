@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using FMODUnity;
 
 public class Enemy : Subject
 {
     [SerializeField] Transform[] testtrs;
     int curI = 0;
 
-    [Header("Settings")]
+    [Header("settings")]
     public float ArmsDistance = 2.5f;
     public float ArmsDistanceOffset = -1f;
 
@@ -20,12 +21,16 @@ public class Enemy : Subject
 
     [SerializeField] GameObject EnemyTriggers;
 
-    [Header("Animation & sound")]
+    [Header("animation & sound")]
     public float MinimumSpeedToPlayFootStepSound = 1;
+
+    [Header("sound")]
+    [SerializeField] String ScreamEventName;
 
     //local
     NavMeshAgent _agent;
     Animator _animator;
+    StudioEventEmitter _seePhrase;
 
     EnemyAnimationController _enemyAnimationController;
 
@@ -47,6 +52,7 @@ public class Enemy : Subject
 
     //bools
     bool _seesPlayer;
+    bool _isFollowingPlayer;
 
     //threshold
     float _curDistanceToTarget;
@@ -62,6 +68,7 @@ public class Enemy : Subject
 
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+        _seePhrase = GetComponent<StudioEventEmitter>();
 
         _enemyAnimationController = GetComponentInChildren<EnemyAnimationController>();
 
@@ -69,7 +76,7 @@ public class Enemy : Subject
 
         _curDestination = transform;
         //TEST
-        _curDestination = testtrs[curI % 2];
+        //_curDestination = testtrs[curI % 2];
     }
 
     void Start()
@@ -86,11 +93,13 @@ public class Enemy : Subject
         _animator.SetFloat(_animIDMotionSpeed, _agent.velocity.magnitude);
 
         //test
+        /*
         if (Vector3.Distance(transform.position, Destination) < 0.3f)
         {
             _curDestination = testtrs[curI%2];
             curI++;
         }
+        */
 
         if (_seesPlayer)
         {
@@ -138,9 +147,14 @@ public class Enemy : Subject
     }
     void ToggleOffEnemy()
     {
-        _animator.enabled = _agent.enabled = this.enabled = false;
+        _animator.enabled = _agent.enabled = _seePhrase.enabled = this.enabled = false;
 
         EnemyTriggers.SetActive(false);
+    }
+
+    void StartPhrase()
+    {
+        if (_seePhrase.enabled) _seePhrase.Play();
     }
 
     //outside methods
@@ -149,7 +163,13 @@ public class Enemy : Subject
         if (_seesPlayer) return;
 
         _enemyAnimationController.LookAtPlayer();
-        Invoke("StartFollowingPlayer", TimeBeforeFollowingPlayer);
+        if (!_isFollowingPlayer)
+        {
+            _isFollowingPlayer = true;
+            Invoke("StartFollowingPlayer", TimeBeforeFollowingPlayer);
+            AudioManager.Instance.PlayOneShot("PlayerNoticed");
+            StartPhrase();
+        }
 
         ToggleSeeingPlayer(true);
     }
@@ -159,6 +179,15 @@ public class Enemy : Subject
 
         _enemyAnimationController.StopLookAtPlayer();
         ToggleSeeingPlayer(false);
+    }
+
+    public void Scream()
+    {
+        if (_seePhrase.IsPlaying()) _seePhrase.Stop();
+
+        Invoke("StartPhrase", 0.3f);
+
+        AudioManager.Instance.PlayOneShot(ScreamEventName, transform.position);
     }
 
     public void Die()

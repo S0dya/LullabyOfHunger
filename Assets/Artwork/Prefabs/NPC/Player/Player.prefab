@@ -227,7 +227,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 243881161743503962}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -240,7 +240,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4904237183007382727, guid: 69223c7a6c7fd94499f069b7f3ebed33, type: 3}
+  - {fileID: 2100000, guid: 3732067efae3b73429e02c72ec733edb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2114,7 +2114,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4904237183007382727, guid: 69223c7a6c7fd94499f069b7f3ebed33, type: 3}
+  - {fileID: 2100000, guid: 3732067efae3b73429e02c72ec733edb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2548,7 +2548,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4904237183007382727, guid: 69223c7a6c7fd94499f069b7f3ebed33, type: 3}
+  - {fileID: 2100000, guid: 3732067efae3b73429e02c72ec733edb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5953,9 +5953,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionsDictionaries: []
-  WalkSpeed: 3
-  RunSpeed: 5
-  RotationSpeed: 5.5
+  WalkSpeed: 2.5
+  RunSpeed: 4
+  RotationSpeed: 5
   Durability: 4
   AimDelayDuration: 0.5
   SensitivityInReloading: 0.025
@@ -5972,8 +5972,8 @@ MonoBehaviour:
   - -1
   - 1.25
   ReloadingZOffset: 0.22
-  ShakeDuration: 0.2
-  ShakeRotation: {x: 1, y: 1, z: 1}
+  ShakeDuration: 0.3
+  ShakeRotation: {x: 2, y: 2, z: 2}
   LookingTargetTransform: {fileID: 0}
   ReloadingTargetTransform: {fileID: 7088589589611031448}
   MinimumSpeedToPlayFootStepSound: 0.5
@@ -5996,7 +5996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActionsDictionaries: []
   Durability: 4
-  GunRecoilPower: 0.7
+  GunRecoilPower: 0.95
   GunRecoilSpeed: 30
   GunRecoilReturnSpeed: 10
   LookingRig: {fileID: 7088589589397670185}

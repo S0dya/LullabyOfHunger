@@ -9,31 +9,39 @@ using System.Linq;
 
 public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 {
+    [SerializeField] Camera LoadingCamera;
     [SerializeField] GameObject LoadingScreen;
     [SerializeField] Image LoadingBarFill;
 
-    protected override void Awake()
+    //outside methods
+    void Start()
     {
-        base.Awake();
-
-        //StartCoroutine(LoadMenu());
+        //LoadMenu();
+        LoadingCamera.enabled = false;
     }
 
-    //outside methods
+    public void LoadMenu()
+    {
+        StartCoroutine(LoadMenuCor());
+    }
     public void OpenMenu(int sceneToClose)
     {
         SceneManager.UnloadSceneAsync(sceneToClose);
-        StartCoroutine(LoadMenu());
+        LoadMenu();
     }
     public void OpenMenu() => OpenMenu(Settings.curSceneId);
 
     public void OpenScene(int sceneToOpen)
     {
-        StartCoroutine(LoadGame(sceneToOpen));
+        StartCoroutine(LoadSceneCor(sceneToOpen, 1));
+    }
+    public void OpenScene(int sceneToOpen, int sceneToClose)
+    {
+        StartCoroutine(LoadSceneCor(sceneToOpen, sceneToClose));
     }
 
     //main cors
-    IEnumerator LoadMenu()
+    IEnumerator LoadMenuCor()
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
 
@@ -49,9 +57,9 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         ToggleLoadingScreen(false);
     }
 
-    IEnumerator LoadGame(int sceneToOpen)
+    IEnumerator LoadSceneCor(int sceneToOpen, int sceneToClose)
     {
-        SceneManager.UnloadSceneAsync(1);
+        SceneManager.UnloadSceneAsync(sceneToClose);
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToOpen, LoadSceneMode.Additive);
 
         ToggleLoadingScreen(true);
@@ -67,6 +75,10 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
     }
 
     //other methods
-    void ToggleLoadingScreen(bool toggle) => LoadingScreen.SetActive(toggle);
+    void ToggleLoadingScreen(bool toggle)
+    {
+        LoadingCamera.enabled = toggle;
+        LoadingScreen.SetActive(toggle);
+    }
     void SetFillAmount(float progress) => LoadingBarFill.fillAmount = Mathf.Clamp01(progress / 0.9f);
 }

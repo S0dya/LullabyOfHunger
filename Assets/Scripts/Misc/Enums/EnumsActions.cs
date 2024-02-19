@@ -4,6 +4,7 @@ public enum EnumsActions
     OnSwitchToIsometric,
     OnSwitchToInteraction,
 
+    OnAim,
     OnFire,
     OnReload,
     OnStopReloading,

@@ -177,6 +177,8 @@ public class GunController : Subject
     
     void TakeMagFromGun()
     {
+        AudioManager.Instance.PlayOneShot("TakeMagFromGun");
+
         if (_curBulletsAmount > 1) _curBulletsAmount = 1;
 
         _isHoldingEmptyMag = true;
@@ -186,6 +188,8 @@ public class GunController : Subject
     }
     void PutMagInGun()
     {
+        AudioManager.Instance.PlayOneShot("PutMagInGun");
+
         if (_curBulletsAmount == 0)
         {
             NotifyObserver(EnumsActions.OnRecieverReloaded);

@@ -48,7 +48,6 @@ public class Player: Subject
     [SerializeField] GameObject HeadObj;
 
     //local
-    RiggingController _riggingController;
     GunController _gunController;
     InteractionCameraController _interactionCameraController;
     CharacterController _cc;
@@ -107,7 +106,6 @@ public class Player: Subject
     {
         base.Awake();
 
-        _riggingController = GetComponent<RiggingController>();
         _gunController = GetComponent<GunController>();
         _cc = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
@@ -117,6 +115,7 @@ public class Player: Subject
         HandleMouseDeltaInput = OnLook;
 
         AddAction(EnumsActions.OnFire, Shoot);
+        AddAction(EnumsActions.OnAim, StartAiming);
 
         AddAction(EnumsActions.OnReload, Reload);
         AddAction(EnumsActions.OnStopReloading, StopReloading);
@@ -259,12 +258,11 @@ public class Player: Subject
         if (_isAiming)
         {
             if (_gunController._curBulletsAmount > 0) NotifyObserver(EnumsActions.OnFire);
+            else AudioManager.Instance.PlayOneShot("ShootNoBullets");
         }
         else
         {
-            _riggingController.StartAiming();
-
-            _isAiming = true;
+            NotifyObserver(EnumsActions.OnAim);
         }
     }
 
@@ -358,6 +356,7 @@ public class Player: Subject
         FirstPersonCamera.DOComplete();
         FirstPersonCamera.DOShakeRotation(ShakeDuration, ShakeRotation);
     }
+    void StartAiming() => _isAiming = true;
 
     void Reload()
     {

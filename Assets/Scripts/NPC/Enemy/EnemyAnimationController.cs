@@ -120,7 +120,7 @@ public class EnemyAnimationController : MonoBehaviour
     public void Shot(Vector3 force, Vector3 pos)
     {
         _curNearestBodyPart = BodyParts.OrderBy(bodyPart => Vector3.Distance(bodyPart.BodyPartRb.position, pos)).First();
-        
+
         if (_curNearestBodyPart.ShootsAmount == 0)
         {
             Push(force, pos);
@@ -131,8 +131,14 @@ public class EnemyAnimationController : MonoBehaviour
 
             return;
         }
-        else BodyDamageOnShot(_curNearestBodyPart.BodyPartEnum);
+        else
+        {
+            _enemy.Scream();
         
+            BodyDamageOnShot(_curNearestBodyPart.BodyPartEnum);
+        }
+
+
         _curNearestBodyPart.ShootsAmount--;
         _curNearestBodyPart.BodyPartConstraint.constraintActive = true;
 

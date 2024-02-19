@@ -92,12 +92,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8518030489769069457}
+  - component: {fileID: 2195863263409743558}
   - component: {fileID: -9090659057040762675}
   - component: {fileID: 8518030489769069470}
   - component: {fileID: 8518030489769069471}
   - component: {fileID: 5403253868922564114}
   - component: {fileID: 1970493804804294730}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: MagFullInGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,6 +128,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 270, y: 0, z: 0}
+--- !u!114 &2195863263409743558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8518030489769069468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c26b38768e5cb8d4088a876788967131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-9090659057040762675
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 997945604586567579}
   - component: {fileID: 8424376294213650348}
   - component: {fileID: 562281664764359371}
+  - component: {fileID: 3336686998975943182}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -171,6 +172,37 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &3336686998975943182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850361401194158564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1406293524
+      Data2: 1088906652
+      Data3: -2109663050
+      Data4: 124115591
+    Path: event:/SFX/Envirenment/CeilingLamp
+  Event: 
+  PlayEvent: 11
+  StopEvent: 12
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &5062233250112685210
 GameObject:
   m_ObjectHideFlags: 0
