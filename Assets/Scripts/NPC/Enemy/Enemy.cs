@@ -75,14 +75,14 @@ public class Enemy : Subject
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
 
         _curDestination = transform;
+
         //TEST
-        //_curDestination = testtrs[curI % 2];
+        if (testtrs[0] != null) _curDestination = testtrs[curI%2];
     }
 
     void Start()
     {
         _maxSpeed = _agent.speed;
-
     }
 
     void Update()
@@ -93,13 +93,15 @@ public class Enemy : Subject
         _animator.SetFloat(_animIDMotionSpeed, _agent.velocity.magnitude);
 
         //test
-        /*
-        if (Vector3.Distance(transform.position, Destination) < 0.3f)
+        if (testtrs[0] != null)
         {
-            _curDestination = testtrs[curI%2];
-            curI++;
+            if (Vector3.Distance(transform.position, Destination) < 0.3f)
+            {
+                _curDestination = testtrs[curI%2];
+                curI++;
+            }
         }
-        */
+        
 
         if (_seesPlayer)
         {
@@ -147,14 +149,15 @@ public class Enemy : Subject
     }
     void ToggleOffEnemy()
     {
-        _animator.enabled = _agent.enabled = _seePhrase.enabled = this.enabled = false;
+        _animator.enabled = _agent.enabled = this.enabled = false;
 
+        Destroy(_seePhrase);
         EnemyTriggers.SetActive(false);
     }
 
     void StartPhrase()
     {
-        if (_seePhrase.enabled) _seePhrase.Play();
+        if (_seePhrase != null) _seePhrase.Play();
     }
 
     //outside methods

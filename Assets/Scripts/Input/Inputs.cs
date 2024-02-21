@@ -101,6 +101,15 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Value"",
+                    ""id"": ""def77380-53a3-44b4-a643-12980ae3c52f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -180,6 +189,17 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""849d9582-e307-4b58-bfe8-947cde6bb4f3"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -243,6 +263,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         m_IsometricInput_Move = m_IsometricInput.FindAction("Move", throwIfNotFound: true);
         m_IsometricInput_Rotation = m_IsometricInput.FindAction("Rotation", throwIfNotFound: true);
         m_IsometricInput_Run = m_IsometricInput.FindAction("Run", throwIfNotFound: true);
+        m_IsometricInput_Interact = m_IsometricInput.FindAction("Interact", throwIfNotFound: true);
         // FirstPersonInput
         m_FirstPersonInput = asset.FindActionMap("FirstPersonInput", throwIfNotFound: true);
         m_FirstPersonInput_Fire = m_FirstPersonInput.FindAction("Fire", throwIfNotFound: true);
@@ -365,6 +386,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_IsometricInput_Move;
     private readonly InputAction m_IsometricInput_Rotation;
     private readonly InputAction m_IsometricInput_Run;
+    private readonly InputAction m_IsometricInput_Interact;
     public struct IsometricInputActions
     {
         private @Inputs m_Wrapper;
@@ -372,6 +394,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_IsometricInput_Move;
         public InputAction @Rotation => m_Wrapper.m_IsometricInput_Rotation;
         public InputAction @Run => m_Wrapper.m_IsometricInput_Run;
+        public InputAction @Interact => m_Wrapper.m_IsometricInput_Interact;
         public InputActionMap Get() { return m_Wrapper.m_IsometricInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -390,6 +413,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IIsometricInputActions instance)
@@ -403,6 +429,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IIsometricInputActions instance)
@@ -484,6 +513,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnRotation(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IFirstPersonInputActions
     {

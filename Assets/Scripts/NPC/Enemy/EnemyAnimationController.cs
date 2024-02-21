@@ -119,6 +119,10 @@ public class EnemyAnimationController : MonoBehaviour
 
     public void Shot(Vector3 force, Vector3 pos)
     {
+        Instantiate(BloodShedEffect, pos, Quaternion.identity, _effectsParent);
+
+        if (!this.enabled) return;
+
         _curNearestBodyPart = BodyParts.OrderBy(bodyPart => Vector3.Distance(bodyPart.BodyPartRb.position, pos)).First();
 
         if (_curNearestBodyPart.ShootsAmount == 0)
@@ -126,6 +130,7 @@ public class EnemyAnimationController : MonoBehaviour
             Push(force, pos);
 
             _enemy.Die();
+            TurnOffConstraints();
 
             Invoke("ToggleKinematic", 10f);
 
@@ -138,11 +143,8 @@ public class EnemyAnimationController : MonoBehaviour
             BodyDamageOnShot(_curNearestBodyPart.BodyPartEnum);
         }
 
-
         _curNearestBodyPart.ShootsAmount--;
         _curNearestBodyPart.BodyPartConstraint.constraintActive = true;
-
-        Instantiate(BloodShedEffect, pos, Quaternion.identity, _effectsParent);
     }
 
     void Push(Vector3 force, Vector3 pos)
@@ -180,5 +182,15 @@ public class EnemyAnimationController : MonoBehaviour
     WeightedTransformArray GetAssignedWeightArr(string tag)
     {
         return new WeightedTransformArray { new WeightedTransform(GameObject.FindGameObjectWithTag(tag).transform, 1f) };
+    }
+
+    void TurnOffConstraints()
+    {
+        foreach (var bodyPart in BodyParts)
+        {
+            if (bodyPart.BodyPartConstraint != null) bodyPart.BodyPartConstraint.constraintActive = false;
+
+        }
+
     }
 }

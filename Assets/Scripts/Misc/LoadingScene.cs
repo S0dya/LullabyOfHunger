@@ -33,7 +33,9 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 
     public void OpenScene(int sceneToOpen)
     {
-        StartCoroutine(LoadSceneCor(sceneToOpen, 1));
+        OpenScene(sceneToOpen, Settings.curSceneId);
+
+        Settings.curSceneId = sceneToOpen;
     }
     public void OpenScene(int sceneToOpen, int sceneToClose)
     {

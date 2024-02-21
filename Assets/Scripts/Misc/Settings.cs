@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class Settings
 {
-    public static int curSceneId;
+    public static int curSceneId = 1;
 
     public static float[] musicStats;
 }

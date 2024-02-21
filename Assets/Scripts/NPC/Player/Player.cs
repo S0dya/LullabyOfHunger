@@ -18,8 +18,8 @@ public class Player: Subject
     public float SensitivityInReloading = 0.5f;
 
     [Header("smoothness of animation, 0 - performed, 1 - canceled")]
-    public Vector2 MoveSmoothness;
-    public Vector2 RotateSmoothness;
+    public float[] MoveSmoothness = new float[2] { 3, 2.5f };
+    public float[] RotateSmoothness = new float[2] { 7, 8 }; 
 
     [Header("FOV")]
     public float[] LookRotationOffset = new float[4];
@@ -27,7 +27,7 @@ public class Player: Subject
 
     public float ReloadingZOffset;
 
-    [Header("Shake")]
+    [Header("shake")]
     public float ShakeDuration = 0.2f;
     public Vector3 ShakeRotation = Vector3.one;
 
@@ -35,13 +35,13 @@ public class Player: Subject
     public Transform LookingTargetTransform;
     public Transform ReloadingTargetTransform;
 
-    [Header("Animation & sound")]
+    [Header("animation & sound")]
     public float MinimumSpeedToPlayFootStepSound = 1;
 
     [Header("interaction camera")]
     [SerializeField] Transform ReloadingTrasf;
 
-    [Header("Other")]
+    [Header("other")]
     [SerializeField] Transform FirstPersonCameraTranform;
     [SerializeField] Camera FirstPersonCamera;
 
@@ -125,7 +125,6 @@ public class Player: Subject
         AddAction(EnumsActions.OnSwitchToInteraction, ToInteractionView);
 
         AddAction(EnumsActions.OnStoppedAiming, StoppedAiming);
-
     }
     protected override void OnEnable()
     {
@@ -149,6 +148,8 @@ public class Player: Subject
 
         _input.IsometricInput.Run.performed += ctx => OnRun(RunSpeed);
         _input.IsometricInput.Run.canceled += ctx => OnRun(WalkSpeed);
+
+        _input.IsometricInput.Interact.performed += ctx => OnInteracte();
 
         _input.FirstPersonInput.Look.performed += ctx => HandleMouseDeltaInput.Invoke(ctx.ReadValue<Vector2>());
 
@@ -210,6 +211,11 @@ public class Player: Subject
         _movementSpeed = speed;
 
         ChangeTargetSpeed();
+    }
+
+    void OnInteracte()
+    {
+        InteractionManager.Instance.Interact();
     }
 
     void OnRightMousePerformed()
