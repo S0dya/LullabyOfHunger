@@ -34,7 +34,7 @@ TagManager:
   - Mag
   - 
   - Interactable
-  - 
+  - InteractionItem
   - 
   - 
   - PostProcessing

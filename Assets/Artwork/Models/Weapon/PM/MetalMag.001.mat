@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PMMag
+  m_Name: MetalMag.001
   m_Shader: {fileID: 4800000, guid: 9181994163c66fe4589a653f9b74a0e6, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -49,7 +49,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d0ed3e64b4ef118448335be6116e730c, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0db42b56d4de0e64292f31169fbeb527, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:

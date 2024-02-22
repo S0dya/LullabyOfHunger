@@ -149,15 +149,9 @@ public class Enemy : Subject
     }
     void ToggleOffEnemy()
     {
-        _animator.enabled = _agent.enabled = this.enabled = false;
+        _animator.enabled = _agent.enabled = _seePhrase.enabled = this.enabled = false;
 
-        Destroy(_seePhrase);
         EnemyTriggers.SetActive(false);
-    }
-
-    void StartPhrase()
-    {
-        if (_seePhrase != null) _seePhrase.Play();
     }
 
     //outside methods
@@ -171,7 +165,7 @@ public class Enemy : Subject
             _isFollowingPlayer = true;
             Invoke("StartFollowingPlayer", TimeBeforeFollowingPlayer);
             AudioManager.Instance.PlayOneShot("PlayerNoticed");
-            StartPhrase();
+            _seePhrase.Play();
         }
 
         ToggleSeeingPlayer(true);
@@ -186,9 +180,11 @@ public class Enemy : Subject
 
     public void Scream()
     {
+        /*
         if (_seePhrase.IsPlaying()) _seePhrase.Stop();
 
         Invoke("StartPhrase", 0.3f);
+        */
 
         AudioManager.Instance.PlayOneShot(ScreamEventName, transform.position);
     }

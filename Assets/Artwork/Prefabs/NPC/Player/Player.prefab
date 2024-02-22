@@ -920,7 +920,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5948483955265213452, guid: 69223c7a6c7fd94499f069b7f3ebed33, type: 3}
+  - {fileID: 2100000, guid: 354c51435e8f8b844bd7bccf5449225e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1153,7 +1153,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5948483955265213452, guid: 69223c7a6c7fd94499f069b7f3ebed33, type: 3}
+  - {fileID: 2100000, guid: 354c51435e8f8b844bd7bccf5449225e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1675,7 +1675,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5948483955265213452, guid: 69223c7a6c7fd94499f069b7f3ebed33, type: 3}
+  - {fileID: 2100000, guid: 354c51435e8f8b844bd7bccf5449225e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1971,7 +1971,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5948483955265213452, guid: 69223c7a6c7fd94499f069b7f3ebed33, type: 3}
+  - {fileID: 2100000, guid: 354c51435e8f8b844bd7bccf5449225e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2283,7 +2283,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5948483955265213452, guid: 69223c7a6c7fd94499f069b7f3ebed33, type: 3}
+  - {fileID: 2100000, guid: 354c51435e8f8b844bd7bccf5449225e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3541,7 +3541,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 36265463
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -5959,8 +5959,12 @@ MonoBehaviour:
   Durability: 4
   AimDelayDuration: 0.5
   SensitivityInReloading: 0.025
-  MoveSmoothness: {x: 3, y: 2.5}
-  RotateSmoothness: {x: 7, y: 8}
+  MoveSmoothness:
+  - 3
+  - 2.5
+  RotateSmoothness:
+  - 7
+  - 8
   LookRotationOffset:
   - 30
   - 30
@@ -6031,7 +6035,7 @@ MonoBehaviour:
   Animator: {fileID: 7088589589217760921}
   RayCollidingLayer:
     serializedVersion: 2
-    m_Bits: 5377
+    m_Bits: 5376
   ShotEffect: {fileID: 2599464581111520670, guid: befe5685c82b11d4c967562b941c9f03, type: 3}
   HandTargetTransform: {fileID: 1681809841}
   HandOriginTransform: {fileID: 7088589589090509199}
@@ -6290,7 +6294,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5948483955265213452, guid: 69223c7a6c7fd94499f069b7f3ebed33, type: 3}
+  - {fileID: 2100000, guid: 354c51435e8f8b844bd7bccf5449225e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
