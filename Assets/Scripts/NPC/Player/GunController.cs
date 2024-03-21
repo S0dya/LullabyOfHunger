@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunController : Subject
+public class GunController : SingletonSubject<GunController>
 {
     [Header("settings")]
     public int BulletsInMagazine = 7;

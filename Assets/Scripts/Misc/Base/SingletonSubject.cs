@@ -4,14 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Subject : MonoBehaviour
+public class SingletonSubject<T> : MonoBehaviour where T : MonoBehaviour
 {
+    static T instance;
+    public static T Instance { get { return instance; } }
+
     [SerializeField] ActionsDictionary[] ActionsDictionaries;
 
     //local
     Dictionary<EnumsActions, Action> _actionDictionary = new Dictionary<EnumsActions, Action>();
 
-    public void AddAction(EnumsActions enumAction, Action action) => _actionDictionary.Add(enumAction, action);
+    public void CreateInstance()
+    {
+        if (instance == null) instance = this as T;
+        else Debug.Log(gameObject.transform + " duplicated");
+    }
 
     protected virtual void Awake()
     {
@@ -26,13 +33,15 @@ public class Subject : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        Observer.Instance.AddObserver(this);
+        Observer.OnNotifyObservers += PerformAction;
     }
     protected virtual void OnDisable()
     {
-        Observer.Instance.RemoveObserver(this);
+        Observer.OnNotifyObservers -= PerformAction;
     }
 
+    public void AddAction(EnumsActions enumAction, Action action) => _actionDictionary.Add(enumAction, action);
+    
     public virtual void PerformAction(EnumsActions actionEnum)
     {
         if (_actionDictionary.ContainsKey(actionEnum)) _actionDictionary[actionEnum].Invoke();

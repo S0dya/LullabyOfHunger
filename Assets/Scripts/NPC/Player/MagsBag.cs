@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagsBag : Subject
+public class MagsBag : SingletonSubject<MagsBag>
 {
     [SerializeField] SkinnedMeshRenderer[] MagsObjs = new SkinnedMeshRenderer[6];
 

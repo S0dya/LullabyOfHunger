@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using FMODUnity;
 
-public class Enemy : Subject
+public class Enemy : SingletonSubject<Enemy>
 {
     [SerializeField] Transform[] testtrs;
     int curI = 0;

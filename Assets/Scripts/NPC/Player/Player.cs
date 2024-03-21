@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 
-public class Player: Subject
+public class Player: SingletonSubject<Player>
 {
     [Header("main settings")]
     public float WalkSpeed = 2;
@@ -52,11 +52,6 @@ public class Player: Subject
     InteractionCameraController _interactionCameraController;
     CharacterController _cc;
     Animator _animator;
-    
-    Inputs _input;
-    InputActionMap _firstPersonInput;
-    InputActionMap _isometricInput;
-
     //general 
     //float _curDurability = 2;
 
@@ -88,7 +83,7 @@ public class Player: Subject
     [HideInInspector] public Vector2 _lookDirection;
 
     //actions
-    Action<Vector2> HandleMouseDeltaInput;
+    [HideInInspector] public Action<Vector2> HandleMouseDeltaInput;
 
     //other
     float _deltaTime;
@@ -104,7 +99,7 @@ public class Player: Subject
     //serialization
     protected override void Awake()
     {
-        base.Awake();
+        base.Awake(); CreateInstance();
 
         _gunController = GetComponent<GunController>();
         _cc = GetComponent<CharacterController>();
@@ -126,72 +121,18 @@ public class Player: Subject
 
         AddAction(EnumsActions.OnStoppedAiming, StoppedAiming);
     }
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-
-        _input = new Inputs();
-
-        _isometricInput = _input.IsometricInput;
-        _firstPersonInput = _input.FirstPersonInput;
-
-        _input.Input.LookAt.performed += ctx => OnRightMousePerformed();
-        _input.Input.LookAt.canceled += ctx => OnRightMouseCanceled();
-
-        _input.Input.Reload.performed += ctx => OnReload();
-
-        _input.IsometricInput.Move.performed += ctx => OnMove(ctx.ReadValue<float>(), MoveSmoothness[0]);
-        _input.IsometricInput.Move.canceled += ctx => OnMove(0, MoveSmoothness[1]);
-
-        _input.IsometricInput.Rotation.performed += ctx => OnRotate(ctx.ReadValue<float>(), RotateSmoothness[0]);
-        _input.IsometricInput.Rotation.canceled += ctx => OnRotate(0, RotateSmoothness[1]);
-
-        _input.IsometricInput.Run.performed += ctx => OnRun(RunSpeed);
-        _input.IsometricInput.Run.canceled += ctx => OnRun(WalkSpeed);
-
-        _input.IsometricInput.Interact.performed += ctx => OnInteracte();
-
-        _input.FirstPersonInput.Look.performed += ctx => HandleMouseDeltaInput.Invoke(ctx.ReadValue<Vector2>());
-
-        _input.FirstPersonInput.Fire.performed += ctx => OnFire();
-
-        _input.Enable();
-    }
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-
-        _input.Input.LookAt.performed -= ctx => OnRightMousePerformed();
-        _input.Input.LookAt.canceled -= ctx => OnRightMouseCanceled();
-
-        _input.Input.Reload.performed -=ctx => OnReload();
-
-        _input.IsometricInput.Move.performed -=ctx => OnMove(ctx.ReadValue<float>(), MoveSmoothness[0]);
-        _input.IsometricInput.Move.canceled -=ctx => OnMove(0, MoveSmoothness[1]);
-
-        _input.IsometricInput.Rotation.performed -=ctx => OnRotate(ctx.ReadValue<float>(), RotateSmoothness[0]);
-        _input.IsometricInput.Rotation.canceled -=ctx => OnRotate(0, RotateSmoothness[1]);
-
-        _input.IsometricInput.Run.performed -=ctx => OnRun(RunSpeed);
-        _input.IsometricInput.Run.canceled -=ctx => OnRun(WalkSpeed);
-
-        _input.FirstPersonInput.Look.performed -=ctx => HandleMouseDeltaInput.Invoke(ctx.ReadValue<Vector2>());
-
-        _input.FirstPersonInput.Fire.performed -=ctx => OnFire();
-
-        _input.Disable();
-    }
 
     void Start()
     {
         _movementSpeed = WalkSpeed;
-        _firstPersonInput.Disable();
 
         StartCoroutine(DelayAimCor());
     }
 
     //input
-    void OnMove(float direction, float smoothSpeed)
+    public void OnMove(float direction) => Move(direction, MoveSmoothness[0]);
+    public void OnMoveStop(float direction) => Move(direction, MoveSmoothness[1]);
+    void Move(float direction, float smoothSpeed)
     {
         _curMovementDirection = direction;
         ChangeTargetSpeed();
@@ -199,26 +140,30 @@ public class Player: Subject
         _curMoveSmoothness = smoothSpeed;
     }
 
-    void OnRotate(float direction, float smoothSpeed)
+    public void OnRotate(float direction) => Rotate(direction, RotateSmoothness[0]);
+    public void OnRotateStop(float direction) => Rotate(direction, RotateSmoothness[1]);
+    void Rotate(float direction, float smoothSpeed)
     {
         _targetRotation = direction;
 
         _curRotateSmoothness = smoothSpeed;
     }
 
-    void OnRun(float speed)
+    public void OnRun() => Run(RunSpeed);
+    public void OnRunStop() => Run(WalkSpeed);
+    public void Run(float speed)
     {
         _movementSpeed = speed;
 
         ChangeTargetSpeed();
     }
 
-    void OnInteracte()
+    public void OnInteracte()
     {
         InteractionManager.Instance.Interact();
     }
 
-    void OnRightMousePerformed()
+    public void OnRightMousePerformed()
     {
         if (_isReloading)
         {
@@ -234,7 +179,7 @@ public class Player: Subject
             }
         }
     }
-    void OnRightMouseCanceled()
+    public void OnRightMouseCanceled()
     {
         if (_isReloading)
         {
@@ -246,18 +191,18 @@ public class Player: Subject
         }
     }
 
-    void OnLook(Vector2 direction)
+    public void OnLook(Vector2 direction)
     {
         _lookDirection = new Vector2(Mathf.Clamp(_lookDirection.x + direction.x, -LookRotationOffset[0], LookRotationOffset[1]), 
             Mathf.Clamp(_lookDirection.y + direction.y, -LookRotationOffset[2], LookRotationOffset[3]));
     }
-    void OnReloadLook(Vector2 direction)
+    public void OnReloadLook(Vector2 direction)
     {
         _lookDirection = new Vector2(Mathf.Clamp(_lookDirection.x + direction.x * SensitivityInReloading, -ReloadingOffset[0], ReloadingOffset[1]),
             Mathf.Clamp(_lookDirection.y + direction.y * SensitivityInReloading, -ReloadingOffset[2], ReloadingOffset[3]));
     }
 
-    void OnFire()
+    public void OnFire()
     {
         if (_isReloading) return;
         
@@ -272,7 +217,7 @@ public class Player: Subject
         }
     }
 
-    void OnReload()
+    public void OnReload()
     {
         if (!_isReloading && _canReload) NotifyObserver(EnumsActions.OnReload);
         else if (_isReloading) NotifyObserver(EnumsActions.OnStopReloading);
@@ -337,14 +282,12 @@ public class Player: Subject
     //actions
     void ToFirstPersonView()
     {
-        ToggleInput(_firstPersonInput, _isometricInput);
         ToggleRendering(true);
 
         _isLooking = true;
     }
     void ToIsometricView()
     {
-        ToggleInput(_isometricInput, _firstPersonInput);
         ToggleRendering(false);
 
         StartCoroutine(DelayAimCor());
@@ -352,7 +295,6 @@ public class Player: Subject
     }
     void ToInteractionView()
     {
-        ToggleInput(_firstPersonInput, _isometricInput);
         ToggleRendering(false);
         ToggleLooking(false);
     }
@@ -397,12 +339,6 @@ public class Player: Subject
     }
 
     void ToggleLooking(bool toggle) => _isAiming = _isLooking = toggle;
-
-    void ToggleInput(InputActionMap toEnabled, InputActionMap toDisabled)
-    {
-        toEnabled.Enable();
-        toDisabled.Disable();
-    }
 
     float GetLerpVal(float curValue, float targetValue, float threshold, float smoothTime)
     {

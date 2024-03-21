@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManagerSubject : Subject
+public class AudioManagerSubject : SingletonSubject<AudioManagerSubject>
 {
     AudioManager _audioManager;
 

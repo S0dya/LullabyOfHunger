@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Animations;
 
-public class RiggingController : Subject
+public class RiggingController : SingletonSubject<RiggingController>
 {
     [Header("Settings")]
     public float Durability = 4;
@@ -60,6 +60,9 @@ public class RiggingController : Subject
     Coroutine _returnLookDirectionCor;
     Coroutine _smoothAimingHandCor;
     Coroutine _recoilVisualizsationCor;
+
+    Coroutine _lerpRecoilUpCor;
+    Coroutine _lerpRecoilDownCor;
 
     Coroutine _increaseWeightOfHandCor;
     Coroutine _dereaseWeightOfHandCor;
@@ -207,8 +210,11 @@ public class RiggingController : Subject
 
     IEnumerator RecoilVisualizsationCor()
     {
-        yield return StartCoroutine(SmoothlyLerpLocalPosCor(RecoilTargetTransform, (Vector2)GetLocalPos(RecoilTargetTransform) + Vector2.up * GunRecoilPower + GetRandomVector2(0.05f), 0.3f, GunRecoilSpeed));
-        yield return StartCoroutine(SmoothlyLerpLocalPosCor(RecoilTargetTransform, Vector2.zero, 0.1f, GunRecoilReturnSpeed));
+        StopCor(_lerpRecoilUpCor);
+        yield return _lerpRecoilUpCor =  StartCoroutine(SmoothlyLerpLocalPosCor(RecoilTargetTransform, (Vector2)GetLocalPos(RecoilTargetTransform) + Vector2.up * GunRecoilPower + GetRandomVector2(0.05f), 0.3f, GunRecoilSpeed));
+
+        StopCor(_lerpRecoilDownCor);
+        yield return _lerpRecoilDownCor = StartCoroutine(SmoothlyLerpLocalPosCor(RecoilTargetTransform, Vector2.zero, 0.025f, GunRecoilReturnSpeed));
     }
 
     IEnumerator IncreaseWeightOfHandCor()

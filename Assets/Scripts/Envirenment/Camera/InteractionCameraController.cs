@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractionCameraController : Subject
+public class InteractionCameraController : SingletonSubject<InteractionCameraController>
 {
 
     //local

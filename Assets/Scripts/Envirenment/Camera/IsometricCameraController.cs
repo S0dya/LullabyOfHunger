@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IsometricCameraController : Subject
+public class IsometricCameraController : SingletonSubject<IsometricCameraController>
 {
     //local
     Camera IsometricCamera;

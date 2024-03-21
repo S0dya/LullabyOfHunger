@@ -71,8 +71,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
-    - _CustomDepthOffset: 0
-    - _Cutoff: 0.5
+    - _CustomDepthOffset: -1
+    - _Cutoff: 0.9
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _FlatShading: 0

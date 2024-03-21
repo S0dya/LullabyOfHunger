@@ -346,7 +346,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: ceda3bc6c9def8c4fbd79f706c269afe, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 19ed9869efd96e740b5c57ab8f29c41b, type: 2}
 --- !u!1 &279242965
 GameObject:
   m_ObjectHideFlags: 0
@@ -4647,6 +4647,18 @@ PrefabInstance:
       propertyPath: m_Sources.Array.data[0].sourceTransform
       value: 
       objectReference: {fileID: 694200298}
+    - target: {fileID: 7088589588633428421, guid: a01a56b3e33bcd7408b513f8cffb19d6, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: d99a94631e01c6a42bc471f8308446f9, type: 2}
+    - target: {fileID: 7088589588633428422, guid: a01a56b3e33bcd7408b513f8cffb19d6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 26483e78e71cb0e47a78d50ee5cee98d, type: 2}
+    - target: {fileID: 7088589588633428472, guid: a01a56b3e33bcd7408b513f8cffb19d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7088589589007774133, guid: a01a56b3e33bcd7408b513f8cffb19d6, type: 3}
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 
