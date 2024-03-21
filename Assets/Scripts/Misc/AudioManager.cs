@@ -4,7 +4,7 @@ using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 
-public class AudioManager : SingletonMonobehaviour<AudioManager>
+public class AudioManager : SingletonSubject<AudioManager>
 {
     [Header("Sounds")]
     [SerializeField] KeyValueSound[] KvSounds;
@@ -14,6 +14,13 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     Dictionary<EnumsActions, EventInstance> _enumInstancesDict = new Dictionary<EnumsActions, EventInstance>();
 
     //initialization
+    protected override void Awake()
+    {
+        base.Awake();
+
+        CreateInstance();
+    }
+
     void Start()
     {
         foreach (var kvSound in KvSounds) _eventInstancesDict.Add(kvSound.Name, CreateInstance(kvSound.Sound));
@@ -38,7 +45,12 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     {
         if (_enumInstancesDict.ContainsKey(enumAction)) _enumInstancesDict[enumAction].start();
     }
-    
+
+    public override void PerformAction(EnumsActions actionEnum)
+    {
+        PlayOneShot(actionEnum);
+    }
+
     //settings
     public void SetVolume(int index, float volume)
     {
