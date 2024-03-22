@@ -291,6 +291,8 @@ public class RiggingController : SingletonSubject<RiggingController>
     //other cors
     IEnumerator SmoothlyLerpLocalPosCor(Transform transf, Vector2 endPos, float offsetDistance, float addSpeed)
     {
+        Debug.Log(endPos);
+
         float curDistance = GetDistance(GetLocalPos(transf), endPos);
 
         while (curDistance > offsetDistance)

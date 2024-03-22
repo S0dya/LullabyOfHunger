@@ -14,7 +14,8 @@ public class CameraPositionChanger : MonoBehaviour
         if (!_isSetToThisPos)
         {
             _isSetToThisPos = true;
-            IsometricCameraManager.Instance.NewPositionForCameraFollow(CameraPosTransf);
+
+            IsometricCameraController.Instance.NewPositionForCameraFollow(CameraPosTransf);
         }
     }
 

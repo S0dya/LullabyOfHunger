@@ -16,9 +16,7 @@ public class AudioManager : SingletonSubject<AudioManager>
     //initialization
     protected override void Awake()
     {
-        base.Awake();
-
-        CreateInstance();
+        base.Awake(); CreateInstance();
     }
 
     void Start()

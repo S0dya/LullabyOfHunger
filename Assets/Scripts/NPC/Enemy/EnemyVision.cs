@@ -29,7 +29,7 @@ public class EnemyVision : MonoBehaviour
 
     void Start()
     {
-        _playerTransf = LevelManager.Instance.GetPlayerTransform();
+        _playerTransf = Player.Instance.transform;
     }
 
     void OnTriggerStay(Collider collision)

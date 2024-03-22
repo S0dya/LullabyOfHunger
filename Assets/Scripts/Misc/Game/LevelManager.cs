@@ -15,7 +15,7 @@ public class LevelManager : SingletonMonobehaviour<LevelManager>
 
 
     //outside methods
-    public Transform GetPlayerTransform()
+    public Transform GetPlayerTransforsm()
     {
         return playerTransf;
     }

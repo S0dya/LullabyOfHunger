@@ -137,9 +137,9 @@ public class Enemy : SingletonSubject<Enemy>
 
     void StartFollowingPlayer()
     {
-        _curDestination = LevelManager.Instance.GetPlayerTransform();
+        _curDestination = Player.Instance.transform;
 
-        IsometricCameraManager.Instance.NewPositionForCameraFollow(CameraFollowTransf, this);
+        IsometricCameraController.Instance.NewPositionForCameraFollow(CameraFollowTransf, this);
     }
     IEnumerator DelayCor(Action action)
     {
@@ -191,7 +191,7 @@ public class Enemy : SingletonSubject<Enemy>
 
     public void Die()
     {
-        IsometricCameraManager.Instance.RemoveEnemyFollow(CameraFollowTransf);
+        IsometricCameraController.Instance.RemoveEnemyFollow(CameraFollowTransf);
 
         StartCoroutine(DelayCor(ToggleOffEnemy));
     }
