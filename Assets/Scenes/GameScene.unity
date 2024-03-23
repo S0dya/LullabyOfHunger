@@ -1848,6 +1848,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionsDictionaries: []
+  IsometricCamera: {fileID: 0}
+  TimeBetweenFindingNearestEnemy: 1
 --- !u!114 &963194231
 MonoBehaviour:
   m_ObjectHideFlags: 0
