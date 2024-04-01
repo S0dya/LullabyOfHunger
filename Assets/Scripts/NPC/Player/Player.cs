@@ -83,7 +83,7 @@ public class Player: SingletonSubject<Player>
     [HideInInspector] public Vector2 _lookDirection;
 
     //actions
-    [HideInInspector] public Action<Vector2> HandleMouseDeltaInput;
+    Action<Vector2> _handleMouseDeltaInput;
 
     //other
     float _deltaTime;
@@ -107,7 +107,7 @@ public class Player: SingletonSubject<Player>
         _interactionCameraController = GameObject.FindGameObjectWithTag("InteractionCameraController").GetComponent<InteractionCameraController>();
 
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
-        HandleMouseDeltaInput = OnLook;
+        _handleMouseDeltaInput = OnLook;
 
         AddAction(EnumsActions.OnFire, Shoot);
         AddAction(EnumsActions.OnAim, StartAiming);
@@ -158,39 +158,43 @@ public class Player: SingletonSubject<Player>
         ChangeTargetSpeed();
     }
 
-    public void OnInteracte()
+    public void IsometricInteracte()
     {
         InteractionManager.Instance.Interact();
     }
 
-    public void OnRightMousePerformed()
+    public void IsometricReload()
     {
-        if (_isReloading)
-        {
-            NotifyObserver(EnumsActions.OnInteractionGrab);
-        }
-        else
-        {
-            if (_canLook)
-            {
-                NotifyObserver(EnumsActions.OnSwitchToFirstPerson);
-
-                _canLook = false; _canReload = false;
-            }
-        }
+        if (_canReload) NotifyObserver(EnumsActions.OnReload);
     }
-    public void OnRightMouseCanceled()
+
+    public void IsometricLook()
     {
-        if (_isReloading)
+        if (_canLook)
         {
-            NotifyObserver(EnumsActions.OnInteractionRelease);
-        }
-        else
-        {
-            NotifyObserver(EnumsActions.OnSwitchToIsometric);
+            NotifyObserver(EnumsActions.OnSwitchToFirstPerson);
+
+            _canLook = _canReload = false;
         }
     }
 
+    public void ReloadGrab()
+    {
+        NotifyObserver(EnumsActions.OnInteractionGrab);
+    }
+    public void ReloadRelease()
+    {
+        NotifyObserver(EnumsActions.OnInteractionRelease);
+    }
+    public void ReloadStopReloading()
+    {
+        NotifyObserver(EnumsActions.OnStopReloading);
+    }
+
+    public void OnMouseDelta(Vector2 direction)
+    {
+        _handleMouseDeltaInput.Invoke(direction);
+    }
     public void OnLook(Vector2 direction)
     {
         _lookDirection = new Vector2(Mathf.Clamp(_lookDirection.x + direction.x, -LookRotationOffset[0], LookRotationOffset[1]), 
@@ -204,8 +208,6 @@ public class Player: SingletonSubject<Player>
 
     public void OnFire()
     {
-        if (_isReloading) return;
-        
         if (_isAiming)
         {
             if (_gunController._curBulletsAmount > 0) NotifyObserver(EnumsActions.OnFire);
@@ -216,11 +218,9 @@ public class Player: SingletonSubject<Player>
             NotifyObserver(EnumsActions.OnAim);
         }
     }
-
-    public void OnReload()
+    public void FirstPersonStopLooking()
     {
-        if (!_isReloading && _canReload) NotifyObserver(EnumsActions.OnReload);
-        else if (_isReloading) NotifyObserver(EnumsActions.OnStopReloading);
+        NotifyObserver(EnumsActions.OnSwitchToIsometric);
     }
 
     //update
@@ -312,16 +312,18 @@ public class Player: SingletonSubject<Player>
 
         _isReloading = true;
 
-        HandleMouseDeltaInput = OnReloadLook;
+        _handleMouseDeltaInput = OnReloadLook;
         _curOffsetMouseInput = ReloadingOffset;
         _interactionCameraController.SetCameraTransform(ReloadingTrasf);
-        NotifyObserver(EnumsActions.OnSwitchToInteraction);
+
+        //CHANGE LATER
+        ToInteractionView();
     }
     void StopReloading()
     {
         _isReloading = false;
 
-        HandleMouseDeltaInput = OnLook;
+        _handleMouseDeltaInput = OnLook;
         _curOffsetMouseInput = LookRotationOffset;
         NotifyObserver(EnumsActions.OnSwitchToIsometric);
     }

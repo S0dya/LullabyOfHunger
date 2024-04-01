@@ -201,7 +201,7 @@ public class GunController : SingletonSubject<GunController>
         ToggleGO(MagHandObj, false);
         for (int i = 0; i < 2; i++) ToggleGO(InGunMagObjs[i], true);
 
-        NotifyObserver(EnumsActions.OnStopReloading);
+        //NotifyObserver(EnumsActions.OnStopReloading);
     }
 
     void DropMag()

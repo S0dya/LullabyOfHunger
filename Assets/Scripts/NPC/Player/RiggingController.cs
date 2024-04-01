@@ -79,7 +79,7 @@ public class RiggingController : SingletonSubject<RiggingController>
 
         AddAction(EnumsActions.OnSwitchToFirstPerson, ToFirstPersonView);
         AddAction(EnumsActions.OnSwitchToIsometric, ToIsometricView);
-        AddAction(EnumsActions.OnSwitchToInteraction, ToInteractionView);
+        AddAction(EnumsActions.OnSwitchToInteraction, ToInteractionView); 
 
         AddAction(EnumsActions.OnAim, StartAiming);
 
@@ -98,7 +98,7 @@ public class RiggingController : SingletonSubject<RiggingController>
 
     }
 
-    //actions
+    //actions Change later
     void ToFirstPersonView()
     {
         StartLooking();
@@ -121,22 +121,6 @@ public class RiggingController : SingletonSubject<RiggingController>
         _increaseWeightOfHandCor = StartCoroutine(IncreaseWeightOfHandCor());
     }
 
-    public void StartLooking()
-    {
-        StopCor(_returnLookDirectionCor);
-
-        LookingRig.weight = 1.0f;
-    }
-    public void StopLooking()
-    {
-        StopCor(_returnLookDirectionCor);
-        _returnLookDirectionCor = StartCoroutine(SmoothReturnLookDirectionCor());
-        StopCor(_smoothAimingHandCor);
-
-        StopCor(_increaseWeightOfHandCor);
-        _dereaseWeightOfHandCor = StartCoroutine(DecreaseWeightOfHandCor());
-    }
-
     void VisualiseRecoil()
     {
         StopCor(_recoilVisualizsationCor);
@@ -151,6 +135,8 @@ public class RiggingController : SingletonSubject<RiggingController>
 
         AimingRig.weight = 0;
         FingersRig.weight = ReloadingRig.weight = 1;
+
+        StartLooking();
     }
     void StopReloading()
     {
@@ -168,6 +154,23 @@ public class RiggingController : SingletonSubject<RiggingController>
     void InteractionRelease()
     {
         if (_isReloading) FingersRig.weight = 1;
+    }
+
+    //other outside methods
+    public void StartLooking()
+    {
+        StopCor(_returnLookDirectionCor);
+
+        LookingRig.weight = 1.0f;
+    }
+    public void StopLooking()
+    {
+        StopCor(_returnLookDirectionCor);
+        _returnLookDirectionCor = StartCoroutine(SmoothReturnLookDirectionCor());
+        StopCor(_smoothAimingHandCor);
+
+        StopCor(_increaseWeightOfHandCor);
+        _dereaseWeightOfHandCor = StartCoroutine(DecreaseWeightOfHandCor());
     }
 
     //cors

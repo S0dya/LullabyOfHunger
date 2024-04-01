@@ -2,54 +2,6 @@
     "name": "Inputs",
     "maps": [
         {
-            "name": "Input",
-            "id": "72462321-4107-4cad-bd7d-269c9150a246",
-            "actions": [
-                {
-                    "name": "LookAt",
-                    "type": "Value",
-                    "id": "5242b132-15e1-4311-9e62-dd4b6696ad33",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Reload",
-                    "type": "Value",
-                    "id": "aadd64c2-d96e-457c-b178-86274265aa08",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "9af4595c-8d28-49ca-827c-c7a23b9f47cd",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LookAt",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1cdfeff0-abe0-43d7-851c-e694617c4ea9",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Reload",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
             "name": "IsometricInput",
             "id": "df222970-edfb-4d4a-9460-3fdfe358647b",
             "actions": [
@@ -58,6 +10,24 @@
                     "type": "Value",
                     "id": "10e255ad-a3b5-4ae3-a2df-a835c2cd4c49",
                     "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Reload",
+                    "type": "Value",
+                    "id": "ca92c419-affd-4e2b-bf37-57f897926394",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LookAt",
+                    "type": "Value",
+                    "id": "0b9a48f9-6033-49eb-af85-df9f0cd83f7c",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -125,6 +95,50 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "",
+                    "id": "5786308b-28a7-4613-9694-bd7515845d12",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "849d9582-e307-4b58-bfe8-947cde6bb4f3",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6632486d-84c5-4f8a-8079-1cd64062e93f",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookAt",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7aa93f37-d816-4e1d-864c-1bb4a0beb5e9",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "1D Axis",
                     "id": "c41e6af9-f785-4987-884f-eb81dc849900",
                     "path": "1DAxis",
@@ -156,28 +170,6 @@
                     "action": "Rotation",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "5786308b-28a7-4613-9694-bd7515845d12",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "849d9582-e307-4b58-bfe8-947cde6bb4f3",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
@@ -189,6 +181,15 @@
                     "name": "Fire",
                     "type": "Value",
                     "id": "5e317b3d-9f2b-458b-8961-eef5013e1959",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LookAt",
+                    "type": "Value",
+                    "id": "f4b0b72a-e2bf-4526-b896-11873e026c3d",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -224,6 +225,96 @@
                     "processors": "ScaleVector2(x=0.05,y=0.05)",
                     "groups": "",
                     "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a3ab5786-f1c8-4de6-91b6-3d1c425a40db",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookAt",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "ReloadInput",
+            "id": "a45aa758-cfc1-47e8-a0a3-9ec0646860e9",
+            "actions": [
+                {
+                    "name": "Grab",
+                    "type": "Value",
+                    "id": "dd408396-1c28-4243-92de-082eda9f77a7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "MoveHand",
+                    "type": "Value",
+                    "id": "f0848c3b-4962-4664-b70e-d5eca9b880d7",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ExitReload",
+                    "type": "Value",
+                    "id": "985b53ab-8f1f-418f-871b-84f4514c935c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "58d19db6-6c59-469c-b080-0b185bcffe28",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd29cdb6-0a31-43fb-8164-9ff850d8a832",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitReload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e7f68df6-6585-4165-8971-2bf7cbedbaa2",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitReload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bbc545fe-1526-4868-b466-f881b334837d",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "ScaleVector2(x=0.05,y=0.05)",
+                    "groups": "",
+                    "action": "MoveHand",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -15,6 +15,8 @@ public class InteractionCameraController : SingletonSubject<InteractionCameraCon
         _interactionCam = GetComponent<Camera>();
 
         AddAction(EnumsActions.OnSwitchToInteraction, StartRendering);
+        AddAction(EnumsActions.OnReload, StartRendering);
+
         AddAction(EnumsActions.OnSwitchToFirstPerson, StopRendering);
         AddAction(EnumsActions.OnSwitchToIsometric, StopRendering);
     }

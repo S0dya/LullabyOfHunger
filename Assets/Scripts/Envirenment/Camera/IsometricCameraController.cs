@@ -37,9 +37,11 @@ public class IsometricCameraController : SingletonSubject<IsometricCameraControl
         _vCam = GetComponent<CinemachineVirtualCamera>();
 
         AddAction(EnumsActions.OnSwitchToIsometric, StartRendering);
-        AddAction(EnumsActions.OnSwitchToFirstPerson, StopRendering);
-        AddAction(EnumsActions.OnSwitchToInteraction, StopRendering);
 
+        AddAction(EnumsActions.OnSwitchToFirstPerson, StopRendering);
+
+        AddAction(EnumsActions.OnSwitchToInteraction, StopRendering);
+        AddAction(EnumsActions.OnReload, StopRendering);
     }
 
     void Start()
