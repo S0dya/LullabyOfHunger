@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -17,35 +18,36 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
     void Start()
     {
         //LoadMenu();
-        LoadingCamera.enabled = false;
+
+        FindCurSceneID();//remove later
     }
 
     public void LoadMenu()
     {
         StartCoroutine(LoadMenuCor());
     }
-    public void OpenMenu(int sceneToClose)
+    public void OpenMenu() => OpenMenu(Settings.curScene);
+    public void OpenMenu(SceneNameEnum sceneToClose)
     {
-        SceneManager.UnloadSceneAsync(sceneToClose);
+        SceneManager.UnloadSceneAsync(GetSceneIndexByName(sceneToClose));
         LoadMenu();
     }
-    public void OpenMenu() => OpenMenu(Settings.curSceneId);
 
-    public void OpenScene(int sceneToOpen)
+    public void OpenScene(SceneNameEnum sceneToOpen)
     {
-        OpenScene(sceneToOpen, Settings.curSceneId);
+        OpenScene(sceneToOpen, Settings.curScene);
 
-        Settings.curSceneId = sceneToOpen;
+        Settings.curScene = sceneToOpen;
     }
-    public void OpenScene(int sceneToOpen, int sceneToClose)
+    public void OpenScene(SceneNameEnum sceneToOpen, SceneNameEnum sceneToClose)
     {
-        StartCoroutine(LoadSceneCor(sceneToOpen, sceneToClose));
+        StartCoroutine(LoadSceneCor(GetSceneIndexByName(sceneToOpen), GetSceneIndexByName(sceneToClose)));
     }
 
     //main cors
     IEnumerator LoadMenuCor()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(GetSceneIndexByName(SceneNameEnum.Menu), LoadSceneMode.Additive);
 
         ToggleLoadingScreen(true);
 
@@ -83,4 +85,41 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         LoadingScreen.SetActive(toggle);
     }
     void SetFillAmount(float progress) => LoadingBarFill.fillAmount = Mathf.Clamp01(progress / 0.9f);
+
+    void FindCurSceneID()
+    {
+        for (int i = 1; i < SceneManager.sceneCount; i++)
+        {
+            var sceneName = SceneManager.GetSceneAt(i).name;
+
+            if (Enum.TryParse(sceneName, out SceneNameEnum sceneEnum))
+            {
+                Settings.curScene = sceneEnum; break;
+            }
+            else Debug.Log("Scene not found");
+        }
+    }
+
+    int GetSceneIndexByName(SceneNameEnum sceneName)
+    {
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            var scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+            var sceneNameInBuild = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+
+            if (sceneNameInBuild == sceneName.ToString()) return i;
+        }
+
+        Debug.Log("Scene not found");
+        return -1;
+    }
+}
+
+public enum SceneNameEnum
+{
+    None,
+
+    Menu,
+    Hallway, 
+
 }

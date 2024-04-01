@@ -123,7 +123,8 @@ public class RiggingController : SingletonSubject<RiggingController>
 
     void VisualiseRecoil()
     {
-        StopCor(_recoilVisualizsationCor);
+        StopCor(_recoilVisualizsationCor); StopCor(_lerpRecoilUpCor); StopCor(_lerpRecoilDownCor);
+
         _recoilVisualizsationCor = StartCoroutine(RecoilVisualizsationCor());
     }
 
@@ -218,6 +219,7 @@ public class RiggingController : SingletonSubject<RiggingController>
 
         StopCor(_lerpRecoilDownCor);
         yield return _lerpRecoilDownCor = StartCoroutine(SmoothlyLerpLocalPosCor(RecoilTargetTransform, Vector2.zero, 0.025f, GunRecoilReturnSpeed));
+        //  Debug.Log(endPos);
     }
 
     IEnumerator IncreaseWeightOfHandCor()
@@ -294,8 +296,6 @@ public class RiggingController : SingletonSubject<RiggingController>
     //other cors
     IEnumerator SmoothlyLerpLocalPosCor(Transform transf, Vector2 endPos, float offsetDistance, float addSpeed)
     {
-        Debug.Log(endPos);
-
         float curDistance = GetDistance(GetLocalPos(transf), endPos);
 
         while (curDistance > offsetDistance)

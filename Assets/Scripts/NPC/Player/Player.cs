@@ -49,9 +49,12 @@ public class Player: SingletonSubject<Player>
 
     //local
     GunController _gunController;
-    InteractionCameraController _interactionCameraController;
     CharacterController _cc;
     Animator _animator;
+    InteractionController _interactionController;
+
+    InteractionCameraController _interactionCameraController;
+
     //general 
     //float _curDurability = 2;
 
@@ -104,6 +107,8 @@ public class Player: SingletonSubject<Player>
         _gunController = GetComponent<GunController>();
         _cc = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
+        _interactionController = GetComponent<InteractionController>();
+        
         _interactionCameraController = GameObject.FindGameObjectWithTag("InteractionCameraController").GetComponent<InteractionCameraController>();
 
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
@@ -160,7 +165,7 @@ public class Player: SingletonSubject<Player>
 
     public void IsometricInteracte()
     {
-        InteractionManager.Instance.Interact();
+        _interactionController.Interact();
     }
 
     public void IsometricReload()

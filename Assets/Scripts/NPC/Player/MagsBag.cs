@@ -6,6 +6,7 @@ public class MagsBag : SingletonSubject<MagsBag>
 {
     [SerializeField] SkinnedMeshRenderer[] MagsObjs = new SkinnedMeshRenderer[6];
 
+    //local
     int _lastMagIndex = 5;
 
     protected override void Awake()
