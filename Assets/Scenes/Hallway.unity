@@ -7554,7 +7554,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.005
+  m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &547347918
 MonoBehaviour:
@@ -12099,7 +12099,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.005
+  m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &850441931
 MonoBehaviour:
@@ -12166,7 +12166,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.005
+  m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &856240251
 MonoBehaviour:
@@ -12721,7 +12721,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.005
+  m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &884042511
 MonoBehaviour:
@@ -17822,7 +17822,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.005
+  m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1220523862
 MonoBehaviour:
@@ -19096,10 +19096,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1887593907760235862, guid: 0c1c887d8ef91624a9e8763cb7cddaea, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1887593907760235862, guid: 0c1c887d8ef91624a9e8763cb7cddaea, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13.83
       objectReference: {fileID: 0}
@@ -19143,21 +19139,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScenePref
       objectReference: {fileID: 0}
-    - target: {fileID: 1887593909036414943, guid: 0c1c887d8ef91624a9e8763cb7cddaea, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1887593909036414943, guid: 0c1c887d8ef91624a9e8763cb7cddaea, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1887593909785968622, guid: 0c1c887d8ef91624a9e8763cb7cddaea, type: 3}
-      propertyPath: m_NavMeshData
-      value: 
-      objectReference: {fileID: 23800000, guid: 10af70e270ea76a459e56c2978ffe5b1, type: 2}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 1887593909333242983, guid: 0c1c887d8ef91624a9e8763cb7cddaea, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c1c887d8ef91624a9e8763cb7cddaea, type: 3}
@@ -24416,7 +24399,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.005
+  m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1687323009
 MonoBehaviour:
@@ -25711,7 +25694,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.005
+  m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1742130359
 MonoBehaviour:

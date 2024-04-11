@@ -29,6 +29,7 @@ public class InteractionController : SingletonSubject<InteractionController>
         switch (_curNearestInteraction)
         {
             case InteractionDoor interactionDoor: interactionDoor.Interact(); break;
+            case InteractionItem interactionItem: interactionItem.Interact(); break;
             default: break;
         }
     }

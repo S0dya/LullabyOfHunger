@@ -139,7 +139,7 @@ public class Enemy : SingletonSubject<Enemy>
     {
         _curDestination = Player.Instance.transform;
 
-        IsometricCameraController.Instance.NewPositionForCameraFollow(CameraFollowTransf, this);
+        IsometricCamera.Instance.NewPositionForCameraFollow(CameraFollowTransf, this);
     }
     IEnumerator DelayCor(Action action)
     {
@@ -191,7 +191,7 @@ public class Enemy : SingletonSubject<Enemy>
 
     public void Die()
     {
-        IsometricCameraController.Instance.RemoveEnemyFollow(CameraFollowTransf);
+        IsometricCamera.Instance.RemoveEnemyFollow(CameraFollowTransf);
 
         StartCoroutine(DelayCor(ToggleOffEnemy));
     }

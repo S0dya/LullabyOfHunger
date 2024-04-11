@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using DG.Tweening;
 
 public class Player: SingletonSubject<Player>
 {
@@ -38,24 +36,15 @@ public class Player: SingletonSubject<Player>
     [Header("animation & sound")]
     public float MinimumSpeedToPlayFootStepSound = 1;
 
-    [Header("interaction camera")]
-    [SerializeField] Transform ReloadingTrasf;
-
-    [Header("other")]
-    [SerializeField] Transform FirstPersonCameraTranform;
-    [SerializeField] Camera FirstPersonCamera;
-
-    [SerializeField] GameObject HeadObj;
-
     //local
     GunController _gunController;
     CharacterController _cc;
     Animator _animator;
     InteractionController _interactionController;
-
-    InteractionCameraController _interactionCameraController;
+    Transform _fPCamTranf;
 
     //general 
+
     //float _curDurability = 2;
 
     //animator
@@ -108,8 +97,7 @@ public class Player: SingletonSubject<Player>
         _cc = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _interactionController = GetComponent<InteractionController>();
-        
-        _interactionCameraController = GameObject.FindGameObjectWithTag("InteractionCameraController").GetComponent<InteractionCameraController>();
+        _fPCamTranf = FirstPersonCamera.Instance.gameObject.transform;
 
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         _handleMouseDeltaInput = OnLook;
@@ -256,13 +244,13 @@ public class Player: SingletonSubject<Player>
     {
         if (_isLooking)
         {
-            FirstPersonCameraTranform.localRotation = Quaternion.Euler(-_lookDirection.y, _lookDirection.x, 0.0f);
+            _fPCamTranf.localRotation = Quaternion.Euler(-_lookDirection.y, _lookDirection.x, 0.0f);
 
             //if (Physics.Raycast(FirstPersonCamera.ScreenPointToRay(_lookDirection + _cameraAimingOffset), out RaycastHit hit)) LookingTargetTransform.position = hit.point;
-            LookingTargetTransform.position = FirstPersonCameraTranform.position + FirstPersonCameraTranform.forward * 2f;
+            LookingTargetTransform.position = _fPCamTranf.position + _fPCamTranf.forward * 2f;
 
-            //AimingHandTargetTransform.position = (GetPos(FirstPersonCameraTranform) + (GetPos(LookingTargetTransform) - GetPos(FirstPersonCameraTranform)).normalized * 2);
-            //AimingHandTargetTransform.rotation = Quaternion.LookRotation(AimingHandTargetTransform.position - FirstPersonCameraTranform.position);
+            //AimingHandTargetTransform.position = (GetPos(_fPCamTranf) + (GetPos(LookingTargetTransform) - GetPos(_fPCamTranf)).normalized * 2);
+            //AimingHandTargetTransform.rotation = Quaternion.LookRotation(AimingHandTargetTransform.position - _fPCamTranf.position);
         }
         else if (_isReloading)
         {
@@ -287,27 +275,21 @@ public class Player: SingletonSubject<Player>
     //actions
     void ToFirstPersonView()
     {
-        ToggleRendering(true);
-
         _isLooking = true;
     }
     void ToIsometricView()
     {
-        ToggleRendering(false);
-
         StartCoroutine(DelayAimCor());
         ToggleLooking(false);
     }
     void ToInteractionView()
     {
-        ToggleRendering(false);
         ToggleLooking(false);
     }
 
     void Shoot()
     {
-        FirstPersonCamera.DOComplete();
-        FirstPersonCamera.DOShakeRotation(ShakeDuration, ShakeRotation);
+        FirstPersonCamera.Instance.Shoot();
     }
     void StartAiming() => _isAiming = true;
 
@@ -319,7 +301,6 @@ public class Player: SingletonSubject<Player>
 
         _handleMouseDeltaInput = OnReloadLook;
         _curOffsetMouseInput = ReloadingOffset;
-        _interactionCameraController.SetCameraTransform(ReloadingTrasf);
 
         //CHANGE LATER
         ToInteractionView();
@@ -339,11 +320,6 @@ public class Player: SingletonSubject<Player>
     }
 
     //other methods
-    void ToggleRendering(bool toggle)
-    {
-        FirstPersonCamera.enabled = toggle;
-        HeadObj.SetActive(!toggle);
-    }
 
     void ToggleLooking(bool toggle) => _isAiming = _isLooking = toggle;
 

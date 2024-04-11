@@ -4,15 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IsometricCameraController : SingletonSubject<IsometricCameraController>
+public class IsometricCamera : SingletonCamera<IsometricCamera>, ICamera
 {
-    [SerializeField] Camera IsometricCamera;
-
     [Header("settings")]
     public float TimeBetweenFindingNearestEnemy = 1;
 
     //local
-
     CinemachineVirtualCamera _vCam;
 
     Transform _playerTrasnf;
@@ -32,16 +29,9 @@ public class IsometricCameraController : SingletonSubject<IsometricCameraControl
 
     protected override void Awake()
     {
-        base.Awake(); CreateInstance();
+        base.Awake();
 
         _vCam = GetComponent<CinemachineVirtualCamera>();
-
-        AddAction(EnumsActions.OnSwitchToIsometric, StartRendering);
-
-        AddAction(EnumsActions.OnSwitchToFirstPerson, StopRendering);
-
-        AddAction(EnumsActions.OnSwitchToInteraction, StopRendering);
-        AddAction(EnumsActions.OnReload, StopRendering);
     }
 
     void Start()
@@ -53,20 +43,6 @@ public class IsometricCameraController : SingletonSubject<IsometricCameraControl
     void MoveCamera(Transform followTransf) => _vCam.Follow = followTransf;
     void MoveCamera() => MoveCamera(_curCameraPosTransf);
 
-
-   
-
-    //actions
-    public void StartRendering()
-    {
-        ToggleRendering(true);
-    }
-
-    public void StopRendering()
-    {
-        ToggleRendering(false);
-    }
- 
     //cors
     IEnumerator ChangeToNearestEnemyCor()
     {
@@ -116,11 +92,5 @@ public class IsometricCameraController : SingletonSubject<IsometricCameraControl
 
             MoveCamera();
         }
-    }
-
-    //other methods
-    void ToggleRendering(bool toggle)
-    {
-        IsometricCamera.enabled = toggle;
     }
 }
