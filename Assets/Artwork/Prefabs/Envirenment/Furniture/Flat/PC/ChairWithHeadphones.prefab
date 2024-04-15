@@ -1,0 +1,160 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1988148470352339264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5019136628821011293}
+  - component: {fileID: 4694270953025307530}
+  - component: {fileID: 228852521377567452}
+  m_Layer: 0
+  m_Name: ChairWithHeadphones
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5019136628821011293
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988148470352339264}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.00014197828, y: 0.000101596124, z: 0.8129491, w: -0.58233476}
+  m_LocalPosition: {x: -0.008763203, y: -0.00084478356, z: -0.0013209438}
+  m_LocalScale: {x: 1.2686999, y: 1.2686999, z: 1.2687001}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4469432139167729043}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -90.028, y: 180, z: 71.25}
+--- !u!33 &4694270953025307530
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988148470352339264}
+  m_Mesh: {fileID: -6264831526926562434, guid: 8807d3358f7c2a0418f49939f610f4e2, type: 3}
+--- !u!23 &228852521377567452
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988148470352339264}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: bd303251b6979114abf398bbfc493318, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &5103996124390512502
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5019136628821011293}
+    m_Modifications:
+    - target: {fileID: 2954300705624931658, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_Name
+      value: Headphones
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5652715
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.56527144
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.56527156
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0007627891
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.00079554337
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0015530479
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.6976225
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.11566892
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.11542553
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.697582
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -71.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -89.941
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 89.938
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+--- !u!4 &4469432139167729043 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8706467119518896869, guid: 743eff9714e72f6498f29e9b59475529, type: 3}
+  m_PrefabInstance: {fileID: 5103996124390512502}
+  m_PrefabAsset: {fileID: 0}
