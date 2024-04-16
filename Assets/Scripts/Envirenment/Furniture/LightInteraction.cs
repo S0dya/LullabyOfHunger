@@ -6,7 +6,7 @@ using DG.Tweening;
 public class LightInteraction : MonoBehaviour
 {
     [Header("settings")]
-    [SerializeField] float PingPongIntensityDuration;
+    [SerializeField] float PingPongIntensityDuration = 1;
 
     [SerializeField] Light Light;
 
@@ -16,6 +16,8 @@ public class LightInteraction : MonoBehaviour
     void Awake()
     {
         if (Light == null) Light = GetComponent<Light>();
+
+        Light.enabled = false;
     }
 
     void Start()

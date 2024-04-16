@@ -54,6 +54,8 @@ public class Player: SingletonSubject<Player>
     Vector3 _gravity;
     float _gravityForce = 9.81f;
 
+    //threshold
+
     //movement
     float _targetSpeed;
     float _curMovementSpeed;
@@ -238,7 +240,7 @@ public class Player: SingletonSubject<Player>
         _curRotationDirection = GetLerpVal(_curRotationDirection, _targetRotation, 0.05f, _curRotateSmoothness);
 
         _cc.Move((transform.forward.normalized * (_curMovementSpeed) + _gravity) * _deltaTime);
-        transform.rotation = Quaternion.Euler(0.0f, transform.eulerAngles.y + _curRotationDirection * (1 - Mathf.Clamp01(GetAbs(_curMovementSpeed) / RotationSpeed)), 0.0f);
+        transform.rotation *= Quaternion.Euler(0.0f, _curRotationDirection * (1 - Mathf.Clamp01(GetAbs(_curMovementSpeed) / RotationSpeed)), 0.0f);
     }
     void HandleMouse()
     {

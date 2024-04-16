@@ -4768,6 +4768,14 @@ PrefabInstance:
       propertyPath: SceneToOpen
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8921728130770342293, guid: 12991ed7dfdbe8849bc835b4d89b8465, type: 3}
+      propertyPath: m_Size.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921728130770342293, guid: 12991ed7dfdbe8849bc835b4d89b8465, type: 3}
+      propertyPath: m_Size.y
+      value: 1.5
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8921728130770342290, guid: 12991ed7dfdbe8849bc835b4d89b8465, type: 3}
     m_RemovedGameObjects: []

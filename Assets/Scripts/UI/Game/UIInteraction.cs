@@ -31,7 +31,7 @@ public class UIInteraction : UISingletonMonobehaviour<UIInteraction>
     {
         FadeSetTime(0, 0.05f, NotifyOnSwitchOff);
 
-        if (_curInteractionItem.Pickable)
+        if (_curInteractionItem.Pickable && _curInteractionItem.ActionOnPicked != null)
         {
             _curInteractionItem.ActionOnPicked.Invoke();
         }
@@ -42,7 +42,7 @@ public class UIInteraction : UISingletonMonobehaviour<UIInteraction>
     {
         FadeSetTime(1, 0.1f, NotifyOnSwitchOn);
 
-        _curInteractionItem = InteractionItems.OrderBy(item => item.ItemName).FirstOrDefault(item => item.ItemName == interactionItemEnum);
+        _curInteractionItem = InteractionItems.FirstOrDefault(item => item.ItemName == interactionItemEnum);
         _curInteractionitemObjTransf = _curInteractionItem.Object.transform;
 
         _curInteractionItem.Object.SetActive(true); _curInteractionitemObjTransf.localScale = Vector3.zero;
@@ -61,7 +61,7 @@ public class UIInteraction : UISingletonMonobehaviour<UIInteraction>
 }
 
 [System.Serializable]
-class InteractionObject
+public class InteractionObject
 {
     [SerializeField] public InteractionItemEnum ItemName;
     [SerializeField] public GameObject Object;
@@ -72,9 +72,9 @@ class InteractionObject
 
 public enum InteractionItemEnum
 {
-    none, 
+    none,
 
-    Handgun, 
+    Handgun,
     Magazine,
 
 }
