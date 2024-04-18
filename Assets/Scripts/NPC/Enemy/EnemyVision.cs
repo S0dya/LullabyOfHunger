@@ -34,13 +34,12 @@ public class EnemyVision : MonoBehaviour
 
     void OnTriggerStay(Collider collision)
     {
-        _directionToPlayer = _playerTransf.position - HeadTransform.position;
-        _directionToPlayer.y = 0f;
+        _directionToPlayer = _playerTransf.position - HeadTransform.position; _directionToPlayer.y = 0f;
 
         _angleToPlayer = Vector3.Angle(HeadTransform.forward, _directionToPlayer);
         _distanceToPlayer = Vector3.Distance(_playerTransf.position, transform.position);
 
-        if (_angleToPlayer <= VisionAngle && !Physics.Raycast(HeadTransform.position, _directionToPlayer, _distanceToPlayer, ObstacleLayer))
+        if (_angleToPlayer < VisionAngle && !Physics.Raycast(HeadTransform.position, _directionToPlayer, _distanceToPlayer, ObstacleLayer))
             enemy.PlayerNoticed();
         else
         {

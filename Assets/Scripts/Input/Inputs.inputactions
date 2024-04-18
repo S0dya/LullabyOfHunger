@@ -319,6 +319,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "InteractionInput",
+            "id": "79546eca-aef7-4cb1-8636-07fc1ae2805a",
+            "actions": [
+                {
+                    "name": "Continue",
+                    "type": "Value",
+                    "id": "fa58d3f7-7d8f-4492-98dc-f6d4647f8831",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1bc53e5a-3c87-4257-a258-bce257f1cad9",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76bc6b7d-2ab0-4c11-ad18-2abaa35ff96b",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

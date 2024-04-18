@@ -341,6 +341,45 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""InteractionInput"",
+            ""id"": ""79546eca-aef7-4cb1-8636-07fc1ae2805a"",
+            ""actions"": [
+                {
+                    ""name"": ""Continue"",
+                    ""type"": ""Value"",
+                    ""id"": ""fa58d3f7-7d8f-4492-98dc-f6d4647f8831"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""1bc53e5a-3c87-4257-a258-bce257f1cad9"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Continue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76bc6b7d-2ab0-4c11-ad18-2abaa35ff96b"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Continue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -363,6 +402,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         m_ReloadInput_Grab = m_ReloadInput.FindAction("Grab", throwIfNotFound: true);
         m_ReloadInput_MoveHand = m_ReloadInput.FindAction("MoveHand", throwIfNotFound: true);
         m_ReloadInput_ExitReload = m_ReloadInput.FindAction("ExitReload", throwIfNotFound: true);
+        // InteractionInput
+        m_InteractionInput = asset.FindActionMap("InteractionInput", throwIfNotFound: true);
+        m_InteractionInput_Continue = m_InteractionInput.FindAction("Continue", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -630,6 +672,52 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         }
     }
     public ReloadInputActions @ReloadInput => new ReloadInputActions(this);
+
+    // InteractionInput
+    private readonly InputActionMap m_InteractionInput;
+    private List<IInteractionInputActions> m_InteractionInputActionsCallbackInterfaces = new List<IInteractionInputActions>();
+    private readonly InputAction m_InteractionInput_Continue;
+    public struct InteractionInputActions
+    {
+        private @Inputs m_Wrapper;
+        public InteractionInputActions(@Inputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Continue => m_Wrapper.m_InteractionInput_Continue;
+        public InputActionMap Get() { return m_Wrapper.m_InteractionInput; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InteractionInputActions set) { return set.Get(); }
+        public void AddCallbacks(IInteractionInputActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InteractionInputActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InteractionInputActionsCallbackInterfaces.Add(instance);
+            @Continue.started += instance.OnContinue;
+            @Continue.performed += instance.OnContinue;
+            @Continue.canceled += instance.OnContinue;
+        }
+
+        private void UnregisterCallbacks(IInteractionInputActions instance)
+        {
+            @Continue.started -= instance.OnContinue;
+            @Continue.performed -= instance.OnContinue;
+            @Continue.canceled -= instance.OnContinue;
+        }
+
+        public void RemoveCallbacks(IInteractionInputActions instance)
+        {
+            if (m_Wrapper.m_InteractionInputActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInteractionInputActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InteractionInputActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InteractionInputActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InteractionInputActions @InteractionInput => new InteractionInputActions(this);
     public interface IIsometricInputActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -650,5 +738,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         void OnGrab(InputAction.CallbackContext context);
         void OnMoveHand(InputAction.CallbackContext context);
         void OnExitReload(InputAction.CallbackContext context);
+    }
+    public interface IInteractionInputActions
+    {
+        void OnContinue(InputAction.CallbackContext context);
     }
 }

@@ -14,6 +14,7 @@ public class InputManager : SingletonSubject<InputManager>
     InputActionMap _firstPersonInput;
     InputActionMap _isometricInput;
     InputActionMap _reloadInput;
+    InputActionMap _interactionInput;
 
     List<InputActionMap> _actionMapsList = new List<InputActionMap>();
 
@@ -32,6 +33,7 @@ public class InputManager : SingletonSubject<InputManager>
         _actionMapsList.Add(_firstPersonInput);
         _actionMapsList.Add(_isometricInput);
         _actionMapsList.Add(_reloadInput);
+        _actionMapsList.Add(_interactionInput);
 
         ToIsometricView();
     }
@@ -45,6 +47,7 @@ public class InputManager : SingletonSubject<InputManager>
         _isometricInput = _input.IsometricInput;
         _firstPersonInput = _input.FirstPersonInput;
         _reloadInput = _input.ReloadInput;
+        _interactionInput = _input.InteractionInput;
 
         //isometric
         _input.IsometricInput.LookAt.performed += ctx => Player.Instance.IsometricLook();
@@ -75,6 +78,9 @@ public class InputManager : SingletonSubject<InputManager>
         _input.ReloadInput.Grab.canceled += ctx => Player.Instance.ReloadRelease();
 
         _input.ReloadInput.ExitReload.canceled += ctx => Player.Instance.ReloadStopReloading();
+
+        //interaction
+        _input.InteractionInput.Continue.performed += ctx => UIInteraction.Instance.Continue();
 
         _input.Enable();
     }
@@ -112,13 +118,17 @@ public class InputManager : SingletonSubject<InputManager>
 
         _input.ReloadInput.ExitReload.canceled -= ctx => Player.Instance.ReloadStopReloading();
 
+        //interaction
+        _input.InteractionInput.Continue.performed -= ctx => UIInteraction.Instance.Continue();
+
+
         _input.Disable();
     }
 
     //actions
     void ToFirstPersonView() => EnableActionMap(_firstPersonInput);
     void ToIsometricView() => EnableActionMap(_isometricInput);
-    void ToInteractionView() => Debug.Log("to interaction");//EnableActionMap(_firstPersonInput);
+    void ToInteractionView() => EnableActionMap(_interactionInput);
     void ToReloadView() => EnableActionMap(_reloadInput);
 
     //other methods

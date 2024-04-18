@@ -11,7 +11,6 @@ public class LevelManager : SingletonSubject<LevelManager>
     [SerializeField] InteractionCamera _interactionCam;
 
     //local
-    Transform _playerTransf;
 
     ICamera[] _cameras;
     //InteractionCamera _interactionCam;
@@ -26,11 +25,6 @@ public class LevelManager : SingletonSubject<LevelManager>
         AddAction(EnumsActions.OnSwitchToFirstPerson, SwitchToFP);
         AddAction(EnumsActions.OnReload, SwitchToReload);
         AddAction(EnumsActions.OnSwitchToInteraction, SwitchToInteraction);
-    }
-
-    void Start()
-    {
-        _playerTransf = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     //actions
@@ -49,12 +43,6 @@ public class LevelManager : SingletonSubject<LevelManager>
     void SwitchToInteraction()
     {
         DisableCameras(); _interactionCam.ToggleCam(true);
-    }
-
-    //outside methods
-    public Transform Get_playerTransforsm()
-    {
-        return _playerTransf;
     }
 
     //other methods

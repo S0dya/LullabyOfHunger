@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class InteractionCamera : SingletonCamera<InteractionCamera>, ICamera
 {
-
     public void SetCameraTransform(Transform newTransformParent)
     {
-        Debug.Log("123");
-
-        transform.SetParent(newTransformParent);
-
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
+        transform.position = newTransformParent.position;
+        transform.rotation = newTransformParent.rotation;
     }
 }

@@ -79,7 +79,7 @@ public class RiggingController : SingletonSubject<RiggingController>
 
         AddAction(EnumsActions.OnSwitchToFirstPerson, ToFirstPersonView);
         AddAction(EnumsActions.OnSwitchToIsometric, ToIsometricView);
-        AddAction(EnumsActions.OnSwitchToInteraction, ToInteractionView); 
+        //AddAction(EnumsActions.OnSwitchToInteraction, ToInteractionView);
 
         AddAction(EnumsActions.OnAim, StartAiming);
 
@@ -99,19 +99,14 @@ public class RiggingController : SingletonSubject<RiggingController>
     }
 
     //actions Change later
-    void ToFirstPersonView()
-    {
-        StartLooking();
-    }
     void ToIsometricView()
     {
         StopLooking();
     }
-    void ToInteractionView()
+    void ToFirstPersonView()
     {
         StartLooking();
     }
-
     public void StartAiming()
     {
         StopCor(_smoothAimingHandCor);

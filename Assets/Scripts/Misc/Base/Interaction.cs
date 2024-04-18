@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Interaction : MonoBehaviour
@@ -9,6 +7,12 @@ public class Interaction : MonoBehaviour
         InteractionController.Instance.AddInteraction(this);
     }
     protected virtual void OnTriggerExit(Collider collision)
+    {
+        RemoveInteraction();
+    }
+
+    //inherited methods
+    public void RemoveInteraction()
     {
         InteractionController.Instance.RemoveInteraction(this);
     }

@@ -240,7 +240,7 @@ public class Player: SingletonSubject<Player>
         _curRotationDirection = GetLerpVal(_curRotationDirection, _targetRotation, 0.05f, _curRotateSmoothness);
 
         _cc.Move((transform.forward.normalized * (_curMovementSpeed) + _gravity) * _deltaTime);
-        transform.rotation *= Quaternion.Euler(0.0f, _curRotationDirection * (1 - Mathf.Clamp01(GetAbs(_curMovementSpeed) / RotationSpeed)), 0.0f);
+        transform.rotation *= Quaternion.Euler(0, _curRotationDirection * (1 - Mathf.Clamp01(GetAbs(_curMovementSpeed) / RotationSpeed)), 0);
     }
     void HandleMouse()
     {
@@ -287,6 +287,8 @@ public class Player: SingletonSubject<Player>
     void ToInteractionView()
     {
         ToggleLooking(false);
+
+        _curRotationDirection = 0;
     }
 
     void Shoot()

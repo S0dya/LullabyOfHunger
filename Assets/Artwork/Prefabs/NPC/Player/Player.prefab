@@ -5422,6 +5422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionsDictionaries: []
+  InteractionAngle: 120
 --- !u!95 &7971040925087514212
 Animator:
   serializedVersion: 5

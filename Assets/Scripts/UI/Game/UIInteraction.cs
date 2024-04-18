@@ -20,43 +20,80 @@ public class UIInteraction : UISingletonMonobehaviour<UIInteraction>
     [Header("other")]
     [SerializeField] InteractionObject[] InteractionItems;
 
+    //local
+
+    bool _scaledUp;
+
     //threshold
-    InteractionObject _curInteractionItem;
+    InteractionObject _curInteractionObj;
     Transform _curInteractionitemObjTransf;
 
-    Tweener _curRotationTweener;
+    InteractionItemDestroyable _curInteractionItem;
+    Vector3 _curItemTargetScale;
+
+    //cors
+    Coroutine _rotateObjCor;
 
     //buttons
     public void Continue()
     {
-        FadeSetTime(0, 0.05f, NotifyOnSwitchOff);
+        if (!MainCG.blocksRaycasts || !_scaledUp) return;
 
-        if (_curInteractionItem.Pickable && _curInteractionItem.ActionOnPicked != null)
+        _curInteractionObj.Object.SetActive(false);
+        StopCoroutine(_rotateObjCor);
+
+        FadeSetTime(0, 0.1f, NotifyOnSwitchOff);
+
+        if (_curInteractionObj.Pickable && _curInteractionObj.ActionOnPicked != null)
         {
-            _curInteractionItem.ActionOnPicked.Invoke();
+            _curInteractionObj.ActionOnPicked.Invoke();
+
+            _curInteractionItem.DisableObj();
         }
     }
 
     //outside methods
+    public void StartInteraction(InteractionItemDestroyable interactionItme, InteractionItemEnum interactionItemEnum)
+    {
+        _curInteractionItem = interactionItme;
+
+        StartInteraction(interactionItemEnum);
+    }
     public void StartInteraction(InteractionItemEnum interactionItemEnum)
     {
         FadeSetTime(1, 0.1f, NotifyOnSwitchOn);
 
-        _curInteractionItem = InteractionItems.FirstOrDefault(item => item.ItemName == interactionItemEnum);
-        _curInteractionitemObjTransf = _curInteractionItem.Object.transform;
+        _curInteractionObj = InteractionItems.FirstOrDefault(item => item.ItemName == interactionItemEnum);
+        _curInteractionitemObjTransf = _curInteractionObj.Object.transform;
 
-        _curInteractionItem.Object.SetActive(true); _curInteractionitemObjTransf.localScale = Vector3.zero;
+        _curInteractionObj.Object.SetActive(true); _scaledUp = false;
 
-        _curInteractionitemObjTransf.DOScale(Vector3.one, ScaleSpeed).SetEase(Ease.OutQuad);
-        _curRotationTweener = _curInteractionitemObjTransf.DOLocalRotate(new Vector3(90, 0, 0), RotationSpeed, RotateMode.LocalAxisAdd)
-            .SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        _curItemTargetScale = _curInteractionitemObjTransf.localScale; _curInteractionitemObjTransf.localScale = Vector3.zero;
 
-        ContinueButtonText.text = (_curInteractionItem.Pickable ? "Equip" : "Continue");
+
+        _curInteractionitemObjTransf.DOScale(_curItemTargetScale, ScaleSpeed).SetUpdate(true).SetEase(Ease.OutQuad).OnComplete(OnScaledUp);
+
+        _rotateObjCor = StartCoroutine(RotateObjCor());
+
+        ContinueButtonText.text = (_curInteractionObj.Pickable ? "Equip" : "Continue");
     }
 
     //other methods
     void NotifyOnSwitchOn() => Observer.Instance.NotifyObservers(EnumsActions.OnSwitchToInteraction);
     void NotifyOnSwitchOff() => Observer.Instance.NotifyObservers(EnumsActions.OnSwitchToIsometric);
+
+    void OnScaledUp() => _scaledUp = true;
+
+    //cors 
+    IEnumerator RotateObjCor()
+    {
+        while (true)
+        {
+            _curInteractionitemObjTransf.rotation *= Quaternion.Euler(0, 0, Time.fixedDeltaTime * RotationSpeed);
+
+            yield return null;
+        }
+    }
 
 }
 
