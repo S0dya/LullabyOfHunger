@@ -8,4 +8,8 @@ public static class Settings
     public static SceneNameEnum curScene;
 
     public static float[] musicStats;
+
+    //in game
+    public static int curMagsN = 1;
+
 }

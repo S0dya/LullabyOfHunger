@@ -20,7 +20,7 @@ public class InputManager : SingletonSubject<InputManager>
 
     protected override void Awake()
     {
-        base.Awake();
+        base.Awake(); CreateInstance();
 
         AddAction(EnumsActions.OnSwitchToFirstPerson, ToFirstPersonView);
         AddAction(EnumsActions.OnSwitchToIsometric, ToIsometricView);
@@ -63,14 +63,11 @@ public class InputManager : SingletonSubject<InputManager>
 
         _input.IsometricInput.Interact.performed += ctx => Player.Instance.IsometricInteracte();
 
-        _input.IsometricInput.Reload.performed += ctx => Player.Instance.IsometricReload();
-
         //first person
         _input.FirstPersonInput.Look.performed += ctx => Player.Instance.OnMouseDelta(ctx.ReadValue<Vector2>());
         _input.FirstPersonInput.LookAt.canceled += ctx => Player.Instance.FirstPersonStopLooking();
-
-        _input.FirstPersonInput.Fire.performed += ctx => Player.Instance.OnFire();
-
+        
+        if (Settings.curScene != SceneNameEnum.MCFlat) EnableGun();
         //reload
         _input.ReloadInput.MoveHand.performed += ctx => Player.Instance.OnMouseDelta(ctx.ReadValue<Vector2>());
 
@@ -109,7 +106,6 @@ public class InputManager : SingletonSubject<InputManager>
         _input.FirstPersonInput.LookAt.canceled -= ctx => Player.Instance.FirstPersonStopLooking();
 
         _input.FirstPersonInput.Fire.performed -= ctx => Player.Instance.OnFire();
-
         //reload
         _input.ReloadInput.MoveHand.performed -= ctx => Player.Instance.OnMouseDelta(ctx.ReadValue<Vector2>());
 
@@ -120,7 +116,6 @@ public class InputManager : SingletonSubject<InputManager>
 
         //interaction
         _input.InteractionInput.Continue.performed -= ctx => UIInteraction.Instance.Continue();
-
 
         _input.Disable();
     }
@@ -138,9 +133,16 @@ public class InputManager : SingletonSubject<InputManager>
 
         mapToEnable.Enable();
     }
-    
     void DisableMaps()
     {
         foreach (InputActionMap map in _actionMapsList) map.Disable();
+    }
+
+    //other outside methods
+    public void EnableGun()
+    {
+        _input.FirstPersonInput.Fire.performed += ctx => Player.Instance.OnFire();
+
+        _input.IsometricInput.Reload.performed += ctx => Player.Instance.IsometricReload();
     }
 }

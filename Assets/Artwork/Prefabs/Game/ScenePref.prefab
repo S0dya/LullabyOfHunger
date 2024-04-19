@@ -2123,6 +2123,66 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: MainFlat, Assembly-CSharp
+          m_MethodName: HandGunFound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - ItemName: 2
+    Object: {fileID: 0}
+    Pickable: 1
+    ActionOnPicked:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: MainFlat, Assembly-CSharp
+          m_MethodName: MagFound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - ItemName: 4
+    Object: {fileID: 0}
+    Pickable: 1
+    ActionOnPicked:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: MainFlat, Assembly-CSharp
+          m_MethodName: GasMaskFound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - ItemName: 3
+    Object: {fileID: 0}
+    Pickable: 1
+    ActionOnPicked:
+      m_PersistentCalls:
+        m_Calls: []
+  - ItemName: 5
+    Object: {fileID: 0}
+    Pickable: 1
+    ActionOnPicked:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: InteractionDoorMainFlat, Assembly-CSharp
           m_MethodName: EnableDoor
           m_Mode: 1
@@ -2145,7 +2205,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 1887593908259429430}
-  m_PlaneDistance: 0.5
+  m_PlaneDistance: 0.11
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -2595,7 +2655,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -271}
-  m_SizeDelta: {x: 200, y: 100}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &350560114603576563
 CanvasRenderer:
@@ -2658,9 +2718,9 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 0}
     m_HighlightedColor: {r: 0.22745098, g: 0.22745098, b: 0.22745098, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_PressedColor: {r: 0.23018861, g: 0.23018861, b: 0.23018861, a: 1}
+    m_SelectedColor: {r: 0.16981131, g: 0.15347098, b: 0.15347098, a: 1}
+    m_DisabledColor: {r: 0.10943389, g: 0.102207124, b: 0.102207124, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:

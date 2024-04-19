@@ -8,20 +8,27 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System.Linq;
 
+[DefaultExecutionOrder(-1)]
 public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 {
     [SerializeField] Camera LoadingCamera;
     [SerializeField] GameObject LoadingScreen;
     [SerializeField] Image LoadingBarFill;
 
-    //outside methods
-    void Start()
+    protected override void Awake()
     {
-        //LoadMenu();
+        base.Awake();
 
         FindCurSceneID();//remove later
     }
 
+    void Start()
+    {
+        //LoadMenu();
+
+    }
+
+    //outside methods
     public void LoadMenu()
     {
         StartCoroutine(LoadMenuCor());
@@ -120,6 +127,6 @@ public enum SceneNameEnum
     None,
 
     Menu,
-    Hallway, 
-    GGFlat,
+    Hallway,
+    MCFlat,
 }

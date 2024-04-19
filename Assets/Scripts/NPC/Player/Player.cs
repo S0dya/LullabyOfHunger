@@ -208,10 +208,7 @@ public class Player: SingletonSubject<Player>
             if (_gunController._curBulletsAmount > 0) NotifyObserver(EnumsActions.OnFire);
             else AudioManager.Instance.PlayOneShot("ShootNoBullets");
         }
-        else
-        {
-            NotifyObserver(EnumsActions.OnAim);
-        }
+        else NotifyObserver(EnumsActions.OnAim);
     }
     public void FirstPersonStopLooking()
     {
@@ -324,7 +321,6 @@ public class Player: SingletonSubject<Player>
     }
 
     //other methods
-
     void ToggleLooking(bool toggle) => _isAiming = _isLooking = toggle;
 
     float GetLerpVal(float curValue, float targetValue, float threshold, float smoothTime)

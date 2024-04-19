@@ -15,6 +15,7 @@ public class UIInteraction : UISingletonMonobehaviour<UIInteraction>
     [SerializeField] float RotationSpeed = 1;
 
     [Header("UI")]
+    [SerializeField] Button ContinueButton;
     [SerializeField] TextMeshProUGUI ContinueButtonText;
 
     [Header("other")]
@@ -28,11 +29,20 @@ public class UIInteraction : UISingletonMonobehaviour<UIInteraction>
     InteractionObject _curInteractionObj;
     Transform _curInteractionitemObjTransf;
 
-    InteractionItemDestroyable _curInteractionItem;
+    InteractionItem _curInteractionItem;
+    InteractionItemDestroyable _curInteractionItemDestroyable;
+
     Vector3 _curItemTargetScale;
 
     //cors
     Coroutine _rotateObjCor;
+
+    //props
+    bool Interactable
+    {
+        get { return _scaledUp; }
+        set { _scaledUp = ContinueButton.interactable = value; }
+    }
 
     //buttons
     public void Continue()
@@ -44,45 +54,40 @@ public class UIInteraction : UISingletonMonobehaviour<UIInteraction>
 
         FadeSetTime(0, 0.1f, NotifyOnSwitchOff);
 
-        if (_curInteractionObj.Pickable && _curInteractionObj.ActionOnPicked != null)
-        {
-            _curInteractionObj.ActionOnPicked.Invoke();
+        if (_curInteractionItemDestroyable != null) _curInteractionItemDestroyable.DestroyObj();
+        else _curInteractionItem.ToggleObj(true);
 
-            _curInteractionItem.DisableObj();
-        }
+        if (_curInteractionObj.ActionOnPicked != null) _curInteractionObj.ActionOnPicked.Invoke();
     }
 
     //outside methods
-    public void StartInteraction(InteractionItemDestroyable interactionItme, InteractionItemEnum interactionItemEnum)
+    public void StartInteraction(InteractionItem interactionItem, InteractionItemEnum interactionItemEnum)
     {
-        _curInteractionItem = interactionItme;
-
-        StartInteraction(interactionItemEnum);
-    }
-    public void StartInteraction(InteractionItemEnum interactionItemEnum)
-    {
+        Interactable = false;
         FadeSetTime(1, 0.1f, NotifyOnSwitchOn);
+        _curInteractionItem = interactionItem; _curInteractionItem.ToggleObj(false);
+        
+        _curInteractionItemDestroyable = null;
+        if (_curInteractionItem is InteractionItemDestroyable) 
+            _curInteractionItemDestroyable = _curInteractionItem as InteractionItemDestroyable;
 
         _curInteractionObj = InteractionItems.FirstOrDefault(item => item.ItemName == interactionItemEnum);
         _curInteractionitemObjTransf = _curInteractionObj.Object.transform;
 
-        _curInteractionObj.Object.SetActive(true); _scaledUp = false;
-
+        _curInteractionObj.Object.SetActive(true); 
         _curItemTargetScale = _curInteractionitemObjTransf.localScale; _curInteractionitemObjTransf.localScale = Vector3.zero;
-
-
+        
         _curInteractionitemObjTransf.DOScale(_curItemTargetScale, ScaleSpeed).SetUpdate(true).SetEase(Ease.OutQuad).OnComplete(OnScaledUp);
-
         _rotateObjCor = StartCoroutine(RotateObjCor());
 
-        ContinueButtonText.text = (_curInteractionObj.Pickable ? "Equip" : "Continue");
+        ContinueButtonText.text = (_curInteractionItemDestroyable != null ? "Equip" : "Continue");
     }
 
     //other methods
     void NotifyOnSwitchOn() => Observer.Instance.NotifyObservers(EnumsActions.OnSwitchToInteraction);
     void NotifyOnSwitchOff() => Observer.Instance.NotifyObservers(EnumsActions.OnSwitchToIsometric);
 
-    void OnScaledUp() => _scaledUp = true;
+    void OnScaledUp() => Interactable = true;
 
     //cors 
     IEnumerator RotateObjCor()
@@ -103,7 +108,6 @@ public class InteractionObject
     [SerializeField] public InteractionItemEnum ItemName;
     [SerializeField] public GameObject Object;
 
-    [SerializeField] public bool Pickable;
     [SerializeField] public UnityEvent ActionOnPicked;
 }
 
@@ -113,5 +117,8 @@ public enum InteractionItemEnum
 
     Handgun,
     Magazine,
+    FlatIcon,
+    GasMaskMC,
+    GasMaskChild,
 
 }

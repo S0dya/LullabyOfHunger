@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class InteractionItemDestroyable : InteractionItem
 {
-    [SerializeField] GameObject ObjectToDisable;
-
     //local
     SphereCollider _collider;
     LightInteraction _lightInteraction;
@@ -17,17 +15,10 @@ public class InteractionItemDestroyable : InteractionItem
         _collider = GetComponent<SphereCollider>();
     }
 
-    public override void Interact()
+
+    public void DestroyObj()
     {
-        base.Interact();
-
-        UIInteraction.Instance.StartInteraction(this, ItemEnum);
-    }
-
-
-    public void DisableObj()
-    {
-        ObjectToDisable.SetActive(false); _collider.enabled = _lightInteraction.enabled = false;
+         _collider.enabled = _lightInteraction.enabled = false;
 
         RemoveInteraction();
     }
