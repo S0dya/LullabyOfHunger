@@ -80,6 +80,15 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""OpenGameMenu"",
+                    ""type"": ""Value"",
+                    ""id"": ""9908644d-274e-4847-a630-20636f4d0273"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -192,6 +201,17 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""action"": ""Rotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d3cac402-5ab1-4527-b0c4-bfe0354d61ff"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenGameMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -222,6 +242,15 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""35b369e4-4724-4838-aec4-e6630f2cc398"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""OpenGameMenu"",
+                    ""type"": ""Value"",
+                    ""id"": ""c48d1ad9-7ddc-41d3-8eff-6033a1e09478"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -260,6 +289,17 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""action"": ""LookAt"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8c5817e5-ab22-40d7-a99c-af7f0ed7c130"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenGameMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -289,6 +329,15 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""name"": ""ExitReload"",
                     ""type"": ""Value"",
                     ""id"": ""985b53ab-8f1f-418f-871b-84f4514c935c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""OpenGameMenu"",
+                    ""type"": ""Value"",
+                    ""id"": ""52494202-23f0-4fd0-aaf0-c31de81dd011"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -339,6 +388,17 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""action"": ""MoveHand"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c5b62730-9638-4ae3-baa7-07b7dd4a0409"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenGameMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -378,6 +438,45 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""action"": ""Continue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3240aa76-c89d-4b53-812c-cbffa6a10dc0"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Continue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""GameMenuInput"",
+            ""id"": ""c6717eed-268f-4b6f-98c7-f8fee5c48b83"",
+            ""actions"": [
+                {
+                    ""name"": ""Continue"",
+                    ""type"": ""Value"",
+                    ""id"": ""75411783-4865-4fe8-ab50-9b2a79f833cc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3d882bcf-4d92-48f6-81e3-917ef3146cab"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Continue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -392,19 +491,25 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         m_IsometricInput_Rotation = m_IsometricInput.FindAction("Rotation", throwIfNotFound: true);
         m_IsometricInput_Run = m_IsometricInput.FindAction("Run", throwIfNotFound: true);
         m_IsometricInput_Interact = m_IsometricInput.FindAction("Interact", throwIfNotFound: true);
+        m_IsometricInput_OpenGameMenu = m_IsometricInput.FindAction("OpenGameMenu", throwIfNotFound: true);
         // FirstPersonInput
         m_FirstPersonInput = asset.FindActionMap("FirstPersonInput", throwIfNotFound: true);
         m_FirstPersonInput_Fire = m_FirstPersonInput.FindAction("Fire", throwIfNotFound: true);
         m_FirstPersonInput_LookAt = m_FirstPersonInput.FindAction("LookAt", throwIfNotFound: true);
         m_FirstPersonInput_Look = m_FirstPersonInput.FindAction("Look", throwIfNotFound: true);
+        m_FirstPersonInput_OpenGameMenu = m_FirstPersonInput.FindAction("OpenGameMenu", throwIfNotFound: true);
         // ReloadInput
         m_ReloadInput = asset.FindActionMap("ReloadInput", throwIfNotFound: true);
         m_ReloadInput_Grab = m_ReloadInput.FindAction("Grab", throwIfNotFound: true);
         m_ReloadInput_MoveHand = m_ReloadInput.FindAction("MoveHand", throwIfNotFound: true);
         m_ReloadInput_ExitReload = m_ReloadInput.FindAction("ExitReload", throwIfNotFound: true);
+        m_ReloadInput_OpenGameMenu = m_ReloadInput.FindAction("OpenGameMenu", throwIfNotFound: true);
         // InteractionInput
         m_InteractionInput = asset.FindActionMap("InteractionInput", throwIfNotFound: true);
         m_InteractionInput_Continue = m_InteractionInput.FindAction("Continue", throwIfNotFound: true);
+        // GameMenuInput
+        m_GameMenuInput = asset.FindActionMap("GameMenuInput", throwIfNotFound: true);
+        m_GameMenuInput_Continue = m_GameMenuInput.FindAction("Continue", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -472,6 +577,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_IsometricInput_Rotation;
     private readonly InputAction m_IsometricInput_Run;
     private readonly InputAction m_IsometricInput_Interact;
+    private readonly InputAction m_IsometricInput_OpenGameMenu;
     public struct IsometricInputActions
     {
         private @Inputs m_Wrapper;
@@ -482,6 +588,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         public InputAction @Rotation => m_Wrapper.m_IsometricInput_Rotation;
         public InputAction @Run => m_Wrapper.m_IsometricInput_Run;
         public InputAction @Interact => m_Wrapper.m_IsometricInput_Interact;
+        public InputAction @OpenGameMenu => m_Wrapper.m_IsometricInput_OpenGameMenu;
         public InputActionMap Get() { return m_Wrapper.m_IsometricInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -509,6 +616,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @OpenGameMenu.started += instance.OnOpenGameMenu;
+            @OpenGameMenu.performed += instance.OnOpenGameMenu;
+            @OpenGameMenu.canceled += instance.OnOpenGameMenu;
         }
 
         private void UnregisterCallbacks(IIsometricInputActions instance)
@@ -531,6 +641,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @OpenGameMenu.started -= instance.OnOpenGameMenu;
+            @OpenGameMenu.performed -= instance.OnOpenGameMenu;
+            @OpenGameMenu.canceled -= instance.OnOpenGameMenu;
         }
 
         public void RemoveCallbacks(IIsometricInputActions instance)
@@ -555,6 +668,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_FirstPersonInput_Fire;
     private readonly InputAction m_FirstPersonInput_LookAt;
     private readonly InputAction m_FirstPersonInput_Look;
+    private readonly InputAction m_FirstPersonInput_OpenGameMenu;
     public struct FirstPersonInputActions
     {
         private @Inputs m_Wrapper;
@@ -562,6 +676,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_FirstPersonInput_Fire;
         public InputAction @LookAt => m_Wrapper.m_FirstPersonInput_LookAt;
         public InputAction @Look => m_Wrapper.m_FirstPersonInput_Look;
+        public InputAction @OpenGameMenu => m_Wrapper.m_FirstPersonInput_OpenGameMenu;
         public InputActionMap Get() { return m_Wrapper.m_FirstPersonInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -580,6 +695,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @OpenGameMenu.started += instance.OnOpenGameMenu;
+            @OpenGameMenu.performed += instance.OnOpenGameMenu;
+            @OpenGameMenu.canceled += instance.OnOpenGameMenu;
         }
 
         private void UnregisterCallbacks(IFirstPersonInputActions instance)
@@ -593,6 +711,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @OpenGameMenu.started -= instance.OnOpenGameMenu;
+            @OpenGameMenu.performed -= instance.OnOpenGameMenu;
+            @OpenGameMenu.canceled -= instance.OnOpenGameMenu;
         }
 
         public void RemoveCallbacks(IFirstPersonInputActions instance)
@@ -617,6 +738,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_ReloadInput_Grab;
     private readonly InputAction m_ReloadInput_MoveHand;
     private readonly InputAction m_ReloadInput_ExitReload;
+    private readonly InputAction m_ReloadInput_OpenGameMenu;
     public struct ReloadInputActions
     {
         private @Inputs m_Wrapper;
@@ -624,6 +746,7 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         public InputAction @Grab => m_Wrapper.m_ReloadInput_Grab;
         public InputAction @MoveHand => m_Wrapper.m_ReloadInput_MoveHand;
         public InputAction @ExitReload => m_Wrapper.m_ReloadInput_ExitReload;
+        public InputAction @OpenGameMenu => m_Wrapper.m_ReloadInput_OpenGameMenu;
         public InputActionMap Get() { return m_Wrapper.m_ReloadInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -642,6 +765,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @ExitReload.started += instance.OnExitReload;
             @ExitReload.performed += instance.OnExitReload;
             @ExitReload.canceled += instance.OnExitReload;
+            @OpenGameMenu.started += instance.OnOpenGameMenu;
+            @OpenGameMenu.performed += instance.OnOpenGameMenu;
+            @OpenGameMenu.canceled += instance.OnOpenGameMenu;
         }
 
         private void UnregisterCallbacks(IReloadInputActions instance)
@@ -655,6 +781,9 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @ExitReload.started -= instance.OnExitReload;
             @ExitReload.performed -= instance.OnExitReload;
             @ExitReload.canceled -= instance.OnExitReload;
+            @OpenGameMenu.started -= instance.OnOpenGameMenu;
+            @OpenGameMenu.performed -= instance.OnOpenGameMenu;
+            @OpenGameMenu.canceled -= instance.OnOpenGameMenu;
         }
 
         public void RemoveCallbacks(IReloadInputActions instance)
@@ -718,6 +847,52 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         }
     }
     public InteractionInputActions @InteractionInput => new InteractionInputActions(this);
+
+    // GameMenuInput
+    private readonly InputActionMap m_GameMenuInput;
+    private List<IGameMenuInputActions> m_GameMenuInputActionsCallbackInterfaces = new List<IGameMenuInputActions>();
+    private readonly InputAction m_GameMenuInput_Continue;
+    public struct GameMenuInputActions
+    {
+        private @Inputs m_Wrapper;
+        public GameMenuInputActions(@Inputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Continue => m_Wrapper.m_GameMenuInput_Continue;
+        public InputActionMap Get() { return m_Wrapper.m_GameMenuInput; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GameMenuInputActions set) { return set.Get(); }
+        public void AddCallbacks(IGameMenuInputActions instance)
+        {
+            if (instance == null || m_Wrapper.m_GameMenuInputActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GameMenuInputActionsCallbackInterfaces.Add(instance);
+            @Continue.started += instance.OnContinue;
+            @Continue.performed += instance.OnContinue;
+            @Continue.canceled += instance.OnContinue;
+        }
+
+        private void UnregisterCallbacks(IGameMenuInputActions instance)
+        {
+            @Continue.started -= instance.OnContinue;
+            @Continue.performed -= instance.OnContinue;
+            @Continue.canceled -= instance.OnContinue;
+        }
+
+        public void RemoveCallbacks(IGameMenuInputActions instance)
+        {
+            if (m_Wrapper.m_GameMenuInputActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IGameMenuInputActions instance)
+        {
+            foreach (var item in m_Wrapper.m_GameMenuInputActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_GameMenuInputActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public GameMenuInputActions @GameMenuInput => new GameMenuInputActions(this);
     public interface IIsometricInputActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -726,20 +901,27 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         void OnRotation(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnOpenGameMenu(InputAction.CallbackContext context);
     }
     public interface IFirstPersonInputActions
     {
         void OnFire(InputAction.CallbackContext context);
         void OnLookAt(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnOpenGameMenu(InputAction.CallbackContext context);
     }
     public interface IReloadInputActions
     {
         void OnGrab(InputAction.CallbackContext context);
         void OnMoveHand(InputAction.CallbackContext context);
         void OnExitReload(InputAction.CallbackContext context);
+        void OnOpenGameMenu(InputAction.CallbackContext context);
     }
     public interface IInteractionInputActions
+    {
+        void OnContinue(InputAction.CallbackContext context);
+    }
+    public interface IGameMenuInputActions
     {
         void OnContinue(InputAction.CallbackContext context);
     }

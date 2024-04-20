@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "OpenGameMenu",
+                    "type": "Value",
+                    "id": "9908644d-274e-4847-a630-20636f4d0273",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -170,6 +179,17 @@
                     "action": "Rotation",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d3cac402-5ab1-4527-b0c4-bfe0354d61ff",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenGameMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -200,6 +220,15 @@
                     "type": "Value",
                     "id": "35b369e4-4724-4838-aec4-e6630f2cc398",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "OpenGameMenu",
+                    "type": "Value",
+                    "id": "c48d1ad9-7ddc-41d3-8eff-6033a1e09478",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -238,6 +267,17 @@
                     "action": "LookAt",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8c5817e5-ab22-40d7-a99c-af7f0ed7c130",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenGameMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -267,6 +307,15 @@
                     "name": "ExitReload",
                     "type": "Value",
                     "id": "985b53ab-8f1f-418f-871b-84f4514c935c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "OpenGameMenu",
+                    "type": "Value",
+                    "id": "52494202-23f0-4fd0-aaf0-c31de81dd011",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -317,6 +366,17 @@
                     "action": "MoveHand",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c5b62730-9638-4ae3-baa7-07b7dd4a0409",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenGameMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -350,6 +410,45 @@
                     "name": "",
                     "id": "76bc6b7d-2ab0-4c11-ad18-2abaa35ff96b",
                     "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3240aa76-c89d-4b53-812c-cbffa6a10dc0",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "GameMenuInput",
+            "id": "c6717eed-268f-4b6f-98c7-f8fee5c48b83",
+            "actions": [
+                {
+                    "name": "Continue",
+                    "type": "Value",
+                    "id": "75411783-4865-4fe8-ab50-9b2a79f833cc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3d882bcf-4d92-48f6-81e3-917ef3146cab",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

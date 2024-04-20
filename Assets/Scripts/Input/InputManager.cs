@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class InputManager : SingletonSubject<InputManager>
 {
@@ -15,6 +16,7 @@ public class InputManager : SingletonSubject<InputManager>
     InputActionMap _isometricInput;
     InputActionMap _reloadInput;
     InputActionMap _interactionInput;
+    InputActionMap _gameMenuInput;
 
     List<InputActionMap> _actionMapsList = new List<InputActionMap>();
 
@@ -26,6 +28,8 @@ public class InputManager : SingletonSubject<InputManager>
         AddAction(EnumsActions.OnSwitchToIsometric, ToIsometricView);
         AddAction(EnumsActions.OnSwitchToInteraction, ToInteractionView);
         AddAction(EnumsActions.OnReload, ToReloadView);
+        AddAction(EnumsActions.OnOpenGameMenu, ToGameMenu);
+        AddAction(EnumsActions.OnCloseGameMenu, ToIsometricView);
     }
 
     void Start()
@@ -34,6 +38,7 @@ public class InputManager : SingletonSubject<InputManager>
         _actionMapsList.Add(_isometricInput);
         _actionMapsList.Add(_reloadInput);
         _actionMapsList.Add(_interactionInput);
+        _actionMapsList.Add(_gameMenuInput);
 
         ToIsometricView();
     }
@@ -48,6 +53,7 @@ public class InputManager : SingletonSubject<InputManager>
         _firstPersonInput = _input.FirstPersonInput;
         _reloadInput = _input.ReloadInput;
         _interactionInput = _input.InteractionInput;
+        _gameMenuInput = _input.GameMenuInput;
 
         //isometric
         _input.IsometricInput.LookAt.performed += ctx => Player.Instance.IsometricLook();
@@ -62,6 +68,8 @@ public class InputManager : SingletonSubject<InputManager>
         _input.IsometricInput.Run.canceled += ctx => Player.Instance.OnRunStop();
 
         _input.IsometricInput.Interact.performed += ctx => Player.Instance.IsometricInteracte();
+
+        _input.IsometricInput.OpenGameMenu.performed += ctx => UIGameMenu.Instance.OpenGameMenu();
 
         //first person
         _input.FirstPersonInput.Look.performed += ctx => Player.Instance.OnMouseDelta(ctx.ReadValue<Vector2>());
@@ -78,6 +86,9 @@ public class InputManager : SingletonSubject<InputManager>
 
         //interaction
         _input.InteractionInput.Continue.performed += ctx => UIInteraction.Instance.Continue();
+
+        //game menu
+        _input.GameMenuInput.Continue.canceled += ctx => UIGameMenu.Instance.ButtonContinue();
 
         _input.Enable();
     }
@@ -117,6 +128,9 @@ public class InputManager : SingletonSubject<InputManager>
         //interaction
         _input.InteractionInput.Continue.performed -= ctx => UIInteraction.Instance.Continue();
 
+        //game menu
+        _input.GameMenuInput.Continue.performed -= ctx => UIGameMenu.Instance.ButtonContinue();
+        
         _input.Disable();
     }
 
@@ -125,6 +139,7 @@ public class InputManager : SingletonSubject<InputManager>
     void ToIsometricView() => EnableActionMap(_isometricInput);
     void ToInteractionView() => EnableActionMap(_interactionInput);
     void ToReloadView() => EnableActionMap(_reloadInput);
+    void ToGameMenu() => EnableActionMap(_gameMenuInput);
 
     //other methods
     void EnableActionMap(InputActionMap mapToEnable)

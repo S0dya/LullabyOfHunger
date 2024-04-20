@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4e27a20da1eb647409c6c5be81bd6c9e
+guid: dd1682b8f86070f4784b1929a05cfc4f
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - DotGothic16
+  - Oswald
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

@@ -15,4 +15,7 @@ public enum EnumsActions
 
     OnStoppedAiming,
     OnTakeMagFromBag,
+
+    OnOpenGameMenu,
+    OnCloseGameMenu,
 }

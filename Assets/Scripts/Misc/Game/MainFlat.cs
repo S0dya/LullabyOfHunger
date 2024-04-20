@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainFlat : SingletonSubject<MainFlat>
 {
     [SerializeField] SkinnedMeshRenderer HeadMesh;
     [SerializeField] SkinnedMeshRenderer GasMaskMesh;
     [SerializeField] GameObject HandGunObj;
+    [SerializeField] Image FPGasMaskVisorImage;
 
     //local
     InteractionDoorMainFlat _interactionDoorMainFlat;
@@ -18,7 +20,7 @@ public class MainFlat : SingletonSubject<MainFlat>
 
         _interactionDoorMainFlat = GameObject.FindGameObjectWithTag("InteractionDoorMainFlat").GetComponent<InteractionDoorMainFlat>();
 
-        HeadMesh.enabled = true; GasMaskMesh.enabled = false;
+        HeadMesh.enabled = true; GasMaskMesh.enabled = FPGasMaskVisorImage.enabled = false;
         HandGunObj.SetActive(false);
     }
 
@@ -34,7 +36,7 @@ public class MainFlat : SingletonSubject<MainFlat>
 
     public void GasMaskFound()
     {
-        GasMaskMesh.enabled = true; HeadMesh.enabled = false;
+        GasMaskMesh.enabled = FPGasMaskVisorImage.enabled = true; HeadMesh.enabled = false;
     }
 
     public void MagFound()
