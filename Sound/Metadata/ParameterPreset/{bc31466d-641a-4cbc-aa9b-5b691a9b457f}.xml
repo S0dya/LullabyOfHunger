@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{bc31466d-641a-4cbc-aa9b-5b691a9b457f}">
+		<property name="name">
+			<value>OpenCloseDoor</value>
+		</property>
+		<relationship name="folder">
+			<destination>{b358c906-1bb2-4b90-a8a8-2da86625a832}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{9f6a4a5c-caa8-4ceb-9690-71dfd59150ef}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{9f6a4a5c-caa8-4ceb-9690-71dfd59150ef}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

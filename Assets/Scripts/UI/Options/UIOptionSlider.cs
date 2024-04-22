@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,25 +12,20 @@ public class UIOptionSlider : UIOption
     //local 
     Slider _slider;
 
-    UnityEvent<float> _optionEvent;
-
     float _curVal;
 
-    void Awake()
+    new void Awake()
     {
-        //_optionName = 
-
-        _slider = GetComponent<Slider>();
+        _optionText = GetComponentInChildren<TextMeshProUGUI>();
+        _slider = GetComponentInChildren<Slider>();
 
         _slider.onValueChanged.AddListener(OnValueChanged);
     }
 
     //outside methods
-    public void AssignOption(string name, UnityEvent<float> optionEvent)
+    public override void AssignOption(string name)
     {
-        AssignOption(name); SetOptionLine("");
-
-        _optionEvent = optionEvent;
+        base.AssignOption(name); SetOptionLine("");
     }
 
     public void SetSliderVal(float val)
@@ -46,10 +42,5 @@ public class UIOptionSlider : UIOption
     public void OnValueChanged(float val)
     {
         _curVal = val;
-
-        InvokeEvent();
     }
-
-    //other methods
-    void InvokeEvent() => _optionEvent.Invoke(_curVal);
 }

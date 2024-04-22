@@ -27,6 +27,12 @@ public class LevelManager : SingletonSubject<LevelManager>
         AddAction(EnumsActions.OnSwitchToInteraction, SwitchToInteraction);
     }
 
+    //outside methods
+    public void SetCamsFov()
+    {
+        foreach (var cam in _cameras) cam.SetCamFov(Settings.camFov);
+    }
+
     //actions
     void SwitchToIsometric()
     {

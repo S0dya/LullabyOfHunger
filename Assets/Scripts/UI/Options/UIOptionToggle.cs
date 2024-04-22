@@ -9,8 +9,6 @@ public class UIOptionToggle : UIOption
     //local 
     Button _button;
 
-    UnityEvent<bool> _optionEvent;
-
     bool _curToggle;
 
     //props 
@@ -25,19 +23,9 @@ public class UIOptionToggle : UIOption
         _button.onClick.AddListener(OnClick);
     }
 
-    //outside methods
-    public void AssignOption(string name, UnityEvent<bool> optionEvent)
-    {
-        AssignOption(name);
-
-        _optionEvent = optionEvent;
-    }
-
     public void SetToggle(bool toggle)
     {
         Toggle = toggle;
-
-        InvokeEvent();
     }
 
     public bool GetToggle()
@@ -48,11 +36,6 @@ public class UIOptionToggle : UIOption
     //actions 
     void OnClick()
     {
-        Toggle = !Toggle;
-
-        InvokeEvent();
+        SetToggle(!Toggle);
     }
-
-    //other methods
-    void InvokeEvent() => _optionEvent.Invoke(Toggle);
 }

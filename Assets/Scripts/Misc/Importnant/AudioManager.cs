@@ -52,7 +52,7 @@ public class AudioManager : SingletonSubject<AudioManager>
     //settings
     public void SetVolume(int index, float volume)
     {
-        RuntimeManager.GetBus((index == 0? "bus:/MUSIC" : "bus:/SFX")).setVolume(volume);
+        RuntimeManager.GetBus((index == 0? "bus:/AMBIENT" : index == 0 ? "bus:/MUSIC" : "bus:/SFX")).setVolume(volume);
         Settings.musicStats[index] = volume;
     }
 }

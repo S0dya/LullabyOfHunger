@@ -21,13 +21,12 @@ public class SingletonCamera<T> : MonoBehaviour where T : MonoBehaviour
     }
 
     //outside methods
-    public virtual void ToggleCam(bool toggle)
-    {
-        Camera.enabled = toggle;
-    }
+    public virtual void ToggleCam(bool toggle) =>Camera.enabled = toggle;
+    public virtual void SetCamFov(float val) => Camera.fieldOfView = val;
 }
 
 interface ICamera
 {
     void ToggleCam(bool toggle);
+    void SetCamFov(float val);
 }

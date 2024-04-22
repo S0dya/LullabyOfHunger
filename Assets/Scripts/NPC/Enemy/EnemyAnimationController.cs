@@ -119,7 +119,7 @@ public class EnemyAnimationController : MonoBehaviour
 
     public void Shot(Vector3 force, Vector3 pos)
     {
-        Instantiate(BloodShedEffect, pos, Quaternion.identity, _effectsParent);
+        if (Settings.showBlood) Instantiate(BloodShedEffect, pos, Quaternion.identity, _effectsParent);
 
         if (!this.enabled) return;
 

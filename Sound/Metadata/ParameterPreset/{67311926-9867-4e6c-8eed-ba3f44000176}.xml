@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{67311926-9867-4e6c-8eed-ba3f44000176}">
+		<property name="name">
+			<value>Fear_Intensity</value>
+		</property>
+		<relationship name="folder">
+			<destination>{b358c906-1bb2-4b90-a8a8-2da86625a832}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{fd39c5c6-72d4-4a7c-aca5-c87afdc27080}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{fd39c5c6-72d4-4a7c-aca5-c87afdc27080}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="seekSpeed">
+			<value>0.39999997615814209</value>
+		</property>
+	</object>
+</objects>

@@ -10,10 +10,9 @@ public class UIOptionText : UIOption, IPointerClickHandler
 {
 
     //local 
-    Button _button;
-
     TextOption[] _options;
 
+    int _optionsN;
     int _curOptionI;
 
     //props
@@ -21,24 +20,17 @@ public class UIOptionText : UIOption, IPointerClickHandler
         set { _curOptionI = value;
             SetOptionLine(_options[_curOptionI].Line); } }
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-        _button = GetComponent<Button>();
-    }
-
     //outside methods
     public void AssignOption(string name, TextOption[] options)
     {
         AssignOption(name);
 
-        _options = options;
+        _options = options; _optionsN = _options.Length - 1;
     }
 
     public void SetOptionI(int i)
     {
-        optionI = i; InvokeEvent();
+        optionI = i;
     }
 
     public int GetOptionI()
@@ -51,18 +43,13 @@ public class UIOptionText : UIOption, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (optionI > _options.Length) optionI = 0;
+            if (optionI == _optionsN) optionI = 0;
             else optionI++;
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            if (_curOptionI == 0) optionI = _options.Length;
+            if (_curOptionI == 0) optionI = _optionsN;
             else optionI--;
         }
-
-        InvokeEvent();
     }
-
-    //other methods
-    void InvokeEvent() => _options[_curOptionI].OptionEvent.Invoke(_options[_curOptionI].Line);
 }

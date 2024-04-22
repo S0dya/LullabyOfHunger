@@ -21,12 +21,13 @@ public class UIGameMenu : UISingletonMonobehaviour<UIGameMenu>
     {
         if (!MainCG.blocksRaycasts) return;
 
+        UIOptions.Instance.CloseOptions(); //myb remove
         SwitchCGSetTime(0); 
         Observer.Instance.NotifyObservers(EnumsActions.OnCloseGameMenu);
     }
     public void ButtonOptions()
     {
-
+        UIOptions.Instance.OpenOptions();
     }
     public void ButtonQuit()
     {

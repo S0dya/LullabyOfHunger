@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
 public class UIOptions : UISingletonMonobehaviour<UIOptions>
 {
+    [Header("UI panels")]
+    [SerializeField] GameObject[] PanelsObjs;
 
+    [SerializeField] Image[] PanelButtons;
+    [SerializeField] Color HighlightedColor;
+    [SerializeField] Color NormalColor;
+
+    [Header("Options")]
     [SerializeField] OptionSettingText[] OptionSettingsTexts;
     [SerializeField] OptionSettingToggle[] OptionSettingsToggles;
     [SerializeField] OptionSettingSlider[] OptionSettingsSliders;
@@ -15,6 +24,11 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
     Dictionary<string, OptionSettingText> _optionsSettingsTextsDict = new Dictionary<string, OptionSettingText>();
     Dictionary<string, OptionSettingToggle> _optionsSettingsTogglesDict = new Dictionary<string, OptionSettingToggle>();
     Dictionary<string, OptionSettingSlider> _optionsSettingsSlidersDict = new Dictionary<string, OptionSettingSlider>();
+
+    PostProcessVolume _postProcessVol;
+
+    //threshold
+    int _curOpenTabI;
 
     protected override void Awake()
     {
@@ -30,32 +44,132 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
         {
             _optionsSettingsTogglesDict.Add(option.Name, option);
 
-            option.UiOption.AssignOption(option.Name, option.OptionEvent);
+            option.UiOption.AssignOption(option.Name);
         }
         foreach (var option in OptionSettingsSliders)
         {
             _optionsSettingsSlidersDict.Add(option.Name, option);
 
-            option.UiOption.AssignOption(option.Name, option.OptionEvent);
+            option.UiOption.AssignOption(option.Name);
         }
+
+        _postProcessVol = FindObjectOfType<PostProcessVolume>();
     }
 
     //outside methods
-    //actions
+    public void OpenOptions()
+    {
+        ButtonOpenTab(0); LoadGameSettings();
+        SwitchCG(1);
+    }
+
+    public void CloseOptions()
+    {
+        SwitchCG(0);
+    }
+
+    //buttons 
+    public void ButtonApplyChanges()
+    {
+        SaveGameSettings(); CloseOptions();
+    }
+
+    public void ButtonOpenTab(int i)
+    {
+        if (_curOpenTabI == i) return;
+
+        SetCurPanel(false); _curOpenTabI = i; SetCurPanel(true);
+    }
+
+    //actions 
+    //text
     public void SetResolution(string str)
     {
         string[] resolutionParts = str.Split(" x ");
         if (resolutionParts.Length == 2 && int.TryParse(resolutionParts[0], out int width) && int.TryParse(resolutionParts[1], out int height))
+        {
             Screen.SetResolution(width, height, Screen.fullScreen);
+        }
+    }
+
+    public void SetWindowMode(string str)
+    {
+        Screen.fullScreen = str == "Windowed";
+    }
+
+    public void SetQuality(string str)
+    {
+        QualitySettings.SetQualityLevel(str == "Low" ? 0 : str == "Medium" ? 1 : 2);
+    }
+
+    //toggle
+    public void ShowBlood(bool toggle)
+    {
+        Settings.showBlood = toggle;
+    }
+
+    //slider
+    public void ChangeAmbientVol(float val) => ChangeVol(0, val);
+    public void ChangeMusicVol(float val) =>ChangeVol(1, val);
+    public void ChangeSFXVol(float val) => ChangeVol(2, val);
+    public void ChangeFov(float val)
+    {
+        Settings.camFov = val;
+
+        LevelManager.Instance.SetCamsFov();
+    }
+    public void ChangeGamma(float val)
+    {
+        GetColorGrading().gamma.value = new Vector4(val, val, val, val);
+    }
+    public void ChangeContrast(float val)
+    {
+        GetColorGrading().contrast.value = val;
+    }
+    public void ChangeBrightness(float val)
+    {
+        GetColorGrading().postExposure.value = val;
+    }
+
+    //other
+    void SetCurPanel(bool toggle)
+    {
+        PanelsObjs[_curOpenTabI].SetActive(toggle);
+        PanelButtons[_curOpenTabI].color = toggle ? HighlightedColor : NormalColor;
+    }
+
+    void ChangeVol(int i, float val) => AudioManager.Instance.SetVolume(i, val);
+
+    ColorGrading GetColorGrading()
+    {
+        ColorGrading colorGrading;
+        _postProcessVol.profile.TryGetSettings(out colorGrading);
+
+        return colorGrading;
+
     }
 
     //save
     public void SaveGameSettings()
     {
-        foreach (var kvp in _optionsSettingsTextsDict) SaveInt(kvp.Key, kvp.Value.UiOption.GetOptionI());
-        foreach (var kvp in _optionsSettingsTogglesDict) SaveBool(kvp.Key, kvp.Value.UiOption.GetToggle());
-        foreach (var kvp in _optionsSettingsSlidersDict) SaveFloat(kvp.Key, kvp.Value.UiOption.GetSliderVal());
+        foreach (var kvp in _optionsSettingsTextsDict)
+        {
+            var val = kvp.Value.UiOption.GetOptionI(); SaveInt(kvp.Key, val);
 
+            kvp.Value.Options[val].OptionEvent.Invoke(kvp.Value.Options[val].Line);
+        }
+        foreach (var kvp in _optionsSettingsTogglesDict)
+        {
+            var val = kvp.Value.UiOption.GetToggle(); SaveBool(kvp.Key, val);
+
+            kvp.Value.OptionEvent.Invoke(val);
+        }
+        foreach (var kvp in _optionsSettingsSlidersDict)
+        {
+            var val = kvp.Value.UiOption.GetSliderVal(); SaveFloat(kvp.Key, val);
+
+            kvp.Value.OptionEvent.Invoke(val);
+        }
     }
 
     void LoadGameSettings()
