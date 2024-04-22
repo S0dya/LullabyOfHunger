@@ -6,19 +6,7 @@ using UnityEngine;
 public class GameData
 {
     //id, data
-    [SerializeField] public Dictionary<string, GameObjectData> GameDataDict = new Dictionary<string, GameObjectData>();
-}
-
-[System.Serializable]
-public class GameObjectData
-{
-    [SerializeField] public Dictionary<SceneNameEnum, GameObjectSave> GameObjectDataDict = new Dictionary<SceneNameEnum, GameObjectSave>();
-
-    public GameObjectData(SceneNameEnum sceneName, GameObjectSave save)
-    {
-        GameObjectDataDict.Add(sceneName, save);
-    }
-    public GameObjectData() { }
+    [SerializeField] public Dictionary<string, GameObjectSave> GameDataDict = new Dictionary<string, GameObjectSave>();
 }
 
 [System.Serializable]

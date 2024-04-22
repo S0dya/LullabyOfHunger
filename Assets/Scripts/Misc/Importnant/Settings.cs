@@ -10,6 +10,8 @@ public static class Settings
     public static float[] musicStats;
 
     //in game
-    public static int curMagsN = 1;
+    public static bool firstTime;
 
+    public static int curMagsN = 1;
+    public static bool hasGasMask;
 }

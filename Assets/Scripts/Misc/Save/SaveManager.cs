@@ -40,10 +40,12 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
         File.WriteAllText(Application.persistentDataPath + fileName, json);
     }
 
-
+    //outside methods
+    public void AddISaveable(ISaveable iSaveable) => _iSaveableObjectList.Add(iSaveable);
+    public void RemoveISaveable(ISaveable iSaveable) => _iSaveableObjectList.Remove(iSaveable);
 
     //other methods
-    public void AssignData(string id, GameObjectData data)
+    public void AssignData(string id, GameObjectSave data)
     {
         if (_gameData.GameDataDict.ContainsKey(id)) _gameData.GameDataDict[id] = data;
         else _gameData.GameDataDict.Add(id, data);

@@ -5324,6 +5324,9 @@ MonoBehaviour:
   LookingTargetTransform: {fileID: 0}
   ReloadingTargetTransform: {fileID: 7088589589611031448}
   MinimumSpeedToPlayFootStepSound: 0.5
+  HeadMesh: {fileID: 2500522277008075549}
+  GasMaskMesh: {fileID: 8977512012460651977}
+  FPGasMaskVisorImage: {fileID: 0}
   _lookDirection: {x: 0, y: 0}
 --- !u!114 &7971040925087514268
 MonoBehaviour:

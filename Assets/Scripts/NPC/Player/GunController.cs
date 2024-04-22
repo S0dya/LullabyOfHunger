@@ -6,7 +6,6 @@ public class GunController : SingletonSubject<GunController>
 {
     [Header("settings")]
     public int BulletsInMagazine = 7;
-    public int MagsAmount = 6;
 
     public float GunInteractionDistance = 0.17f;
     public float MagInteractionDistance = 0.12f;
@@ -41,6 +40,8 @@ public class GunController : SingletonSubject<GunController>
     [SerializeField] GameObject FullMagPrefab;
 
     //local
+    MagsBag _magsBag;
+
     Transform _gunReloadTransform;
     Transform _emptyMagHandTransf;
 
@@ -69,6 +70,8 @@ public class GunController : SingletonSubject<GunController>
     protected override void Awake()
     {
         base.Awake();
+
+        _magsBag = GetComponent<MagsBag>();
 
         _gunReloadTransform = GunReloadObj.transform;
         _emptyMagHandTransf = EmptyMagHandObj.transform;
@@ -166,9 +169,8 @@ public class GunController : SingletonSubject<GunController>
     //reloading methods
     void TakeMagFromBag()
     {
-        if (MagsAmount <= 0) return;
+        if (!_magsBag.HasMags()) return;
 
-        MagsAmount--;
         NotifyObserver(EnumsActions.OnTakeMagFromBag);
 
         _isHoldingFullMag = true;

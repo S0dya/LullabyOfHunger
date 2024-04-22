@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player: SingletonSubject<Player>
 {
@@ -35,6 +36,11 @@ public class Player: SingletonSubject<Player>
 
     [Header("animation & sound")]
     public float MinimumSpeedToPlayFootStepSound = 1;
+
+    [Header("gas mask")]
+    [SerializeField] SkinnedMeshRenderer HeadMesh;
+    [SerializeField] SkinnedMeshRenderer GasMaskMesh;
+    [SerializeField] Image FPGasMaskVisorImage;
 
     //local
     GunController _gunController;
@@ -122,6 +128,8 @@ public class Player: SingletonSubject<Player>
         _movementSpeed = WalkSpeed;
 
         StartCoroutine(DelayAimCor());
+
+        ToggleGasMask(Settings.hasGasMask);
     }
 
     //input
@@ -318,6 +326,13 @@ public class Player: SingletonSubject<Player>
     void StoppedAiming()
     {
         _canReload = true;
+    }
+
+    //outside methods
+    public void ToggleGasMask(bool toggle)
+    {
+        GasMaskMesh.enabled = FPGasMaskVisorImage.enabled = toggle;
+        HeadMesh.enabled = !toggle;
     }
 
     //other methods

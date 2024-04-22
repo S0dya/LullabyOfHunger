@@ -20,11 +20,17 @@ public class MagsBag : SingletonSubject<MagsBag>
     void Start()
     {
         for (int i = 0; i < Settings.curMagsN; i++) MagsObjs[i].enabled = true;
+        for (int i = Settings.curMagsN; i < MagsObjs.Length; i++) MagsObjs[i].enabled = false;
 
         _lastMagIndex = Settings.curMagsN;
     }
 
     //outside methods
+    public bool HasMags()
+    {
+        return _lastMagIndex > 0;
+    }
+
     public void AddMag()
     {
         if (_lastMagIndex >= _maxMagsN) return;

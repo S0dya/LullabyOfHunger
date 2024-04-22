@@ -10,5 +10,7 @@ public class InteractionDoor : Interaction
     public void Interact()
     {
         LoadingScene.Instance.OpenScene(SceneToOpen);
+
+        SaveManager.Instance.SaveDataToFile();
     }
 }
