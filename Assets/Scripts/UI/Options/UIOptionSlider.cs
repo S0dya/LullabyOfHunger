@@ -20,6 +20,7 @@ public class UIOptionSlider : UIOption
         _slider = GetComponentInChildren<Slider>();
 
         _slider.onValueChanged.AddListener(OnValueChanged);
+        _curVal = _slider.value;
     }
 
     //outside methods
@@ -30,7 +31,7 @@ public class UIOptionSlider : UIOption
 
     public void SetSliderVal(float val)
     {
-        _slider.value = val;
+        _slider.value = _curVal = val;
     }
 
     public float GetSliderVal()

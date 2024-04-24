@@ -27,9 +27,6 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
 
     PostProcessVolume _postProcessVol;
 
-    //threshold
-    int _curOpenTabI;
-
     protected override void Awake()
     {
         base.Awake();
@@ -56,6 +53,11 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
         _postProcessVol = FindObjectOfType<PostProcessVolume>();
     }
 
+    void Start()
+    {
+        SaveGameSettings();
+    }
+
     //outside methods
     public void OpenOptions()
     {
@@ -76,9 +78,7 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
 
     public void ButtonOpenTab(int i)
     {
-        if (_curOpenTabI == i) return;
-
-        SetCurPanel(false); _curOpenTabI = i; SetCurPanel(true);
+        SetCurPanel(i);
     }
 
     //actions 
@@ -131,11 +131,23 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
         GetColorGrading().postExposure.value = val;
     }
 
-    //other
-    void SetCurPanel(bool toggle)
+    public void ChangeFPSensitivity(float val)
     {
-        PanelsObjs[_curOpenTabI].SetActive(toggle);
-        PanelButtons[_curOpenTabI].color = toggle ? HighlightedColor : NormalColor;
+        Player.Instance.SensitivityFirstPerson = val;
+    }
+    public void ChangeReloadingSensitivity(float val)
+    {
+        Player.Instance.SensitivityInReloading = val;
+    }
+
+    //other
+    void SetCurPanel(int indexToTrue)
+    {
+        for (int i = 0; i < PanelsObjs.Length; i++)
+        {
+            PanelsObjs[i].SetActive(i == indexToTrue);
+            PanelButtons[i].color = i == indexToTrue ? HighlightedColor : NormalColor;
+        }
     }
 
     void ChangeVol(int i, float val) => AudioManager.Instance.SetVolume(i, val);

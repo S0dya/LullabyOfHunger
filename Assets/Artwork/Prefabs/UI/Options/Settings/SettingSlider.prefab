@@ -476,8 +476,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6274101140653577390}
-  - component: {fileID: 2692981450810392566}
   - component: {fileID: 6897698770180231572}
+  - component: {fileID: 2692981450810392566}
   m_Layer: 5
   m_Name: SettingSlider
   m_TagString: Untagged
@@ -506,6 +506,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6897698770180231572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6301870371805302146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd1a29cfc4732b43a79ba8745589087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _optionText: {fileID: 0}
+  _optionName: 
 --- !u!114 &2692981450810392566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,20 +546,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &6897698770180231572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6301870371805302146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fd1a29cfc4732b43a79ba8745589087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _optionText: {fileID: 0}
-  _optionName: 
 --- !u!1 &8747801157783901643
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using static UnityEngine.InputSystem.PlayerInput;
+using UnityEngine.UIElements;
 
 public class UIOptionText : UIOption, IPointerClickHandler
 {

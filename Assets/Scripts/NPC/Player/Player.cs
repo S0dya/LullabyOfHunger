@@ -10,10 +10,12 @@ public class Player: SingletonSubject<Player>
     public float WalkSpeed = 2;
     public float RunSpeed = 4;
     public float RotationSpeed = 6;
+    public float GeneralRotationSpeed = 5;
 
     public float Durability = 4;
     public float AimDelayDuration = 0.5f;
 
+    public float SensitivityFirstPerson = 1;
     public float SensitivityInReloading = 0.5f;
 
     [Header("smoothness of animation, 0 - performed, 1 - canceled")]
@@ -200,7 +202,7 @@ public class Player: SingletonSubject<Player>
     }
     public void OnLook(Vector2 direction)
     {
-        _lookDirection = new Vector2(Mathf.Clamp(_lookDirection.x + direction.x, -LookRotationOffset[0], LookRotationOffset[1]), 
+        _lookDirection = new Vector2(Mathf.Clamp(_lookDirection.x + direction.x * SensitivityFirstPerson, -LookRotationOffset[0], LookRotationOffset[1]), 
             Mathf.Clamp(_lookDirection.y + direction.y, -LookRotationOffset[2], LookRotationOffset[3]));
     }
     public void OnReloadLook(Vector2 direction)
@@ -245,7 +247,7 @@ public class Player: SingletonSubject<Player>
         _curRotationDirection = GetLerpVal(_curRotationDirection, _targetRotation, 0.05f, _curRotateSmoothness);
 
         _cc.Move((transform.forward.normalized * (_curMovementSpeed) + _gravity) * _deltaTime);
-        transform.rotation *= Quaternion.Euler(0, _curRotationDirection * (1 - Mathf.Clamp01(GetAbs(_curMovementSpeed) / RotationSpeed)), 0);
+        transform.rotation *= Quaternion.Euler(0, _curRotationDirection * _deltaTime * RotationSpeed * (1 - Mathf.Clamp01(GetAbs(_curMovementSpeed) / GeneralRotationSpeed)), 0);
     }
     void HandleMouse()
     {

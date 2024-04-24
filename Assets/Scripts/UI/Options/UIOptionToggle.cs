@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UIOptionToggle : UIOption
 {
+    public bool DefaultVal;
+
     //local 
     Button _button;
 
@@ -21,6 +23,7 @@ public class UIOptionToggle : UIOption
         _button = GetComponent<Button>();
 
         _button.onClick.AddListener(OnClick);
+        Toggle = DefaultVal;
     }
 
     public void SetToggle(bool toggle)
