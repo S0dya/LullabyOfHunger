@@ -6,13 +6,21 @@ public class DistanceToggle : MonoBehaviour
 {
     [SerializeField] GameObject ObjectToToggle;
 
+    void Start()
+    {
+        ToggleObj(false);
+
+    }
+
     void OnTriggerEnter(Collider collision)
     {
-        ObjectToToggle.SetActive(true);
+        ToggleObj(true);
     }
 
     void OnTriggerExit(Collider collision)
     {
-        ObjectToToggle.SetActive(false);
+        ToggleObj(false);
     }
+
+    void ToggleObj(bool toggle) => ObjectToToggle.SetActive(toggle);
 }

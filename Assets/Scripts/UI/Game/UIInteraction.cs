@@ -117,8 +117,18 @@ public enum InteractionItemEnum
 
     Handgun,
     Magazine,
+    
     FlatIcon,
+    
     GasMaskMC,
     GasMaskChild,
+    
+    ParadizePicture,
 
+    WomanFramePhoto,
+    PoliceOfficerFramePhoto,
+    WedingFramePhoto,
+    HospitalFramePhoto,
+
+    Haloperidol,
 }
