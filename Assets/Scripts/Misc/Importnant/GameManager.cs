@@ -46,6 +46,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
         gameObjectSave.BoolDict.Add("HasGasMask", Settings.hasGasMask);
 
         gameObjectSave.IntDict.Add("CurMagsN", Settings.curMagsN);
+        gameObjectSave.IntDict.Add("CurBulletsAmount", Settings.curBulletsAmount);
 
         return gameObjectSave;
     }
@@ -65,6 +66,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
             gameObjectSave.BoolDict.TryGetValue("HasGasMask", out Settings.hasGasMask);
 
             gameObjectSave.IntDict.TryGetValue("CurMagsN", out Settings.curMagsN);
+            gameObjectSave.IntDict.TryGetValue("CurBulletsAmount", out Settings.curBulletsAmount);
 
         }
     }

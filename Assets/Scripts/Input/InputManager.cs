@@ -29,7 +29,8 @@ public class InputManager : SingletonSubject<InputManager>
         AddAction(EnumsActions.OnSwitchToInteraction, ToInteractionView);
         AddAction(EnumsActions.OnReload, ToReloadView);
         AddAction(EnumsActions.OnOpenGameMenu, ToGameMenu);
-        AddAction(EnumsActions.OnCloseGameMenu, ToIsometricView);
+        AddAction(EnumsActions.OnCloseGameMenu, ToIsometricView); 
+        AddAction(EnumsActions.OnGameOver, DisableMaps); 
     }
 
     void Start()

@@ -18,10 +18,6 @@ public class LightInteraction : MonoBehaviour
         if (Light == null) Light = GetComponent<Light>();
     }
 
-    void Start()
-    {
-        this.gameObject.SetActive(false);
-    }
     void OnEnable()
     {
         PingPongLightIntensity(); Light.enabled = true;

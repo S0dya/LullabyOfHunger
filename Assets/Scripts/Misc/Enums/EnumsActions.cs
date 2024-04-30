@@ -18,4 +18,6 @@ public enum EnumsActions
 
     OnOpenGameMenu,
     OnCloseGameMenu,
+
+    OnGameOver,
 }

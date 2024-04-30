@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIGameMenu : UISingletonMonobehaviour<UIGameMenu>
+public class UIMenu : UISingletonMonobehaviour<UIMenu>
 {
-    //[Header("UI")] [SerialzieField]
-
 
     //Input
     public void OpenGameMenu()
@@ -19,11 +17,11 @@ public class UIGameMenu : UISingletonMonobehaviour<UIGameMenu>
     //buttons
     public void ButtonContinue()
     {
-        if (!MainCG.blocksRaycasts) return;
-
-        UIOptions.Instance.CloseOptions(); //myb remove
-        SwitchCGSetTime(0); 
-        Observer.Instance.NotifyObservers(EnumsActions.OnCloseGameMenu);
+        LoadingScene.Instance.OpenScene(Settings.curScene);
+    }
+    public void ButtonNewGame()
+    {
+        LoadingScene.Instance.OpenScene(SceneNameEnum.MCFlat);
     }
     public void ButtonOptions()
     {
@@ -31,9 +29,6 @@ public class UIGameMenu : UISingletonMonobehaviour<UIGameMenu>
     }
     public void ButtonQuit()
     {
-
-        LoadingScene.Instance.OpenScene(SceneNameEnum.Menu);
+        Application.Quit();
     }
-
-
 }

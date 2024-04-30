@@ -5298,9 +5298,11 @@ MonoBehaviour:
   ActionsDictionaries: []
   WalkSpeed: 2.5
   RunSpeed: 4
-  RotationSpeed: 5
+  RotationSpeed: 150
+  GeneralRotationSpeed: 5
   Durability: 4
   AimDelayDuration: 0.5
+  SensitivityFirstPerson: 1
   SensitivityInReloading: 0.025
   MoveSmoothness:
   - 3
@@ -5368,7 +5370,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActionsDictionaries: []
   BulletsInMagazine: 7
-  MagsAmount: 6
   GunInteractionDistance: 0.2
   MagInteractionDistance: 0.215
   ShotEffectTime: 0.05
@@ -5425,7 +5426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionsDictionaries: []
-  InteractionAngle: 120
+  InteractionAngle: 80
 --- !u!95 &7971040925087514212
 Animator:
   serializedVersion: 5

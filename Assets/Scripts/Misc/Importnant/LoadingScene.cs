@@ -31,7 +31,7 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
     //outside methods
     public void LoadMenu()
     {
-        StartCoroutine(LoadMenuCor());
+        StartCoroutine(LoadSceneCor(GetSceneIndexByName(SceneNameEnum.Menu)));
     }
     public void OpenMenu() => OpenMenu(Settings.curScene);
     public void OpenMenu(SceneNameEnum sceneToClose)
@@ -52,25 +52,15 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
     }
 
     //main cors
-    IEnumerator LoadMenuCor()
-    {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(GetSceneIndexByName(SceneNameEnum.Menu), LoadSceneMode.Additive);
-
-        ToggleLoadingScreen(true);
-
-        while (!operation.isDone)
-        {
-            SetFillAmount(operation.progress);
-
-            yield return null;
-        }
-
-        ToggleLoadingScreen(false);
-    }
-
     IEnumerator LoadSceneCor(int sceneToOpen, int sceneToClose)
     {
         SceneManager.UnloadSceneAsync(sceneToClose);
+
+        yield return StartCoroutine(LoadSceneCor(sceneToOpen));
+    }
+
+    IEnumerator LoadSceneCor(int sceneToOpen)
+    {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToOpen, LoadSceneMode.Additive);
 
         ToggleLoadingScreen(true);

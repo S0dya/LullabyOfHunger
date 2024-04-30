@@ -51,7 +51,7 @@ public class GunController : SingletonSubject<GunController>
     Light _shotLight;
 
     //gun
-    [HideInInspector] public int _curBulletsAmount = 8;
+    [HideInInspector] public int _curBulletsAmount;
 
     //animator 
     int _animIDShoot;
@@ -92,6 +92,12 @@ public class GunController : SingletonSubject<GunController>
         _animIDShoot = Animator.StringToHash("Shoot");
         _animIDShootLast = Animator.StringToHash("ShootLast");
         _animIDReloadLast = Animator.StringToHash("ReloadLast");
+    }
+
+    void Start()
+    {
+        _curBulletsAmount = Settings.curBulletsAmount;
+
     }
 
     //actions

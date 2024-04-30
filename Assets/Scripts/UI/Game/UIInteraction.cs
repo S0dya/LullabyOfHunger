@@ -131,4 +131,6 @@ public enum InteractionItemEnum
     HospitalFramePhoto,
 
     Haloperidol,
+
+    RosePicture,
 }
