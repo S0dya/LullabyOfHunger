@@ -30,7 +30,8 @@ public class InputManager : SingletonSubject<InputManager>
         AddAction(EnumsActions.OnReload, ToReloadView);
         AddAction(EnumsActions.OnOpenGameMenu, ToGameMenu);
         AddAction(EnumsActions.OnCloseGameMenu, ToIsometricView); 
-        AddAction(EnumsActions.OnGameOver, DisableMaps); 
+        AddAction(EnumsActions.OnDeath, DisableMaps);
+        AddAction(EnumsActions.OnGameOver, DisableMaps);// myb remove later
     }
 
     void Start()

@@ -9,10 +9,6 @@ public class FirstPersonCamera : SingletonCamera<FirstPersonCamera>, ICamera
     public float ShakeDuration = 0.2f;
     public Vector3 ShakeRotation = Vector3.one;
 
-    [Header("other")]
-    [SerializeField] GameObject HeadObj;
-
-
     //outside methods
     public void Shoot()
     {
@@ -22,8 +18,6 @@ public class FirstPersonCamera : SingletonCamera<FirstPersonCamera>, ICamera
     //interface
     public override void ToggleCam(bool toggle)
     {
-        base.ToggleCam(toggle);
-
-        HeadObj.SetActive(!toggle);
+        base.ToggleCam(toggle); Player.Instance.ToggleHead(!toggle);
     }
 }

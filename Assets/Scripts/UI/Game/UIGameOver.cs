@@ -20,11 +20,6 @@ public class UIGameOver : UISingletonMonobehaviour<UIGameOver>
     CanvasGroup _textCG;
     TextMeshProUGUI _textText; //remove later
 
-    void Start() //remove later
-    {
-        Invoke("OpenTab", 5);
-    }
-
     protected override void Awake()
     {
         base.Awake();

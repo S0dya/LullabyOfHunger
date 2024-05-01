@@ -3432,7 +3432,6 @@ MonoBehaviour:
   Camera: {fileID: 7088589589164769946}
   ShakeDuration: 0.3
   ShakeRotation: {x: 2, y: 2, z: 2}
-  HeadObj: {fileID: 243881161743503962}
 --- !u!20 &7088589589164769946
 Camera:
   m_ObjectHideFlags: 0
@@ -3442,8 +3441,8 @@ Camera:
   m_GameObject: {fileID: 7088589589164769948}
   m_Enabled: 0
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5326,9 +5325,12 @@ MonoBehaviour:
   LookingTargetTransform: {fileID: 0}
   ReloadingTargetTransform: {fileID: 7088589589611031448}
   MinimumSpeedToPlayFootStepSound: 0.5
+  HeadObj: {fileID: 243881161743503962}
   HeadMesh: {fileID: 2500522277008075549}
   GasMaskMesh: {fileID: 8977512012460651977}
   FPGasMaskVisorImage: {fileID: 0}
+  HeadTransfBloodParent: {fileID: 701399289287725312}
+  BloodShedEffectPrefab: {fileID: 2559984588156265729, guid: 063df5ff54190f34b86dde2cc3e3a29c, type: 3}
   _lookDirection: {x: 0, y: 0}
 --- !u!114 &7971040925087514268
 MonoBehaviour:
@@ -5663,8 +5665,8 @@ Camera:
   m_GameObject: {fileID: 8347512665898176734}
   m_Enabled: 0
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

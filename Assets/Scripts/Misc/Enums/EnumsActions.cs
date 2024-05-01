@@ -19,5 +19,12 @@ public enum EnumsActions
     OnOpenGameMenu,
     OnCloseGameMenu,
 
+    OnDeath,
     OnGameOver,
+}
+
+public enum MonsterNameEnum
+{
+    Long,
+
 }

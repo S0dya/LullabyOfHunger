@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using FMODUnity;
 
-public class Enemy : SingletonSubject<Enemy>
+public class Enemy : Subject
 {
     [SerializeField] Transform[] testtrs;
     int curI = 0;
@@ -16,10 +16,14 @@ public class Enemy : SingletonSubject<Enemy>
 
     public float TimeBeforeFollowingPlayer = 1;
 
+    public MonsterNameEnum MonsterName = MonsterNameEnum.Long;
+
     [Header("other")]
     [SerializeField] Transform CameraFollowTransf;
 
     [SerializeField] GameObject EnemyTriggers;
+
+    [SerializeField] Transform KillPlayersTransf;
 
     [Header("animation & sound")]
     public float MinimumSpeedToPlayFootStepSound = 1;
@@ -64,8 +68,6 @@ public class Enemy : SingletonSubject<Enemy>
 
     protected override void Awake()
     {
-        base.Awake();
-
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _seePhrase = GetComponent<StudioEventEmitter>();
@@ -74,10 +76,12 @@ public class Enemy : SingletonSubject<Enemy>
 
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
 
-        _curDestination = transform;
+        StopWalking();
 
         //TEST
         if (testtrs[0] != null) _curDestination = testtrs[curI%2];
+
+        AddAction(EnumsActions.OnDeath, StopWalking);
     }
 
     void Start()
@@ -101,7 +105,6 @@ public class Enemy : SingletonSubject<Enemy>
                 curI++;
             }
         }
-        
 
         if (_seesPlayer)
         {
@@ -119,14 +122,6 @@ public class Enemy : SingletonSubject<Enemy>
     public void PlayFootStep()
     {
         if (_agent.velocity.magnitude > MinimumSpeedToPlayFootStepSound) AudioManager.Instance.PlayOneShot("EnemyLongFootSteps", transform.position);
-    }
-
-    //triggers
-    void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-        }
     }
     
     //other methods
@@ -180,13 +175,17 @@ public class Enemy : SingletonSubject<Enemy>
 
     public void Scream()
     {
-        /*
         if (_seePhrase.IsPlaying()) _seePhrase.Stop();
-
-        Invoke("StartPhrase", 0.3f);
-        */
+        //Invoke("StartPhrase", 0.3f);
 
         AudioManager.Instance.PlayOneShot(ScreamEventName, transform.position);
+    }
+
+    public void Kill()
+    {
+        _animator.Play("Kill");
+
+        Player.Instance.Die(MonsterName, transform.position, KillPlayersTransf.position);
     }
 
     public void Die()
@@ -194,5 +193,11 @@ public class Enemy : SingletonSubject<Enemy>
         IsometricCamera.Instance.RemoveEnemyFollow(CameraFollowTransf);
 
         StartCoroutine(DelayCor(ToggleOffEnemy));
+    }
+
+    //other methods
+    void StopWalking()
+    {
+        _curDestination = transform;
     }
 }

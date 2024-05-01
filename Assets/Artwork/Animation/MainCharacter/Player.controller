@@ -28,14 +28,14 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &3502281085482023272
+--- !u!1102 &1354121629549584460
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LOH_LOHAction_002
+  m_Name: DeathLong
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -48,7 +48,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 36159fc313d7b954782935014e58af13, type: 2}
+  m_Motion: {fileID: 7400000, guid: 8c61311d7882e904f884514a2df78bdd, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -67,8 +67,8 @@ AnimatorStateMachine:
     m_State: {fileID: 8974514134821083497}
     m_Position: {x: 330, y: 210, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 3502281085482023272}
-    m_Position: {x: 665.7407, y: 305.87308, z: 0}
+    m_State: {fileID: 1354121629549584460}
+    m_Position: {x: 570, y: 270, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

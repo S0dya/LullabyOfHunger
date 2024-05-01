@@ -100,6 +100,9 @@ public class GunController : SingletonSubject<GunController>
 
     }
 
+    //outside methods
+    public void DisableGun() => ToggleGO(GunHandObj, false);
+
     //actions
     void Shoot()
     {
@@ -131,7 +134,7 @@ public class GunController : SingletonSubject<GunController>
     //reloading
     void StartReloading()
     {
-        ToggleGO(GunHandObj, false);
+        DisableGun();
         ToggleGO(GunReloadObj, true);
     }
     void StopReloading()

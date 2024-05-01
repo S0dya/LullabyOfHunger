@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,10 +40,15 @@ public class Player: SingletonSubject<Player>
     [Header("animation & sound")]
     public float MinimumSpeedToPlayFootStepSound = 1;
 
-    [Header("gas mask")]
+    [Header("Head")]
+    [SerializeField] GameObject HeadObj;
     [SerializeField] SkinnedMeshRenderer HeadMesh;
     [SerializeField] SkinnedMeshRenderer GasMaskMesh;
     [SerializeField] Image FPGasMaskVisorImage;
+
+    [Header("Death")]
+    [SerializeField] Transform HeadTransfBloodParent;
+    [SerializeField] GameObject BloodShedEffectPrefab;
 
     //local
     GunController _gunController;
@@ -52,6 +58,7 @@ public class Player: SingletonSubject<Player>
     Transform _fPCamTranf;
 
     //general 
+    bool _isDead;
 
     //float _curDurability = 2;
 
@@ -336,6 +343,35 @@ public class Player: SingletonSubject<Player>
         GasMaskMesh.enabled = FPGasMaskVisorImage.enabled = toggle;
         HeadMesh.enabled = !toggle;
     }
+
+    public void Die(MonsterNameEnum monsterName, Vector3 enemyPos, Vector3 deathPos)
+    {
+        _cc.enabled = false;
+
+        transform.rotation = Quaternion.LookRotation(enemyPos - transform.position, Vector3.up);
+        transform.position = deathPos;
+
+        Observer.Instance.NotifyObservers(EnumsActions.OnSwitchToIsometric);
+        Observer.Instance.NotifyObservers(EnumsActions.OnDeath);
+        _isDead = true;
+
+        _animator.Play("Death" + monsterName.ToString());
+
+        this.enabled = false;
+    }
+    public void OnDead() => UIGameOver.Instance.OpenTab();
+
+    public bool IsDead()
+    {
+        return _isDead;
+    }
+
+    //other outside methods
+    public void RipOffHead()
+    {
+        ToggleHead(false); Instantiate(BloodShedEffectPrefab, HeadTransfBloodParent);
+    }
+    public void ToggleHead(bool toggle) => HeadObj.SetActive(toggle);
 
     //other methods
     void ToggleLooking(bool toggle) => _isAiming = _isLooking = toggle;

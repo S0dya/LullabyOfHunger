@@ -22,6 +22,7 @@ public class LevelManager : SingletonSubject<LevelManager>
         _cameras = new ICamera[4] { _isometricCam, _fPCam, _reloadCam, _interactionCam };
 
         AddAction(EnumsActions.OnSwitchToIsometric, SwitchToIsometric);
+        AddAction(EnumsActions.OnDeath, SwitchToIsometric);
         AddAction(EnumsActions.OnSwitchToFirstPerson, SwitchToFP);
         AddAction(EnumsActions.OnReload, SwitchToReload);
         AddAction(EnumsActions.OnSwitchToInteraction, SwitchToInteraction);
