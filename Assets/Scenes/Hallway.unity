@@ -13415,6 +13415,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: MonsterL (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3252335367706532086, guid: 10f93f533663db743aa5c35d8430deb0, type: 3}
+      propertyPath: m_Size.z
+      value: 1.6311071
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252335367706532086, guid: 10f93f533663db743aa5c35d8430deb0, type: 3}
+      propertyPath: m_Center.x
+      value: -0.00000023094789
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252335367706532086, guid: 10f93f533663db743aa5c35d8430deb0, type: 3}
+      propertyPath: m_Center.z
+      value: 0.49312505
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

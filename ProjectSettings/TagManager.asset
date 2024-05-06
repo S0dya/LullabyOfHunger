@@ -30,7 +30,7 @@ TagManager:
   - CameraPositionChanger
   - 
   - DistanceToggle
-  - 
+  - EventTrigger
   - 
   - Mag
   - 
