@@ -6,12 +6,16 @@ using UnityEngine.UI;
 public class UIMenu : UISingletonMonobehaviour<UIMenu>
 {
 
+    void Start()
+    {
+        Time.timeScale = 1;
+    }
+
     //Input
     public void OpenGameMenu()
     {
         Observer.Instance.NotifyObservers(EnumsActions.OnOpenGameMenu);
         FadeSetTime(1, 0.4f);
-
     }
 
     //buttons

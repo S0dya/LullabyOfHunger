@@ -3759,10 +3759,51 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3519940877003870178, guid: 494e2c9984bf42145ad2d4d1e14a47c4, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 2985888261070567718}
   m_SourcePrefab: {fileID: 100100000, guid: 494e2c9984bf42145ad2d4d1e14a47c4, type: 3}
 --- !u!1 &1524032655302184232 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3519940877003870178, guid: 494e2c9984bf42145ad2d4d1e14a47c4, type: 3}
   m_PrefabInstance: {fileID: 2737946904511939274}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2985888261070567718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524032655302184232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbfd889e23124a54287bb878bf57bba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EventOnAnimationEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8461521689606815802}
+        m_TargetAssemblyTypeName: Screamer, Assembly-CSharp
+        m_MethodName: ToggleObj
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8461521689606815802 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5805835985050108656, guid: 494e2c9984bf42145ad2d4d1e14a47c4, type: 3}
+  m_PrefabInstance: {fileID: 2737946904511939274}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fbad7257d65d5643ab1648a46c0fa5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

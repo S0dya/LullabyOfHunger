@@ -24,13 +24,19 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 
     void Start()
     {
-        //LoadMenu();
+        LoadMenu();
 
+    }
+
+    void Update()
+    {
+        Debug.Log(Settings.curScene);
     }
 
     //outside methods
     public void LoadMenu()
     {
+        Settings.curScene = SceneNameEnum.Menu;
         StartCoroutine(LoadSceneCor(GetSceneIndexByName(SceneNameEnum.Menu)));
     }
     public void OpenMenu() => OpenMenu(Settings.curScene);
@@ -61,6 +67,7 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 
     IEnumerator LoadSceneCor(int sceneToOpen)
     {
+        //Observer.Instance.NotifyObservers(EnumsActions.OnChangeScene);
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToOpen, LoadSceneMode.Additive);
 
         ToggleLoadingScreen(true);

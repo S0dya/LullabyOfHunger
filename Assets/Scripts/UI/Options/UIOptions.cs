@@ -116,7 +116,7 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
     {
         Settings.camFov = val;
 
-        LevelManager.Instance.SetCamsFov();
+        if (LevelManager.Instance != null) LevelManager.Instance.SetCamsFov();
     }
     public void ChangeGamma(float val)
     {
@@ -133,11 +133,11 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
 
     public void ChangeFPSensitivity(float val)
     {
-        Player.Instance.SensitivityFirstPerson = val;
+        if (Player.Instance != null) Player.Instance.SensitivityFirstPerson = val;
     }
     public void ChangeReloadingSensitivity(float val)
     {
-        Player.Instance.SensitivityInReloading = val;
+        if (Player.Instance != null) Player.Instance.SensitivityInReloading = val;
     }
 
     //other

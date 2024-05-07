@@ -21,6 +21,8 @@ public enum EnumsActions
 
     OnDeath,
     OnGameOver,
+
+    OnChangeScene,
 }
 
 public enum MonsterNameEnum

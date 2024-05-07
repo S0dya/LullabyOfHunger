@@ -5,7 +5,7 @@ public class EventTrigger : MonoBehaviour
 {
     [SerializeField] UnityEvent EventToCall;
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter(Collider collision)
     {
         EventToCall.Invoke();
 

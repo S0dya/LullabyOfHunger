@@ -7,6 +7,10 @@ public class UIGameMenu : UISingletonMonobehaviour<UIGameMenu>
 {
     //[Header("UI")] [SerialzieField]
 
+    void Start()
+    {
+        Observer.Instance.NotifyObservers(EnumsActions.OnSwitchToIsometric);
+    }
 
     //Input
     public void OpenGameMenu()
