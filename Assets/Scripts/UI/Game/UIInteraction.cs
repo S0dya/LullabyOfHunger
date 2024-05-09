@@ -54,8 +54,18 @@ public class UIInteraction : UISingletonMonobehaviour<UIInteraction>
 
         FadeSetTime(0, 0.1f, NotifyOnSwitchOff);
 
-        if (_curInteractionItemDestroyable != null) _curInteractionItemDestroyable.DestroyObj();
-        else _curInteractionItem.ToggleObj(true);
+        if (_curInteractionItemDestroyable != null)
+        {
+            _curInteractionItemDestroyable.DestroyObj();
+
+            AudioManager.Instance.PlayOneShot("InteractionEquip");
+        }
+        else
+        {
+            _curInteractionItem.ToggleObj(true);
+
+            AudioManager.Instance.PlayOneShot("InteractionContinue");
+        }
 
         if (_curInteractionObj.ActionOnPicked != null) _curInteractionObj.ActionOnPicked.Invoke();
     }
@@ -81,6 +91,8 @@ public class UIInteraction : UISingletonMonobehaviour<UIInteraction>
         _rotateObjCor = StartCoroutine(RotateObjCor());
 
         ContinueButtonText.text = (_curInteractionItemDestroyable != null ? "Equip" : "Continue");
+
+        AudioManager.Instance.PlayOneShot("InteractionItem");
     }
 
     //other methods

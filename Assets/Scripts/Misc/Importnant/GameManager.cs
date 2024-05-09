@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -21,7 +22,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
     void Start()
     {
 
-        SaveManager.Instance.SaveDataToFile();
         SaveManager.Instance.LoadDataFromFile();
     }
 
@@ -45,6 +45,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
         gameObjectSave.BoolDict.Add("FirstTime", Settings.firstTime);
         gameObjectSave.BoolDict.Add("HasGasMask", Settings.hasGasMask);
 
+        gameObjectSave.StringDict.Add("CurScene", Settings.curScene.ToString());
+
         gameObjectSave.IntDict.Add("CurMagsN", Settings.curMagsN);
         gameObjectSave.IntDict.Add("CurBulletsAmount", Settings.curBulletsAmount);
 
@@ -64,6 +66,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
             }
             
             gameObjectSave.BoolDict.TryGetValue("HasGasMask", out Settings.hasGasMask);
+
+            if (gameObjectSave.StringDict.TryGetValue("CurScene", out string CurScene) && CurScene != "")
+                Settings.curScene = (SceneNameEnum)Enum.Parse(typeof(SceneNameEnum), CurScene);
 
             gameObjectSave.IntDict.TryGetValue("CurMagsN", out Settings.curMagsN);
             gameObjectSave.IntDict.TryGetValue("CurBulletsAmount", out Settings.curBulletsAmount);

@@ -371,6 +371,9 @@ public class Player: SingletonSubject<Player>
     {
         ToggleHead(false); Instantiate(BloodShedEffectPrefab, HeadTransfBloodParent);
     }
+
+    public void PlayWakeUp() => _animator.Play("WakeUp");
+
     public void ToggleHead(bool toggle) => HeadObj.SetActive(toggle);
 
     //other methods

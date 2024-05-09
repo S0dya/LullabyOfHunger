@@ -5297,7 +5297,7 @@ MonoBehaviour:
   ActionsDictionaries: []
   WalkSpeed: 2.5
   RunSpeed: 4
-  RotationSpeed: 150
+  RotationSpeed: 175
   GeneralRotationSpeed: 5
   Durability: 4
   AimDelayDuration: 0.5

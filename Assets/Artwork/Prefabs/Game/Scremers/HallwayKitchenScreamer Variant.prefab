@@ -404,6 +404,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.0000018142784
       objectReference: {fileID: 0}
+    - target: {fileID: 1146277463318531729, guid: 494e2c9984bf42145ad2d4d1e14a47c4, type: 3}
+      propertyPath: EventReference.Path
+      value: event:/SFX/Hunger/ScreamerLong
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146277463318531729, guid: 494e2c9984bf42145ad2d4d1e14a47c4, type: 3}
+      propertyPath: OverrideMaxDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146277463318531729, guid: 494e2c9984bf42145ad2d4d1e14a47c4, type: 3}
+      propertyPath: OverrideMinDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146277463318531729, guid: 494e2c9984bf42145ad2d4d1e14a47c4, type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: 1174165060
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146277463318531729, guid: 494e2c9984bf42145ad2d4d1e14a47c4, type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1226272379
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146277463318531729, guid: 494e2c9984bf42145ad2d4d1e14a47c4, type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: 493382277
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146277463318531729, guid: 494e2c9984bf42145ad2d4d1e14a47c4, type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: 2039782181
+      objectReference: {fileID: 0}
     - target: {fileID: 1164658424330621085, guid: 494e2c9984bf42145ad2d4d1e14a47c4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -0.000010672172

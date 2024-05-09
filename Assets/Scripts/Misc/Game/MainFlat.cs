@@ -19,6 +19,13 @@ public class MainFlat : SingletonSubject<MainFlat>
         HandGunObj.SetActive(false);
     }
 
+    void Start()
+    {
+        Player.Instance.PlayWakeUp();
+
+        SaveManager.Instance.SaveDataToFile();//myb remove later
+    }
+
     //outside methods
     public void HandGunFound()
     {

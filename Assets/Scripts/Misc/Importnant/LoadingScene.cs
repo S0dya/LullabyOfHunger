@@ -24,19 +24,13 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 
     void Start()
     {
-        LoadMenu();
+        if (SceneManager.sceneCount < 2) LoadMenu();
 
-    }
-
-    void Update()
-    {
-        Debug.Log(Settings.curScene);
     }
 
     //outside methods
     public void LoadMenu()
     {
-        Settings.curScene = SceneNameEnum.Menu;
         StartCoroutine(LoadSceneCor(GetSceneIndexByName(SceneNameEnum.Menu)));
     }
     public void OpenMenu() => OpenMenu(Settings.curScene);
@@ -49,12 +43,12 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
     public void OpenScene(SceneNameEnum sceneToOpen)
     {
         OpenScene(sceneToOpen, Settings.curScene);
-
-        Settings.curScene = sceneToOpen;
     }
     public void OpenScene(SceneNameEnum sceneToOpen, SceneNameEnum sceneToClose)
     {
         StartCoroutine(LoadSceneCor(GetSceneIndexByName(sceneToOpen), GetSceneIndexByName(sceneToClose)));
+
+        if (sceneToOpen != SceneNameEnum.Menu) Settings.curScene = sceneToOpen;
     }
 
     //main cors

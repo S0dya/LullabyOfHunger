@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{492c402b-1e02-49f7-b0dc-3dcd80218698}">
+		<property name="assetPath">
+			<value>SFX/Hunger/ScreamerLong.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>28.5</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{3d160a81-d6dd-41b0-b9cd-419fdeabd108}</destination>
+		</relationship>
+	</object>
+</objects>

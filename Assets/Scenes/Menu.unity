@@ -3914,6 +3914,7 @@ GameObject:
   - component: {fileID: 1745287138546325377}
   - component: {fileID: 4484926191877842486}
   - component: {fileID: 2183448637168011465}
+  - component: {fileID: 5982415151735122255}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3921,6 +3922,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &5982415151735122255
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5982415151735122254}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6232977937594806703
 GameObject:
   m_ObjectHideFlags: 0
@@ -4229,10 +4242,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainCG: {fileID: 9032148012574799244}
+  ContinueButtonCG: {fileID: 5982415151735122255}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 2934353339184789376}
   - {fileID: 692067079}
+  - {fileID: 2934353339184789376}
   - {fileID: 2127162754}

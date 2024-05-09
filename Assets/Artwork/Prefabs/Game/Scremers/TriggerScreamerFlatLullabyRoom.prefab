@@ -1060,6 +1060,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.000000053341523
       objectReference: {fileID: 0}
+    - target: {fileID: 2209553342802928556, guid: 2273133cce908764993b69ac442281a3, type: 3}
+      propertyPath: EventReference.Path
+      value: event:/SFX/Hunger/ScreamerShort
+      objectReference: {fileID: 0}
+    - target: {fileID: 2209553342802928556, guid: 2273133cce908764993b69ac442281a3, type: 3}
+      propertyPath: OverrideMaxDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2209553342802928556, guid: 2273133cce908764993b69ac442281a3, type: 3}
+      propertyPath: OverrideMinDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2209553342802928556, guid: 2273133cce908764993b69ac442281a3, type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: 1858963331
+      objectReference: {fileID: 0}
+    - target: {fileID: 2209553342802928556, guid: 2273133cce908764993b69ac442281a3, type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1334191239
+      objectReference: {fileID: 0}
+    - target: {fileID: 2209553342802928556, guid: 2273133cce908764993b69ac442281a3, type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: -590840641
+      objectReference: {fileID: 0}
+    - target: {fileID: 2209553342802928556, guid: 2273133cce908764993b69ac442281a3, type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: 386202923
+      objectReference: {fileID: 0}
     - target: {fileID: 2234037802410145645, guid: 2273133cce908764993b69ac442281a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0.0003086391
@@ -3934,7 +3962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8381993867029098671, guid: 2273133cce908764993b69ac442281a3, type: 3}
       propertyPath: m_Name
-      value: TriggerScreamer Variant
+      value: TriggerScreamerFlatLullabyRoom
       objectReference: {fileID: 0}
     - target: {fileID: 8390821843155382132, guid: 2273133cce908764993b69ac442281a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

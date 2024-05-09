@@ -1083,6 +1083,54 @@ MonoBehaviour:
         Data3: -1401273688
         Data4: 1770828972
       Path: event:/SFX/Enemy/Long/PlayerNoticed
+  - Name: InteractionEquip
+    Sound:
+      Guid:
+        Data1: -1105466081
+        Data2: 1256419713
+        Data3: 1248398524
+        Data4: -2142432974
+      Path: event:/SFX/UI/Interaction/Equip
+  - Name: InteractionContinue
+    Sound:
+      Guid:
+        Data1: 1317351397
+        Data2: 1171092900
+        Data3: -249408090
+        Data4: -70530013
+      Path: event:/SFX/UI/Interaction/Continue
+  - Name: InteractionItem
+    Sound:
+      Guid:
+        Data1: -860985867
+        Data2: 1092969352
+        Data3: 817088915
+        Data4: 1040419693
+      Path: event:/SFX/UI/Interaction/Interact
+  - Name: ButtonClick
+    Sound:
+      Guid:
+        Data1: 12292608
+        Data2: 1247638604
+        Data3: -842751087
+        Data4: -746688123
+      Path: event:/SFX/UI/Button
+  - Name: HungerScreamerShort
+    Sound:
+      Guid:
+        Data1: 1858963331
+        Data2: 1334191239
+        Data3: -590840641
+        Data4: 386202923
+      Path: event:/SFX/Hunger/ScreamerShort
+  - Name: HungerScreamerLong
+    Sound:
+      Guid:
+        Data1: 1174165060
+        Data2: 1226272379
+        Data3: 493382277
+        Data4: 2039782181
+      Path: event:/SFX/Hunger/ScreamerLong
   EvSounds:
   - EnumAction: 4
     Sound:

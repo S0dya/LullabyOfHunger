@@ -42,6 +42,8 @@ public class InputManager : SingletonSubject<InputManager>
         _actionMapsList.Add(_reloadInput);
         _actionMapsList.Add(_interactionInput);
         _actionMapsList.Add(_gameMenuInput);
+
+        ToIsometricView();
     }
 
     protected override void OnEnable()
