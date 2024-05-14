@@ -22,7 +22,7 @@ TagManager:
   - Player
   - PlayerDistanceTrigger
   - Obstacle
-  - 
+  - PlayerCamera
   - Enemy
   - EnemyVision
   - EnemyBody

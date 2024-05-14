@@ -114,7 +114,6 @@ public class Player: SingletonSubject<Player>
         _cc = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _interactionController = GetComponent<InteractionController>();
-        _fPCamTranf = FirstPersonCamera.Instance.gameObject.transform;
 
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         _handleMouseDeltaInput = OnLook;
@@ -136,6 +135,7 @@ public class Player: SingletonSubject<Player>
     {
         _movementSpeed = WalkSpeed;
 
+        _fPCamTranf = FirstPersonCamera.Instance.gameObject.transform;
         StartCoroutine(DelayAimCor());
 
         ToggleGasMask(Settings.hasGasMask);

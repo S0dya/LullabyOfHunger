@@ -20,6 +20,8 @@ public class UIGameOver : UISingletonMonobehaviour<UIGameOver>
     CanvasGroup _textCG;
     TextMeshProUGUI _textText; //remove later
 
+    bool _forDemoEnd;
+
     protected override void Awake()
     {
         base.Awake();
@@ -37,6 +39,14 @@ public class UIGameOver : UISingletonMonobehaviour<UIGameOver>
         FadeSetTime(1, 0.8f, ShowText);
     }
 
+    public void DemoEndOpenTab()
+    {
+        _textText.text = "Thanks for playing the demo!"; _textText.color = Color.white;
+        _forDemoEnd = true;
+
+        OpenTab();
+    }
+
     //other methods
     void ShowText()
     {
@@ -47,7 +57,7 @@ public class UIGameOver : UISingletonMonobehaviour<UIGameOver>
     //cors
     IEnumerator DelaySceneSwitchingCor()
     {
-        yield return new WaitForSecondsRealtime(SwitchingDelayDuration);
+        yield return new WaitForSecondsRealtime(_forDemoEnd ? 4 : SwitchingDelayDuration);
 
         LoadingScene.Instance.OpenScene(SceneNameEnum.Menu);
     }

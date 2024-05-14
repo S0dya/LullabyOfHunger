@@ -7,8 +7,7 @@ using FMODUnity;
 
 public class Enemy : Subject
 {
-    [SerializeField] Transform[] testtrs;
-    int curI = 0;
+    [SerializeField] Transform[] PatrolPointsTransfs;
 
     [Header("settings")]
     public float ArmsDistance = 2.5f;
@@ -40,6 +39,8 @@ public class Enemy : Subject
 
     //general
     float _maxSpeed;
+
+    int _curPatrolI = 0;
 
     //nav
     Transform _curDestination;
@@ -78,8 +79,7 @@ public class Enemy : Subject
 
         StopWalking();
 
-        //TEST
-        if (testtrs[0] != null) _curDestination = testtrs[curI%2];
+        if (PatrolPointsTransfs[0] != null) _curDestination = PatrolPointsTransfs[_curPatrolI%2];
 
         AddAction(EnumsActions.OnDeath, StopWalking);
     }
@@ -96,13 +96,12 @@ public class Enemy : Subject
         _curDistanceToTarget = Vector3.Distance(transform.position, Destination);
         _animator.SetFloat(_animIDMotionSpeed, _agent.velocity.magnitude);
 
-        //test
-        if (testtrs[0] != null)
+        //patrol
+        if (PatrolPointsTransfs[0] != null)
         {
-            if (Vector3.Distance(transform.position, Destination) < 0.3f)
+            if (Vector3.Distance(transform.position, Destination) < 0.3f && !_seesPlayer)
             {
-                _curDestination = testtrs[curI%2];
-                curI++;
+                _curDestination = PatrolPointsTransfs[_curPatrolI%2]; _curPatrolI++;
             }
         }
 

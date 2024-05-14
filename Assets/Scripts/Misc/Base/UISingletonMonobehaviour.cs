@@ -54,7 +54,10 @@ public abstract class UISingletonMonobehaviour<T> : MonoBehaviour where T : Mono
     {
         MainCG.alpha = target; MainCG.blocksRaycasts = target == 1;
     }
-    
+
+    //other outside methods
+    public void PlayButtonSound() => AudioManager.Instance.PlayOneShot("ButtonClick");
+
     //other methods
     void SetTime(float target) => Time.timeScale = 1 - target;
 }

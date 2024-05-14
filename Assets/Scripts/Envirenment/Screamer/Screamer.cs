@@ -47,4 +47,5 @@ public enum ScreamerNameEnum
     FlatHallwayKitchenCheck,
     FlatLullabyRoom,
     HallwayDoorClosing,
+    HallwayAboveDoor,
 }

@@ -55,7 +55,7 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
 
     void Start()
     {
-        SaveGameSettings();
+        LoadGameSettings();
     }
 
     //outside methods
@@ -158,7 +158,6 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
         _postProcessVol.profile.TryGetSettings(out colorGrading);
 
         return colorGrading;
-
     }
 
     //save
@@ -191,6 +190,9 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
         foreach (var kvp in _optionsSettingsSlidersDict) kvp.Value.UiOption.SetSliderVal(LoadFloat(kvp.Key));
 
     }
+
+    //other outisde methods
+    public void PlayHeaderButtonSound() => AudioManager.Instance.PlayOneShot("OptionsHeaderButtonClick");
 
     //other 
     void SaveInt(string name, int val) => PlayerPrefs.SetInt(name, val);

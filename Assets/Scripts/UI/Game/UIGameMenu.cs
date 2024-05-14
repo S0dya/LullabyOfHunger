@@ -38,6 +38,4 @@ public class UIGameMenu : UISingletonMonobehaviour<UIGameMenu>
 
         LoadingScene.Instance.OpenScene(SceneNameEnum.Menu);
     }
-
-
 }

@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 5614328092511434715}
   - component: {fileID: 6798137405219143127}
   - component: {fileID: 3016265909983500818}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CameraPositionChanger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
