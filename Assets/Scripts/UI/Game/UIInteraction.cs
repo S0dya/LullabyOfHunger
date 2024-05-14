@@ -106,7 +106,7 @@ public class UIInteraction : UISingletonMonobehaviour<UIInteraction>
     {
         while (true)
         {
-            _curInteractionitemObjTransf.rotation *= Quaternion.Euler(0, 0, Time.fixedDeltaTime * RotationSpeed);
+            _curInteractionitemObjTransf.rotation *= Quaternion.Euler(0, 0, RotationSpeed);
 
             yield return null;
         }

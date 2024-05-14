@@ -38,6 +38,12 @@ public class MagsBag : SingletonSubject<MagsBag>
         _lastMagIndex++; MagsObjs[_lastMagIndex].enabled = true;
     }
 
+    //other outside methods
+    public int GetMagsN()
+    {
+        return _lastMagIndex;
+    }
+
     //actions
     void TakeMagFromBag()
     {

@@ -8,6 +8,8 @@ public class EnemyVision : MonoBehaviour
     public float VisionAngle;
     public LayerMask ObstacleLayer;
 
+    public float MinDistanceToPlayer;
+
     [Header("other")]
     [SerializeField] Transform HeadTransform;
 
@@ -39,7 +41,7 @@ public class EnemyVision : MonoBehaviour
         _angleToPlayer = Vector3.Angle(HeadTransform.forward, _directionToPlayer);
         _distanceToPlayer = Vector3.Distance(_playerTransf.position, transform.position);
 
-        if (_angleToPlayer < VisionAngle && !Physics.Raycast(HeadTransform.position, _directionToPlayer, _distanceToPlayer, ObstacleLayer))
+        if ((_angleToPlayer < VisionAngle || _distanceToPlayer < MinDistanceToPlayer) && !Physics.Raycast(HeadTransform.position, _directionToPlayer, _distanceToPlayer, ObstacleLayer))
             enemy.PlayerNoticed();
         else
         {

@@ -3395,6 +3395,7 @@ GameObject:
   - component: {fileID: 7088589589164769946}
   - component: {fileID: 1972071422}
   - component: {fileID: 7088589589918493930}
+  - component: {fileID: 5915151044001372669}
   m_Layer: 25
   m_Name: FirstPersonCamera
   m_TagString: Untagged
@@ -3430,8 +3431,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 7088589589164769946}
-  ShakeDuration: 0.3
-  ShakeRotation: {x: 2, y: 2, z: 2}
+  ShakeDuration: 0.15
+  ShakeRotation: {x: 1.5, y: 1.5, z: 1}
 --- !u!20 &7088589589164769946
 Camera:
   m_ObjectHideFlags: 0
@@ -3556,6 +3557,22 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &5915151044001372669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7088589589164769948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fac29d7d70e861049bd964dbbb5f2a07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultPosInfluence: {x: 0.15, y: 0.15, z: 0.15}
+  DefaultRotInfluence: {x: 1, y: 1, z: 1}
+  RestPositionOffset: {x: 0, y: 0, z: 0}
+  RestRotationOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &7088589589178515516
 GameObject:
   m_ObjectHideFlags: 0

@@ -182,9 +182,16 @@ public class Enemy : Subject
 
     public void Kill()
     {
-        _animator.Play("Kill");
+        AudioManager.Instance.PlayOneShot(MonsterName.ToString() + "KillScream");
 
         Player.Instance.Die(MonsterName, transform.position, KillPlayersTransf.position);
+
+        if (_seePhrase.IsPlaying()) _seePhrase.Stop();
+        _agent.isStopped = true; _agent.speed = 0; _agent.updateRotation = false;
+
+        transform.rotation = Quaternion.LookRotation(Player.Instance.transform.position - transform.position, Vector3.up);
+
+        _animator.Play("Kill"); 
     }
 
     public void Die()

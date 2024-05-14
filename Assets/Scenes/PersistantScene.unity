@@ -406,6 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88089bf5879418d4381dd73ec212d6be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InitialData: {fileID: 4900000, guid: cf4c02cead653274db5e1cb0d0fa0405, type: 3}
 --- !u!1 &699122879
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,7 +680,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 50}
+  m_SizeDelta: {x: 0, y: 25}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &968174569
 MonoBehaviour:
@@ -736,7 +737,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 17
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 1024
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1424,6 +1425,22 @@ MonoBehaviour:
         Data3: -737888862
         Data4: 1854257026
       Path: event:/SFX/Envirenment/Dooer/DoorLocked
+  - Name: HeadSquish
+    Sound:
+      Guid:
+        Data1: -2125833748
+        Data2: 1145455265
+        Data3: -164580200
+        Data4: 315583548
+      Path: event:/SFX/Player/Other/HeadSquish
+  - Name: LongKillScream
+    Sound:
+      Guid:
+        Data1: -157403072
+        Data2: 1076081037
+        Data3: -354642271
+        Data4: 1137905596
+      Path: event:/SFX/Enemy/Long/Kill
   EvSounds:
   - EnumAction: 4
     Sound:

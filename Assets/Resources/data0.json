@@ -1,0 +1,20 @@
+{
+    "GameDataDict": {
+        "d9a4eebc-e41a-41a7-a007-2ff7e87a2577": {
+            "FloatList": [],
+            "IntDict": {
+                "CurMagsN": 0,
+                "CurBulletsAmount": 8
+            },
+            "FloatDict": {},
+            "BoolDict": {
+                "FirstTime": true,
+                "HasGasMask": false
+            },
+            "StringDict": {
+                "CurScene": "MCFlat"
+            },
+            "Vector3Dict": {}
+        }
+    }
+}

@@ -16,12 +16,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 
         ISaveableUniqueID = GetComponent<GenerateGUID>().GUID;
         
-        //Settings.firstTime = false;
     }
 
     void Start()
     {
 
+        Settings.firstTime = false;
         SaveManager.Instance.LoadDataFromFile();
     }
 
@@ -47,7 +47,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 
         gameObjectSave.StringDict.Add("CurScene", Settings.curScene.ToString());
 
+        Settings.curMagsN = MagsBag.Instance.GetMagsN();
         gameObjectSave.IntDict.Add("CurMagsN", Settings.curMagsN);
+        Settings.curBulletsAmount = GunController.Instance.GetBulletsInMagN();
         gameObjectSave.IntDict.Add("CurBulletsAmount", Settings.curBulletsAmount);
 
         return gameObjectSave;

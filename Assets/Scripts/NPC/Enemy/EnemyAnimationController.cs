@@ -123,6 +123,8 @@ public class EnemyAnimationController : MonoBehaviour
 
         if (!this.enabled) return;
 
+        _enemy.PlayerNoticed();
+
         _curNearestBodyPart = BodyParts.OrderBy(bodyPart => Vector3.Distance(bodyPart.BodyPartRb.position, pos)).First();
 
         if (_curNearestBodyPart.ShootsAmount == 0)

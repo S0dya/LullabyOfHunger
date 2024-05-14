@@ -19,6 +19,7 @@ public class UIMenu : UISingletonMonobehaviour<UIMenu>
             ContinueButtonCG.alpha = 0.8f;
         }
 
+        UIOptions.Instance.SaveGameSettings();
     }
 
     //Input
@@ -36,6 +37,7 @@ public class UIMenu : UISingletonMonobehaviour<UIMenu>
     }
     public void ButtonNewGame()
     {
+        SaveManager.Instance.LoadInitialData();
         LoadingScene.Instance.OpenScene(SceneNameEnum.MCFlat, SceneNameEnum.Menu);
     }
     public void ButtonOptions()

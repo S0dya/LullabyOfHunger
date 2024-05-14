@@ -11,21 +11,25 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
     GameData _gameData = new GameData();
     List<ISaveable> _iSaveableObjectList = new List<ISaveable>();
 
+    [SerializeField] TextAsset InitialData;
+
+    public void LoadInitialData() => LoadData(InitialData.text);
     public void LoadDataFromFile() => LoadDataFromFile("/data.json");
     public void LoadDataFromFile(string fileName)
     {
         string filePath = Application.persistentDataPath + fileName;
 
-        if (File.Exists(filePath))
-        {
-            _gameData = JsonConvert.DeserializeObject<GameData>(File.ReadAllText(filePath));
+        if (File.Exists(filePath)) LoadData(File.ReadAllText(filePath));
+    }
+    public void LoadData(string data)
+    {
+        _gameData = JsonConvert.DeserializeObject<GameData>(data);
 
-            for (int i = _iSaveableObjectList.Count - 1; i >= 0; i--)
-            {
-                if (_gameData.GameDataDict.ContainsKey(_iSaveableObjectList[i].ISaveableUniqueID))
-                    _iSaveableObjectList[i].ISaveableLoad(_gameData);
-                else Destroy(((Component)_iSaveableObjectList[i]).gameObject);
-            }
+        for (int i = _iSaveableObjectList.Count - 1; i >= 0; i--)
+        {
+            if (_gameData.GameDataDict.ContainsKey(_iSaveableObjectList[i].ISaveableUniqueID))
+                _iSaveableObjectList[i].ISaveableLoad(_gameData);
+            else Destroy(((Component)_iSaveableObjectList[i]).gameObject);
         }
     }
 

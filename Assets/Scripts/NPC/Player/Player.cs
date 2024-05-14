@@ -51,7 +51,6 @@ public class Player: SingletonSubject<Player>
     [SerializeField] GameObject BloodShedEffectPrefab;
 
     //local
-    GunController _gunController;
     CharacterController _cc;
     Animator _animator;
     InteractionController _interactionController;
@@ -110,7 +109,6 @@ public class Player: SingletonSubject<Player>
     {
         base.Awake(); CreateInstance();
 
-        _gunController = GetComponent<GunController>();
         _cc = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _interactionController = GetComponent<InteractionController>();
@@ -222,7 +220,7 @@ public class Player: SingletonSubject<Player>
     {
         if (_isAiming)
         {
-            if (_gunController._curBulletsAmount > 0) NotifyObserver(EnumsActions.OnFire);
+            if (GunController.Instance.GetBulletsInMagN() > 0) NotifyObserver(EnumsActions.OnFire);
             else AudioManager.Instance.PlayOneShot("ShootNoBullets");
         }
         else NotifyObserver(EnumsActions.OnAim);
@@ -313,7 +311,7 @@ public class Player: SingletonSubject<Player>
 
     void Reload()
     {
-        _lookDirection = _gunController.GetHandOriginPos();
+        _lookDirection = GunController.Instance.GetHandOriginPos();
 
         _isReloading = true;
 
@@ -346,10 +344,10 @@ public class Player: SingletonSubject<Player>
 
     public void Die(MonsterNameEnum monsterName, Vector3 enemyPos, Vector3 deathPos)
     {
-        _cc.enabled = false;
+        _cc.enabled = false; _curMovementSpeed = 0;
 
-        transform.rotation = Quaternion.LookRotation(enemyPos - transform.position, Vector3.up);
         transform.position = deathPos;
+        transform.rotation = Quaternion.LookRotation(enemyPos - deathPos, Vector3.up);
 
         Observer.Instance.NotifyObservers(EnumsActions.OnSwitchToIsometric);
         Observer.Instance.NotifyObservers(EnumsActions.OnDeath);
@@ -369,7 +367,9 @@ public class Player: SingletonSubject<Player>
     //other outside methods
     public void RipOffHead()
     {
-        ToggleHead(false); Instantiate(BloodShedEffectPrefab, HeadTransfBloodParent);
+        ToggleHead(false); 
+        Instantiate(BloodShedEffectPrefab, HeadTransfBloodParent);
+        AudioManager.Instance.PlayOneShot("HeadSquish"); AudioManager.Instance.PlayOneShot("BloodShed", transform.position);
     }
 
     public void PlayWakeUp() => _animator.Play("WakeUp");

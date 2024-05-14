@@ -5,8 +5,6 @@ using UnityEngine;
 public class GunController : SingletonSubject<GunController>
 {
     [Header("settings")]
-    public int BulletsInMagazine = 7;
-
     public float GunInteractionDistance = 0.17f;
     public float MagInteractionDistance = 0.12f;
 
@@ -51,12 +49,12 @@ public class GunController : SingletonSubject<GunController>
     Light _shotLight;
 
     //gun
-    [HideInInspector] public int _curBulletsAmount;
+    [HideInInspector] public int _curBulletsN;
 
     //animator 
     int _animIDShoot;
     int _animIDShootLast;
-    int _animIDReloadLast;
+    int _animIDReloadLast; 
 
     //reloading
     bool _gunHasMag = true;
@@ -69,7 +67,7 @@ public class GunController : SingletonSubject<GunController>
 
     protected override void Awake()
     {
-        base.Awake();
+        base.Awake(); CreateInstance();
 
         _magsBag = GetComponent<MagsBag>();
 
@@ -96,7 +94,7 @@ public class GunController : SingletonSubject<GunController>
 
     void Start()
     {
-        _curBulletsAmount = Settings.curBulletsAmount;
+        _curBulletsN = Settings.curBulletsAmount;
 
     }
 
@@ -106,7 +104,7 @@ public class GunController : SingletonSubject<GunController>
     //actions
     void Shoot()
     {
-        _curBulletsAmount--;
+        _curBulletsN--;
 
         if (Physics.Raycast(ShootingTransform.position, ShootingTransform.forward, out RaycastHit hit, 1000, RayCollidingLayer))
         {
@@ -125,7 +123,7 @@ public class GunController : SingletonSubject<GunController>
 
         }
 
-        Animator.Play(_curBulletsAmount == 0 ? _animIDShootLast : _animIDShoot);
+        Animator.Play(_curBulletsN == 0 ? _animIDShootLast : _animIDShoot);
 
         if (_visualiseShotCor != null) StopCoroutine(_visualiseShotCor);
         _visualiseShotCor = StartCoroutine(VisualiseShotCor());
@@ -190,7 +188,7 @@ public class GunController : SingletonSubject<GunController>
     {
         AudioManager.Instance.PlayOneShot("TakeMagFromGun");
 
-        if (_curBulletsAmount > 1) _curBulletsAmount = 1;
+        if (_curBulletsN > 1) _curBulletsN = 1;
 
         _isHoldingEmptyMag = true;
         _gunHasMag = false;
@@ -201,12 +199,12 @@ public class GunController : SingletonSubject<GunController>
     {
         AudioManager.Instance.PlayOneShot("PutMagInGun");
 
-        if (_curBulletsAmount == 0)
+        if (_curBulletsN == 0)
         {
             NotifyObserver(EnumsActions.OnRecieverReloaded);
         }
 
-        _curBulletsAmount += 7;
+        _curBulletsN += 7;
         _gunHasMag = true;
         _isHoldingFullMag = false;
         ToggleGO(MagHandObj, false);
@@ -254,5 +252,10 @@ public class GunController : SingletonSubject<GunController>
     public Vector2 GetHandOriginPos()
     {
         return new Vector2(-HandOriginTransform.localPosition.x, HandOriginTransform.localPosition.y);
+    }
+
+    public int GetBulletsInMagN()
+    {
+        return _curBulletsN;
     }
 }
