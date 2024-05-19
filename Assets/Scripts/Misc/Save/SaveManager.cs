@@ -13,6 +13,7 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
 
     [SerializeField] TextAsset InitialData;
 
+    //outside methods
     public void LoadInitialData() => LoadData(InitialData.text);
     public void LoadDataFromFile() => LoadDataFromFile("/data.json");
     public void LoadDataFromFile(string fileName)
@@ -44,9 +45,13 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
         File.WriteAllText(Application.persistentDataPath + fileName, json);
     }
 
-    //outside methods
     public void AddISaveable(ISaveable iSaveable) => _iSaveableObjectList.Add(iSaveable);
     public void RemoveISaveable(ISaveable iSaveable) => _iSaveableObjectList.Remove(iSaveable);
+
+    public bool HasData()
+    {
+        return File.Exists(Application.persistentDataPath + "/data.json");
+    }
 
     //other methods
     public void AssignData(string id, GameObjectSave data)

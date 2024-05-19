@@ -3433,6 +3433,9 @@ MonoBehaviour:
   Camera: {fileID: 7088589589164769946}
   ShakeDuration: 0.15
   ShakeRotation: {x: 1.5, y: 1.5, z: 1}
+  ShakeMagnitude: 0.2
+  ShakeRoughness: 0.1
+  ShakeFadeIn: 0.1
 --- !u!20 &7088589589164769946
 Camera:
   m_ObjectHideFlags: 0
@@ -5388,7 +5391,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionsDictionaries: []
-  BulletsInMagazine: 7
   GunInteractionDistance: 0.2
   MagInteractionDistance: 0.215
   ShotEffectTime: 0.05
@@ -5411,7 +5413,7 @@ MonoBehaviour:
   MagsBagTransform: {fileID: 7088589589381848208}
   EmptyMagPrefab: {fileID: 1148063165074403885, guid: b651c928cc73f29439ba88b07997d2e1, type: 3}
   FullMagPrefab: {fileID: 8518030489769069468, guid: e44a5b52d0f413b4f8a4b47e15630768, type: 3}
-  _curBulletsAmount: 8
+  _curBulletsN: 0
 --- !u!114 &7971040925087514213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5590,7 +5592,7 @@ CharacterController:
   m_Height: 1.8
   m_Radius: 0.28
   m_SlopeLimit: 45
-  m_StepOffset: 0.25
+  m_StepOffset: 0.001
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.93, z: 0}

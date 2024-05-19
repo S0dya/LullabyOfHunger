@@ -17,6 +17,6 @@ public static class Settings
     //in game
     public static int curMagsN = 1;
     public static int curBulletsAmount = 8;
+    public static bool gunHasMag;
     public static bool hasGasMask;
-
 }

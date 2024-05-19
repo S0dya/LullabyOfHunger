@@ -90,12 +90,10 @@ public class GunController : SingletonSubject<GunController>
         _animIDShoot = Animator.StringToHash("Shoot");
         _animIDShootLast = Animator.StringToHash("ShootLast");
         _animIDReloadLast = Animator.StringToHash("ReloadLast");
-    }
 
-    void Start()
-    {
+
+        _gunHasMag = Settings.gunHasMag; ToggleGunMags(_gunHasMag);
         _curBulletsN = Settings.curBulletsAmount;
-
     }
 
     //outside methods
@@ -193,7 +191,7 @@ public class GunController : SingletonSubject<GunController>
         _isHoldingEmptyMag = true;
         _gunHasMag = false;
         ToggleGO(EmptyMagHandObj, true);
-        for (int i = 0; i < 2; i++) ToggleGO(InGunMagObjs[i], false);
+        ToggleGunMags(false);
     }
     void PutMagInGun()
     {
@@ -208,7 +206,7 @@ public class GunController : SingletonSubject<GunController>
         _gunHasMag = true;
         _isHoldingFullMag = false;
         ToggleGO(MagHandObj, false);
-        for (int i = 0; i < 2; i++) ToggleGO(InGunMagObjs[i], true);
+        ToggleGunMags(true);
 
         //NotifyObserver(EnumsActions.OnStopReloading);
     }
@@ -243,10 +241,11 @@ public class GunController : SingletonSubject<GunController>
         return transform.position;
     }
     
-    void ToggleGO(GameObject GO, bool toggle)
+    void ToggleGunMags(bool val)
     {
-        GO.SetActive(toggle);
+        foreach (var mag in InGunMagObjs) ToggleGO(mag, val);
     }
+    void ToggleGO(GameObject GO, bool toggle) => GO.SetActive(toggle);
 
     //outside methods
     public Vector2 GetHandOriginPos()
@@ -257,5 +256,9 @@ public class GunController : SingletonSubject<GunController>
     public int GetBulletsInMagN()
     {
         return _curBulletsN;
+    }
+    public bool GetGunHasMag()
+    {
+        return _gunHasMag;
     }
 }

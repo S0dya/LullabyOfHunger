@@ -55,6 +55,9 @@ public abstract class UISingletonMonobehaviour<T> : MonoBehaviour where T : Mono
         MainCG.alpha = target; MainCG.blocksRaycasts = target == 1;
     }
 
+    //outside methods
+    public void ToggleCursor(bool val) => Cursor.visible = val;
+
     //other outside methods
     public void PlayButtonSound() => AudioManager.Instance.PlayOneShot("ButtonClick");
 

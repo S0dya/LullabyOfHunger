@@ -18,6 +18,7 @@ public class UIGameMenu : UISingletonMonobehaviour<UIGameMenu>
         Observer.Instance.NotifyObservers(EnumsActions.OnOpenGameMenu);
         FadeSetTime(1, 0.4f);
 
+        ToggleCursor(true);
     }
 
     //buttons
@@ -28,6 +29,7 @@ public class UIGameMenu : UISingletonMonobehaviour<UIGameMenu>
         UIOptions.Instance.CloseOptions(); //myb remove
         SwitchCGSetTime(0); 
         Observer.Instance.NotifyObservers(EnumsActions.OnCloseGameMenu);
+        ToggleCursor(false);
     }
     public void ButtonOptions()
     {

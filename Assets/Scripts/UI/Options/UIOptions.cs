@@ -94,7 +94,7 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
 
     public void SetWindowMode(string str)
     {
-        Screen.fullScreen = str == "Windowed";
+        Screen.fullScreen = str != "Windowed";
     }
 
     public void SetQuality(string str)

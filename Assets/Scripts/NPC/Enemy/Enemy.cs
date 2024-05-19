@@ -124,16 +124,9 @@ public class Enemy : Subject
     }
     
     //other methods
-    void ToggleSeeingPlayer(bool toggle)
-    {
-        _seesPlayer = toggle;
-    }
-
     void StartFollowingPlayer()
     {
         _curDestination = Player.Instance.transform;
-
-        IsometricCamera.Instance.NewPositionForCameraFollow(CameraFollowTransf, this);
     }
     IEnumerator DelayCor(Action action)
     {
@@ -162,14 +155,18 @@ public class Enemy : Subject
             _seePhrase.Play();
         }
 
-        ToggleSeeingPlayer(true);
+        _seesPlayer = true;
+
+        IsometricCamera.Instance.NewPositionForCameraFollow(CameraFollowTransf, this);
     }
     public void PlayerLost()
     {
         if (!_seesPlayer) return;
 
         _enemyAnimationController.StopLookAtPlayer();
-        ToggleSeeingPlayer(false);
+        _seesPlayer = false;
+
+        IsometricCamera.Instance.RemoveEnemyFollow(CameraFollowTransf);
     }
 
     public void Scream()

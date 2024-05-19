@@ -18,13 +18,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
         
     }
 
-    void Start()
-    {
-
-        Settings.firstTime = false;
-        SaveManager.Instance.LoadDataFromFile();
-    }
-
     void OnEnable()
     {
         ISaveableRegister();
@@ -48,10 +41,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
         gameObjectSave.StringDict.Add("CurScene", Settings.curScene.ToString());
 
         Settings.curMagsN = MagsBag.Instance.GetMagsN();
-        gameObjectSave.IntDict.Add("CurMagsN", Settings.curMagsN);
         Settings.curBulletsAmount = GunController.Instance.GetBulletsInMagN();
-        gameObjectSave.IntDict.Add("CurBulletsAmount", Settings.curBulletsAmount);
+        Settings.gunHasMag = GunController.Instance.GetGunHasMag();
 
+        gameObjectSave.IntDict.Add("CurMagsN", Settings.curMagsN);
+        gameObjectSave.IntDict.Add("CurBulletsAmount", Settings.curBulletsAmount);
+        gameObjectSave.BoolDict.Add("gunHasMag", Settings.gunHasMag);
+        
         return gameObjectSave;
     }
     public void ISaveableLoad(GameData gameData)
@@ -74,7 +70,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 
             gameObjectSave.IntDict.TryGetValue("CurMagsN", out Settings.curMagsN);
             gameObjectSave.IntDict.TryGetValue("CurBulletsAmount", out Settings.curBulletsAmount);
-
+            gameObjectSave.BoolDict.TryGetValue("gunHasMag", out Settings.gunHasMag);
         }
     }
 }

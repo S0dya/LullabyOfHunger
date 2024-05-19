@@ -22,12 +22,6 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         FindCurSceneID();//remove later
     }
 
-    void Start()
-    {
-        if (SceneManager.sceneCount < 2) LoadMenu();
-
-    }
-
     //outside methods
     public void LoadMenu()
     {
@@ -77,7 +71,7 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
     }
 
     //other methods
-    void ToggleLoadingScreen(bool toggle)
+    public void ToggleLoadingScreen(bool toggle)
     {
         LoadingCamera.enabled = toggle;
         LoadingScreen.SetActive(toggle);

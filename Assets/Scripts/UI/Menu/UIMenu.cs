@@ -13,13 +13,15 @@ public class UIMenu : UISingletonMonobehaviour<UIMenu>
     {
         Time.timeScale = 1;
 
-        if (Settings.curScene == SceneNameEnum.None)
+        if (!SaveManager.Instance.HasData())
         {
             ContinueButtonCG.interactable = false;
             ContinueButtonCG.alpha = 0.8f;
         }
 
         UIOptions.Instance.SaveGameSettings();
+
+        ToggleCursor(true);
     }
 
     //Input
@@ -33,12 +35,17 @@ public class UIMenu : UISingletonMonobehaviour<UIMenu>
     //buttons
     public void ButtonContinue()
     {
+        SaveManager.Instance.LoadDataFromFile();
         LoadingScene.Instance.OpenScene(Settings.curScene, SceneNameEnum.Menu);
+
+        ToggleCursor(false);
     }
     public void ButtonNewGame()
     {
         SaveManager.Instance.LoadInitialData();
         LoadingScene.Instance.OpenScene(SceneNameEnum.MCFlat, SceneNameEnum.Menu);
+        
+        ToggleCursor(false);
     }
     public void ButtonOptions()
     {

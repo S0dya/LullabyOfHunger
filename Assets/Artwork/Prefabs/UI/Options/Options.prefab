@@ -712,7 +712,55 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-    - Line: 800 x 600
+    - Line: 2560 x 1440
+      OptionEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 46026634175104482}
+            m_TargetAssemblyTypeName: UIOptions, Assembly-CSharp
+            m_MethodName: SetResolution
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Line: 1024 x 576
+      OptionEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 46026634175104482}
+            m_TargetAssemblyTypeName: UIOptions, Assembly-CSharp
+            m_MethodName: SetResolution
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Line: 1280 x 720
+      OptionEvent:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 46026634175104482}
+            m_TargetAssemblyTypeName: UIOptions, Assembly-CSharp
+            m_MethodName: SetResolution
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Line: 1600 x 900
       OptionEvent:
         m_PersistentCalls:
           m_Calls:

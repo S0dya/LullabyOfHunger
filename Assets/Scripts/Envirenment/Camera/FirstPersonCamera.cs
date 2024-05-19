@@ -6,8 +6,8 @@ using EZCameraShake;
 public class FirstPersonCamera : SingletonCamera<FirstPersonCamera>, ICamera
 {
     [Header("settings")]
-    //public float ShakeDuration = 0.2f;
-    //public Vector3 ShakeRotation = Vector3.one;
+    public float ShakeDuration = 0.2f;
+    public Vector3 ShakeRotation = Vector3.one;
 
     [SerializeField] float ShakeMagnitude = 0.2f;
     [SerializeField] float ShakeRoughness = 0.1f;
@@ -18,29 +18,29 @@ public class FirstPersonCamera : SingletonCamera<FirstPersonCamera>, ICamera
     //threshold
     CameraShakeInstance _shakeInstance;
 
-    //Quaternion _ogRot;
+    Quaternion _ogRot;
+    Vector3 _ogPos;
 
     //cors
     Coroutine _shakeCameraCor;
 
     void Start()
     {
-        //_ogRot = Camera.transform.localRotation;
+        _ogRot = Camera.transform.localRotation;
+        _ogPos = Camera.transform.localPosition;
     }
 
     //outside methods
     public void Shoot()
     {
-        /*
         if (_shakeCameraCor != null)
         {
             StopCoroutine(_shakeCameraCor); ResetTranf();
         }
         _shakeCameraCor = StartCoroutine(ShakeCameraCor());
-        */
 
-        if (_shakeInstance != null) _shakeInstance.StartFadeOut(0.01f);
-        _shakeInstance = CameraShaker.Instance.ShakeOnce(ShakeMagnitude, ShakeRoughness, 0.1f, ShakeFadeIn);
+        //if (_shakeInstance != null) _shakeInstance.StartFadeOut(0.01f);
+        //_shakeInstance = CameraShaker.Instance.ShakeOnce(ShakeMagnitude, ShakeRoughness, 0.1f, ShakeFadeIn);
     }
 
     //interface
@@ -49,7 +49,6 @@ public class FirstPersonCamera : SingletonCamera<FirstPersonCamera>, ICamera
         base.ToggleCam(toggle); Player.Instance.ToggleHead(!toggle);
     }
 
-    /*
     //cors
     IEnumerator ShakeCameraCor()
     {
@@ -57,6 +56,7 @@ public class FirstPersonCamera : SingletonCamera<FirstPersonCamera>, ICamera
         while (curTime < ShakeDuration)
         {
             Camera.transform.localRotation *= Quaternion.Euler(new Vector3(GetRand(ShakeRotation.x), GetRand(ShakeRotation.y), 0));
+            Camera.transform.localPosition += new Vector3(GetRand(ShakeRotation.x), GetRand(ShakeRotation.y), GetRand(ShakeRotation.z)) * 0.01f;
 
             curTime += Time.deltaTime;
             yield return null;
@@ -71,6 +71,9 @@ public class FirstPersonCamera : SingletonCamera<FirstPersonCamera>, ICamera
         return Random.Range(-val, val);
     }
 
-    void ResetTranf() => Camera.transform.localRotation = _ogRot;
-    */
+    void ResetTranf()
+    {
+        Camera.transform.localRotation = _ogRot;
+        Camera.transform.localPosition = _ogPos;
+    }
 }

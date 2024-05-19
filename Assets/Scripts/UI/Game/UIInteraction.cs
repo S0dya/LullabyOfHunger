@@ -68,6 +68,8 @@ public class UIInteraction : UISingletonMonobehaviour<UIInteraction>
         }
 
         if (_curInteractionObj.ActionOnPicked != null) _curInteractionObj.ActionOnPicked.Invoke();
+
+        ToggleCursor(false);
     }
 
     //outside methods
@@ -93,6 +95,8 @@ public class UIInteraction : UISingletonMonobehaviour<UIInteraction>
         ContinueButtonText.text = (_curInteractionItemDestroyable != null ? "Equip" : "Continue");
 
         AudioManager.Instance.PlayOneShot("InteractionItem");
+
+        ToggleCursor(true);
     }
 
     //other methods
