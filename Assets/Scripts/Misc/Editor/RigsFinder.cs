@@ -30,21 +30,26 @@ public class RigsFinder : Editor
     {
         var allTransforms = GetAllTransforms(new List<Transform>(), EnemyAnimationControllerTransf);
 
-        foreach (Transform transf in allTransforms)
+        foreach (var bodyPart in bodyParts)
         {
-            foreach (var bodyPart in bodyParts)
+            bool found = false;
+
+            foreach (Transform transf in allTransforms)
             {
-                if (transf.gameObject.name.Contains(bodyPart.BodyPartName))
+                if (transf.gameObject.name == bodyPart.BodyPartName)
                 {
-                    var rb = transf.gameObject.GetComponent<Rigidbody>();
-                    var ac = transf.gameObject.GetComponent<AimConstraint>();
+                    AssignBodyPart(bodyPart, transf);
 
-                    if (rb != null) bodyPart.BodyPartRb = rb;
-                    if (ac != null) bodyPart.BodyPartConstraint = ac;
+                    found = true;
+                }
+                else if (!found && transf.gameObject.name.Contains(bodyPart.BodyPartName))
+                {
+                    AssignBodyPart(bodyPart, transf);
 
-                    Debug.Log(transf.gameObject.name);
+                    found = true;
                 }
             }
+            
         }
 
         return bodyParts;
@@ -60,6 +65,12 @@ public class RigsFinder : Editor
         }
 
         return cur;
+    }
+
+    void AssignBodyPart(BodyPart bodyPart, Transform transf)
+    {
+        bodyPart.BodyPartRb = transf.gameObject.GetComponent<Rigidbody>();
+        bodyPart.BodyPartConstraint = transf.gameObject.GetComponent<AimConstraint>();
     }
 }
 

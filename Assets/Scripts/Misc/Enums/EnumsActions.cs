@@ -28,5 +28,6 @@ public enum EnumsActions
 public enum MonsterNameEnum
 {
     Long,
+    Woman,
 
 }

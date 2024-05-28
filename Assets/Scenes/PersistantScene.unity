@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731305, g: 0.13414398, b: 0.121082075, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1125,6 +1125,100 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1578078366}
   m_CullTransparentMesh: 1
+--- !u!1 &1738704734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1738704736}
+  - component: {fileID: 1738704735}
+  m_Layer: 0
+  m_Name: Directional Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!108 &1738704735
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738704734}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 1
+  m_Shape: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 5
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &1738704736
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738704734}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.88741344, y: 0, z: -0.46097437, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 54.9, z: 0}
 --- !u!1 &1770293481
 GameObject:
   m_ObjectHideFlags: 0
@@ -1514,7 +1608,7 @@ MonoBehaviour:
         Data3: 235848119
         Data4: -93414604
       Path: event:/SFX/Player/FootSteps
-  - Name: EnemyLongFootSteps
+  - Name: LongFootSteps
     Sound:
       Guid:
         Data1: -2128249412
@@ -1570,7 +1664,7 @@ MonoBehaviour:
         Data3: -563906907
         Data4: 1235964868
       Path: event:/SFX/Enemy/Long/Scream
-  - Name: PlayerNoticed
+  - Name: LongPlayerNoticed
     Sound:
       Guid:
         Data1: 1421938973
@@ -1666,6 +1760,38 @@ MonoBehaviour:
         Data3: -354642271
         Data4: 1137905596
       Path: event:/SFX/Enemy/Long/Kill
+  - Name: WomanScream
+    Sound:
+      Guid:
+        Data1: -573976617
+        Data2: 1250882668
+        Data3: -1511533377
+        Data4: 2070245385
+      Path: event:/SFX/Enemy/Woman/Scream
+  - Name: WomanFootSteps
+    Sound:
+      Guid:
+        Data1: 1176423001
+        Data2: 1094798052
+        Data3: -707725937
+        Data4: 1626672874
+      Path: event:/SFX/Enemy/Woman/FootSteps
+  - Name: WomanPlayerNoticed
+    Sound:
+      Guid:
+        Data1: -1049286979
+        Data2: 1280201530
+        Data3: 551544743
+        Data4: 904462192
+      Path: event:/SFX/Enemy/Woman/PlayerNoticed
+  - Name: WomanKillScream
+    Sound:
+      Guid:
+        Data1: -559236050
+        Data2: 1143380822
+        Data3: -1274293601
+        Data4: 155122562
+      Path: event:/SFX/Enemy/Woman/Kill
   EvSounds:
   - EnumAction: 4
     Sound:
@@ -1715,3 +1841,4 @@ SceneRoots:
   - {fileID: 778861765}
   - {fileID: 36516149}
   - {fileID: 1857511074}
+  - {fileID: 1738704736}

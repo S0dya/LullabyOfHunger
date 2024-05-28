@@ -27,9 +27,6 @@ public class Enemy : Subject
     [Header("animation & sound")]
     public float MinimumSpeedToPlayFootStepSound = 1;
 
-    [Header("sound")]
-    [SerializeField] String ScreamEventName;
-
     //local
     NavMeshAgent _agent;
     Animator _animator;
@@ -79,7 +76,7 @@ public class Enemy : Subject
 
         StopWalking();
 
-        if (PatrolPointsTransfs[0] != null) _curDestination = PatrolPointsTransfs[_curPatrolI%2];
+        if (PatrolPointsTransfs.Length > 0) _curDestination = PatrolPointsTransfs[_curPatrolI%2];
 
         AddAction(EnumsActions.OnDeath, StopWalking);
     }
@@ -97,7 +94,7 @@ public class Enemy : Subject
         _animator.SetFloat(_animIDMotionSpeed, _agent.velocity.magnitude);
 
         //patrol
-        if (PatrolPointsTransfs[0] != null)
+        if (PatrolPointsTransfs.Length > 0)
         {
             if (Vector3.Distance(transform.position, Destination) < 0.3f && !_seesPlayer)
             {
@@ -120,7 +117,7 @@ public class Enemy : Subject
     //animation&sound
     public void PlayFootStep()
     {
-        if (_agent.velocity.magnitude > MinimumSpeedToPlayFootStepSound) AudioManager.Instance.PlayOneShot("EnemyLongFootSteps", transform.position);
+        if (_agent.velocity.magnitude > MinimumSpeedToPlayFootStepSound) AudioManager.Instance.PlayOneShot(MonsterName.ToString() + "FootSteps", transform.position);
     }
     
     //other methods
@@ -151,7 +148,7 @@ public class Enemy : Subject
         {
             _isFollowingPlayer = true;
             Invoke("StartFollowingPlayer", TimeBeforeFollowingPlayer);
-            AudioManager.Instance.PlayOneShot("PlayerNoticed");
+            AudioManager.Instance.PlayOneShot(MonsterName.ToString() + "PlayerNoticed");
             _seePhrase.Play();
         }
 
@@ -174,7 +171,7 @@ public class Enemy : Subject
         if (_seePhrase.IsPlaying()) _seePhrase.Stop();
         //Invoke("StartPhrase", 0.3f);
 
-        AudioManager.Instance.PlayOneShot(ScreamEventName, transform.position);
+        AudioManager.Instance.PlayOneShot(MonsterName.ToString() + "Scream", transform.position);
     }
 
     public void Kill()

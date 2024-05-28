@@ -27,8 +27,9 @@ public class EnemyAnimationController : MonoBehaviour
 
     //local
     Enemy _enemy;
-
     Transform _effectsParent;
+
+    List<BodyPart> _constraintBodyParts = new List<BodyPart>();
 
     //anim
 
@@ -54,6 +55,8 @@ public class EnemyAnimationController : MonoBehaviour
     void Start()
     {
         _effectsParent = GameObject.FindGameObjectWithTag("EffectsParent").transform;
+
+        foreach (var bp in BodyParts) if (bp.BodyPartConstraint != null) _constraintBodyParts.Add(bp);
     }
 
     void SetupRigs()
@@ -125,7 +128,7 @@ public class EnemyAnimationController : MonoBehaviour
 
         _enemy.PlayerNoticed();
 
-        _curNearestBodyPart = BodyParts.OrderBy(bodyPart => Vector3.Distance(bodyPart.BodyPartRb.position, pos)).First();
+        _curNearestBodyPart = _constraintBodyParts.OrderBy(bodyPart => Vector3.Distance(bodyPart.BodyPartRb.position, pos)).First();
 
         if (_curNearestBodyPart.ShootsAmount == 0)
         {

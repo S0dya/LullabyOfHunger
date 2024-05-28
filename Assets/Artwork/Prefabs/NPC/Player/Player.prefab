@@ -791,6 +791,37 @@ Transform:
   - {fileID: 6317462078534723165}
   m_Father: {fileID: 8694620062050071828}
   m_LocalEulerAnglesHint: {x: 85.12488, y: 97.832855, z: 103.991585}
+--- !u!1 &2239117290579929629
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4360464690385064820}
+  m_Layer: 0
+  m_Name: PlayerGunTarget
+  m_TagString: PlayerGunTarget
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4360464690385064820
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2239117290579929629}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.000000025378528, y: 0.000000022351731, z: 0.000000008032654, w: 1}
+  m_LocalPosition: {x: 0.0014200009, y: 0.0011900051, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8694620062050071828}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2389140561651534670
 GameObject:
   m_ObjectHideFlags: 0
@@ -2431,7 +2462,7 @@ GameObject:
   - component: {fileID: 6530318260694424010}
   m_Layer: 0
   m_Name: mixamorig:LeftHand
-  m_TagString: PlayerGunTarget
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2457,6 +2488,7 @@ Transform:
   - {fileID: 7088589589227272030}
   - {fileID: 7088589589217760922}
   - {fileID: 1681809841}
+  - {fileID: 4360464690385064820}
   m_Father: {fileID: 8196479318970824678}
   m_LocalEulerAnglesHint: {x: 9.864068, y: 14.069865, z: 3.695808}
 --- !u!895512359 &6530318260694424010

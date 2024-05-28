@@ -13,4 +13,6 @@ public enum EnumsBodyParts
     LeftLeg,
     RightUpLeg,
     RightLeg,
+
+    Stomach,
 }
