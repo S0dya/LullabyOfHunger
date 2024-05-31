@@ -4,24 +4,34 @@ using UnityEngine;
 
 public class InteractionDoor : Interaction
 {
+    [SerializeField] DoorTypeEnum DoorType;
+
+    [SerializeField] bool ClosesOnStart;
     [SerializeField] bool Interactable;
 
     [SerializeField] SceneNameEnum SceneToOpen;
+
+    void Start()
+    {
+        if (ClosesOnStart) AudioManager.Instance.PlayOneShot(DoorType.ToString() + "DoorClosed");
+    }
 
     //main method
     public void Interact()
     {
         if (!Interactable)
         {
-            AudioManager.Instance.PlayOneShot("DoorLocked");
+            AudioManager.Instance.PlayOneShot(DoorType.ToString() + "DoorLocked");
 
             return;
         }
 
-        AudioManager.Instance.PlayOneShot("DoorOpen");
+        AudioManager.Instance.PlayOneShot(DoorType.ToString() + "DoorOpen");
 
         LoadingScene.Instance.OpenScene(SceneToOpen);
 
         SaveManager.Instance.SaveDataToFile();
     }
 }
+
+public enum DoorTypeEnum { Wooden, Lift }

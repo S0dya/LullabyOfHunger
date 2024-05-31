@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Hallway.unity
     guid: 6af0f5a250fcbcf4d8d5463168cae120
   - enabled: 1
+    path: Assets/Scenes/Lift.unity
+    guid: 053d1caacc755ec40911a83a10437993
+  - enabled: 1
     path: Assets/Scenes/None.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

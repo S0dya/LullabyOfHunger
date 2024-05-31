@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469fa9e509303d340bece2c810b9bab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DoorType: 1
+  ClosesOnStart: 0
+  Interactable: 0
   SceneToOpen: 2
 --- !u!65 &8921728130770342293
 BoxCollider:

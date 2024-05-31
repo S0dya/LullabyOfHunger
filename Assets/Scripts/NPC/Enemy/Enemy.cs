@@ -94,12 +94,10 @@ public class Enemy : Subject
         _animator.SetFloat(_animIDMotionSpeed, _agent.velocity.magnitude);
 
         //patrol
-        if (PatrolPointsTransfs.Length > 0)
+        if (PatrolPointsTransfs.Length > 0 && Vector3.Distance(transform.position, Destination) < 0.3f && !_seesPlayer)
         {
-            if (Vector3.Distance(transform.position, Destination) < 0.3f && !_seesPlayer)
-            {
-                _curDestination = PatrolPointsTransfs[_curPatrolI%2]; _curPatrolI++;
-            }
+            if (_curPatrolI > PatrolPointsTransfs.Length - 1) _curPatrolI = 0;
+            _curDestination = PatrolPointsTransfs[_curPatrolI]; _curPatrolI++;
         }
 
         if (_seesPlayer)

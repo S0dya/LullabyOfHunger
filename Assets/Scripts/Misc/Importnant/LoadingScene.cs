@@ -114,4 +114,5 @@ public enum SceneNameEnum
     Menu,
     Hallway,
     MCFlat,
+    Lift,
 }

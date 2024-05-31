@@ -48,7 +48,10 @@ public class Player: SingletonSubject<Player>
 
     [Header("Death")]
     [SerializeField] Transform HeadTransfBloodParent;
-    [SerializeField] GameObject BloodShedEffectPrefab;
+    [SerializeField] GameObject HeadBloodPrefab;
+
+    [SerializeField] Transform[] BodyBloodShedTransfs;
+    [SerializeField] GameObject BodyBloodPrefab;
 
     //local
     CharacterController _cc;
@@ -367,9 +370,13 @@ public class Player: SingletonSubject<Player>
     //other outside methods
     public void RipOffHead()
     {
-        ToggleHead(false); 
-        Instantiate(BloodShedEffectPrefab, HeadTransfBloodParent);
-        AudioManager.Instance.PlayOneShot("HeadSquish"); AudioManager.Instance.PlayOneShot("BloodShed", transform.position);
+        ToggleHead(false);
+        InstantiateBloodShed(HeadBloodPrefab, HeadTransfBloodParent);
+    }
+    public void BloodFromBody()
+    {
+        InstantiateBloodShed(BodyBloodPrefab, BodyBloodShedTransfs[UnityEngine.Random.Range(0, BodyBloodShedTransfs.Length)]);
+        AudioManager.Instance.PlayOneShot("Cut", transform.position);
     }
 
     public void PlayWakeUp() => _animator.Play("WakeUp");
@@ -389,4 +396,10 @@ public class Player: SingletonSubject<Player>
     }
 
     void ChangeTargetSpeed() => _targetSpeed = _curMovementDirection * _movementSpeed;
+
+    void InstantiateBloodShed(GameObject bloodPrefab, Transform transf)
+    {
+        Instantiate(bloodPrefab, transf);
+        AudioManager.Instance.PlayOneShot("BloodShed", transform.position);
+    }
 }

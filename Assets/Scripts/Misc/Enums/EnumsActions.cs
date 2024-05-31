@@ -25,9 +25,4 @@ public enum EnumsActions
     OnChangeScene,
 }
 
-public enum MonsterNameEnum
-{
-    Long,
-    Woman,
-
-}
+public enum MonsterNameEnum { Long, Woman, Drunk, }
