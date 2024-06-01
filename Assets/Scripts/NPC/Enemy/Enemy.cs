@@ -10,6 +10,7 @@ public class Enemy : Subject
     [SerializeField] Transform[] PatrolPointsTransfs;
 
     [Header("settings")]
+    public bool RisesHands;
     public float ArmsDistance = 2.5f;
     public float ArmsDistanceOffset = -1f;
 
@@ -107,7 +108,7 @@ public class Enemy : Subject
 
             _clampedDistance = _curSideVal - Mathf.Clamp01(_curDistanceToTarget / ArmsDistance - ArmsDistanceOffset);
 
-            _enemyAnimationController.IncreaseHandsWeight(_clampedDistance);
+            if (RisesHands) _enemyAnimationController.IncreaseHandsWeight(_clampedDistance);
             _agent.speed = _maxSpeed - Mathf.Clamp(_clampedDistance, 0, 1);
         }
     }
@@ -146,7 +147,7 @@ public class Enemy : Subject
         {
             _isFollowingPlayer = true;
             Invoke("StartFollowingPlayer", TimeBeforeFollowingPlayer);
-            AudioManager.Instance.PlayOneShot(MonsterName.ToString() + "PlayerNoticed");
+            AudioManager.Instance.PlayOneShot(MonsterName.ToString() + "PlayerNoticed", Vector3.Lerp(transform.position, Player.Instance.transform.position, 0.5f));
             _seePhrase.Play();
         }
 
@@ -175,6 +176,7 @@ public class Enemy : Subject
     public void Kill()
     {
         AudioManager.Instance.PlayOneShot(MonsterName.ToString() + "KillScream");
+        _enemyAnimationController.RestoreBodyParts();
 
         Player.Instance.Die(MonsterName, transform.position, KillPlayersTransf.position);
 

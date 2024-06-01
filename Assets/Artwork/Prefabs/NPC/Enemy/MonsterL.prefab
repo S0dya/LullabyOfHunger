@@ -455,6 +455,7 @@ MonoBehaviour:
   ObstacleLayer:
     serializedVersion: 2
     m_Bits: 256
+  MinDistanceToPlayer: 0
   HeadTransform: {fileID: 6931391964760207597}
 --- !u!135 &1655091022
 SphereCollider:
@@ -916,6 +917,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  RisesHands: 1
   ArmsDistance: 2.5
   ArmsDistanceOffset: 0.5
   TimeBeforeFollowingPlayer: 1
@@ -924,7 +926,6 @@ MonoBehaviour:
   EnemyTriggers: {fileID: 1140081290}
   KillPlayersTransf: {fileID: 4033445980226058570}
   MinimumSpeedToPlayFootStepSound: 1
-  ScreamEventName: LongScream
 --- !u!114 &646488957140682867
 MonoBehaviour:
   m_ObjectHideFlags: 0

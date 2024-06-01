@@ -120,6 +120,15 @@ public class EnemyAnimationController : MonoBehaviour
         _decreaseWeightOfLookingCor = StartCoroutine(DecreaseWeightOfLookingCor());
     }
 
+    public void RestoreBodyParts()
+    {
+        foreach (var cbp in _constraintBodyParts)
+        {
+            cbp.BodyPartConstraint.constraintActive = false;
+        }
+    }
+
+
     public void Shot(Vector3 force, Vector3 pos)
     {
         if (Settings.showBlood) Instantiate(BloodShedEffect, pos, Quaternion.identity, _effectsParent);

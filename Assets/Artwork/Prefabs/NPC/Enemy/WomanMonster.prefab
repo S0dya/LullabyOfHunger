@@ -3866,6 +3866,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  RisesHands: 1
   ArmsDistance: 3
   ArmsDistanceOffset: 0.5
   TimeBeforeFollowingPlayer: 0.1

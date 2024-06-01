@@ -13,7 +13,7 @@ public class InteractionDoor : Interaction
 
     void Start()
     {
-        if (ClosesOnStart) AudioManager.Instance.PlayOneShot(DoorType.ToString() + "DoorClosed");
+        if (ClosesOnStart) AudioManager.Instance.PlayOneShot(DoorType.ToString() + "DoorClose");
     }
 
     //main method
