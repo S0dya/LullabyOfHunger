@@ -38,6 +38,8 @@ public class Enemy : Subject
     //general
     float _maxSpeed;
 
+    bool _canRiseHands;
+
     int _curPatrolI = 0;
 
     //nav
@@ -108,7 +110,7 @@ public class Enemy : Subject
 
             _clampedDistance = _curSideVal - Mathf.Clamp01(_curDistanceToTarget / ArmsDistance - ArmsDistanceOffset);
 
-            if (RisesHands) _enemyAnimationController.IncreaseHandsWeight(_clampedDistance);
+            if (RisesHands && _canRiseHands) _enemyAnimationController.IncreaseHandsWeight(_clampedDistance);
             _agent.speed = _maxSpeed - Mathf.Clamp(_clampedDistance, 0, 1);
         }
     }
@@ -120,9 +122,11 @@ public class Enemy : Subject
     }
     
     //other methods
-    void StartFollowingPlayer()
+    IEnumerator StartFollowingPlayer()
     {
-        _curDestination = Player.Instance.transform;
+        yield return new WaitForSeconds(TimeBeforeFollowingPlayer);
+
+        _curDestination = Player.Instance.transform; _canRiseHands = true;
     }
     IEnumerator DelayCor(Action action)
     {
@@ -146,7 +150,7 @@ public class Enemy : Subject
         if (!_isFollowingPlayer)
         {
             _isFollowingPlayer = true;
-            Invoke("StartFollowingPlayer", TimeBeforeFollowingPlayer);
+            StartCoroutine(StartFollowingPlayer());
             AudioManager.Instance.PlayOneShot(MonsterName.ToString() + "PlayerNoticed", Vector3.Lerp(transform.position, Player.Instance.transform.position, 0.5f));
             _seePhrase.Play();
         }
