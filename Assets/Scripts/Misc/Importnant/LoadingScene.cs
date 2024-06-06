@@ -115,4 +115,6 @@ public enum SceneNameEnum
     Hallway,
     MCFlat,
     Lift,
+    Street, 
+    Shop
 }
