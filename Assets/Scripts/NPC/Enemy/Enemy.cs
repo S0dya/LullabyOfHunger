@@ -7,8 +7,6 @@ using FMODUnity;
 
 public class Enemy : Subject
 {
-    [SerializeField] Transform[] PatrolPointsTransfs;
-
     [Header("settings")]
     public bool RisesHands;
     public float ArmsDistance = 2.5f;
@@ -24,6 +22,9 @@ public class Enemy : Subject
     [SerializeField] GameObject EnemyTriggers;
 
     [SerializeField] Transform KillPlayersTransf;
+
+    [SerializeField] bool PatrolsRandomly;
+    [SerializeField] List<Transform> PatrolPointsTransfs;
 
     [Header("animation & sound")]
     public float MinimumSpeedToPlayFootStepSound = 1;
@@ -41,6 +42,7 @@ public class Enemy : Subject
     bool _canRiseHands;
 
     int _curPatrolI = 0;
+    Transform _lastPatrolPointTransf;
 
     //nav
     Transform _curDestination;
@@ -79,8 +81,11 @@ public class Enemy : Subject
 
         StopWalking();
 
-        if (PatrolPointsTransfs.Length > 0) _curDestination = PatrolPointsTransfs[_curPatrolI%2];
-
+        if (PatrolPointsTransfs.Count > 0)
+        {
+            if (PatrolsRandomly) _curDestination = _lastPatrolPointTransf = PatrolPointsTransfs[UnityEngine.Random.Range(0, PatrolPointsTransfs.Count)]; 
+            else _curDestination = PatrolPointsTransfs[_curPatrolI % 2];
+        }
         AddAction(EnumsActions.OnDeath, StopWalking);
     }
 
@@ -97,10 +102,20 @@ public class Enemy : Subject
         _animator.SetFloat(_animIDMotionSpeed, _agent.velocity.magnitude);
 
         //patrol
-        if (PatrolPointsTransfs.Length > 0 && Vector3.Distance(transform.position, Destination) < 0.3f && !_seesPlayer)
+        if (PatrolPointsTransfs.Count > 0 && Vector3.Distance(transform.position, Destination) < 0.3f && !_seesPlayer)
         {
-            if (_curPatrolI > PatrolPointsTransfs.Length - 1) _curPatrolI = 0;
-            _curDestination = PatrolPointsTransfs[_curPatrolI]; _curPatrolI++;
+            if (PatrolsRandomly)
+            {
+                _curDestination = PatrolPointsTransfs[UnityEngine.Random.Range(0, PatrolPointsTransfs.Count)];
+                PatrolPointsTransfs.Add(_lastPatrolPointTransf);
+                _lastPatrolPointTransf = _curDestination;
+                PatrolPointsTransfs.Remove(_lastPatrolPointTransf);
+            }
+            else
+            {
+                if (_curPatrolI > PatrolPointsTransfs.Count - 1) _curPatrolI = 0;
+                _curDestination = PatrolPointsTransfs[_curPatrolI]; _curPatrolI++;
+            }
         }
 
         if (_seesPlayer)

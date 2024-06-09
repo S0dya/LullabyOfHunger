@@ -4,6 +4,7 @@ using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 
+[DefaultExecutionOrder(-1)]
 public class AudioManager : SingletonSubject<AudioManager>
 {
     [Header("Sounds")]
@@ -17,13 +18,11 @@ public class AudioManager : SingletonSubject<AudioManager>
     protected override void Awake()
     {
         base.Awake(); CreateInstance();
-    }
 
-    void Start()
-    {
         foreach (var kvSound in KvSounds) _eventInstancesDict.Add(kvSound.Name, CreateInstance(kvSound.Sound));
         foreach (var evSound in EvSounds) _enumInstancesDict.Add(evSound.EnumAction, CreateInstance(evSound.Sound));
     }
+
     EventInstance CreateInstance(EventReference sound)
     {
         return RuntimeManager.CreateInstance(sound);

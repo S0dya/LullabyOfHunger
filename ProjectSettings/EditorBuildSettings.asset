@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Lift.unity
     guid: 053d1caacc755ec40911a83a10437993
   - enabled: 1
+    path: Assets/Scenes/Street.unity
+    guid: 713fb838c8b1935408f13580228e9d16
+  - enabled: 1
     path: Assets/Scenes/None.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}
