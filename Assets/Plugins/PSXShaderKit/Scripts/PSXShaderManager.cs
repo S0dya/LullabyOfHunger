@@ -46,7 +46,7 @@ namespace PSXShaderKit
         [Header("Vertex Wobble")]
         [Tooltip("The size of the grid that vertices will snap to. Smaller means more wobbling.")]
         [SerializeField]
-        private float _VertexGridResolution = 100.0f;
+        public float _VertexGridResolution = 100.0f;
         [Tooltip("ViewSpace makes it so that the effect is decreased with distance to the object. ClipSpace is more accurate.")]
         [SerializeField]
         private PSXVertexWobbleMode _VertexWobbleMode = PSXVertexWobbleMode.ViewSpace;

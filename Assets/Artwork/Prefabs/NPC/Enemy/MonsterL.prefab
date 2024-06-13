@@ -913,10 +913,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionsDictionaries: []
-  PatrolPointsTransfs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   RisesHands: 1
   ArmsDistance: 2.5
   ArmsDistanceOffset: 0.5
@@ -925,6 +921,12 @@ MonoBehaviour:
   CameraFollowTransf: {fileID: 1931010447}
   EnemyTriggers: {fileID: 1140081290}
   KillPlayersTransf: {fileID: 4033445980226058570}
+  PatrolsRandomly: 0
+  PatrolPointsTransfs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  TriggerTransf: {fileID: 0}
   MinimumSpeedToPlayFootStepSound: 1
 --- !u!114 &646488957140682867
 MonoBehaviour:
@@ -3503,7 +3505,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 5839593361624730457, guid: c80b82c41577baa4a8294b87f943ec65, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 3461a418556991a43ac07a1f1ebc157f, type: 2}
   m_Bones:
   - {fileID: 3850841828961491697}
   - {fileID: 1458227425114166121}

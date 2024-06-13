@@ -57,6 +57,8 @@ public class EnemyAnimationController : MonoBehaviour
         _effectsParent = GameObject.FindGameObjectWithTag("EffectsParent").transform;
 
         foreach (var bp in BodyParts) if (bp.BodyPartConstraint != null) _constraintBodyParts.Add(bp);
+
+        //for (int i = 0; i < 5; i++) Shot(Vector3.zero, Vector3.zero);
     }
 
     void SetupRigs()

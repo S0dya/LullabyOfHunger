@@ -149,4 +149,6 @@ public enum InteractionItemEnum
     Haloperidol,
 
     RosePicture,
+
+    KidFood,
 }

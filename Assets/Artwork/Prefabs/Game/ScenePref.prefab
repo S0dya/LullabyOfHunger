@@ -2259,10 +2259,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainCG: {fileID: 5310376903390521187}
   TextFadeDuration: 1
-  TextScaleDuration: 0.9
-  SwitchingDelayDuration: 1
+  TextScaleDuration: 3
+  SwitchingDelayDuration: 2
   TextInitialScale: 0.7
   TextTransf: {fileID: 7871396760236424236}
+  VictoryTextColor: {r: 0.8431373, g: 0.5568628, b: 0.77647066, a: 1}
+  BgImage: {fileID: 3181264705754456165}
 --- !u!223 &1819448670577651744
 Canvas:
   m_ObjectHideFlags: 0

@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 [DefaultExecutionOrder(-1)]
 public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 {
+    [SerializeField] PostProcessVolume Volume;
+
     //save
     public string ISaveableUniqueID { get; set; }
 
@@ -26,6 +29,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
     {
         ISaveableDeregister();
     }
+
+    //outside methods
+    public void DisableVolume() => Volume.weight = 0;
 
     //save
     public void ISaveableRegister() => SaveManager.Instance.AddISaveable(this);

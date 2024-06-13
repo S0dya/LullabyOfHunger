@@ -3856,16 +3856,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionsDictionaries: []
-  PatrolPointsTransfs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   RisesHands: 1
   ArmsDistance: 3
   ArmsDistanceOffset: 0.5
@@ -3874,6 +3864,9 @@ MonoBehaviour:
   CameraFollowTransf: {fileID: 3242224568254119014}
   EnemyTriggers: {fileID: 7502928776758731129}
   KillPlayersTransf: {fileID: 9178589347252723949}
+  PatrolsRandomly: 0
+  PatrolPointsTransfs: []
+  TriggerTransf: {fileID: 0}
   MinimumSpeedToPlayFootStepSound: 1
 --- !u!114 &3340893511511899128
 MonoBehaviour:
@@ -3965,6 +3958,11 @@ MonoBehaviour:
   - BodyPartName: DEF-spine.002
     BodyPartEnum: 10
     BodyPartRb: {fileID: 3716340553088734433}
+    BodyPartConstraint: {fileID: 0}
+    ShootsAmount: 0
+  - BodyPartName: MCH-torso.parent
+    BodyPartEnum: 10
+    BodyPartRb: {fileID: 7402540171255087607}
     BodyPartConstraint: {fileID: 0}
     ShootsAmount: 0
   BloodShedEffect: {fileID: 5346882107229197881, guid: 4e6c9f2b2ec79274b8180d7166e3a374, type: 3}
@@ -5440,6 +5438,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8552246655680934797}
+  - component: {fileID: 7402540171255087607}
+  - component: {fileID: 8883388736824535356}
   m_Layer: 12
   m_Name: MCH-torso.parent
   m_TagString: Untagged
@@ -5463,6 +5463,54 @@ Transform:
   - {fileID: 1549599109230083848}
   m_Father: {fileID: 3953000345164674739}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &7402540171255087607
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8112588465500807464}
+  serializedVersion: 4
+  m_Mass: 3
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &8883388736824535356
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8112588465500807464}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0029540616, y: 0.002470033, z: 0.00010457589}
+  m_Center: {x: 0.000024827721, y: -0.000083062805, z: -0.00027471595}
 --- !u!1 &8126866417018475118
 GameObject:
   m_ObjectHideFlags: 0

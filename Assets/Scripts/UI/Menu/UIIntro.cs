@@ -7,7 +7,7 @@ public class UIIntro : SingletonMonobehaviour<UIIntro>
     //local
     VideoPlayer _videoPlayer;
 
-    void Awake()
+    new void Awake()
     {
         _videoPlayer = GetComponentInChildren<VideoPlayer>();
     }

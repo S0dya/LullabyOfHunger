@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 
@@ -9,25 +10,26 @@ public class UIGameOver : UISingletonMonobehaviour<UIGameOver>
     [Header("settings")]
     [SerializeField] float TextFadeDuration = 1;
     [SerializeField] float TextScaleDuration = 0.9f;
-    [SerializeField] float SwitchingDelayDuration = 1;
+    [SerializeField] float SwitchingDelayDuration = 4;
 
     [SerializeField] [Range(0.5f, 1)] float TextInitialScale = 0.9f;
 
     [Header("UI")]
     [SerializeField] RectTransform TextTransf;
+    [SerializeField] Color VictoryTextColor;
+
+    [SerializeField] Image BgImage;
 
     //local
     CanvasGroup _textCG;
     TextMeshProUGUI _textText; //remove later
 
-    bool _forDemoEnd;
-
     protected override void Awake()
     {
         base.Awake();
-        
+
+        _textText = TextTransf.GetComponent<TextMeshProUGUI>();
         _textCG = TextTransf.gameObject.GetComponent<CanvasGroup>(); _textCG.alpha = 0;
-        _textText = TextTransf.gameObject.GetComponent<TextMeshProUGUI>();
         TextTransf.localScale = new Vector3(TextInitialScale, TextInitialScale, TextInitialScale);
     }
 
@@ -39,10 +41,12 @@ public class UIGameOver : UISingletonMonobehaviour<UIGameOver>
         FadeSetTime(1, 0.8f, ShowText);
     }
 
-    public void DemoEndOpenTab()
+    public void VictoryOpenTab()
     {
-        _textText.text = "Thanks for playing the demo!"; _textText.color = Color.white;
-        _forDemoEnd = true;
+        _textText.text = "Victory!"; _textText.color = VictoryTextColor;
+        BgImage.color = Color.white;
+
+        AudioManager.Instance.PlayOneShot("Victory");
 
         OpenTab();
     }
@@ -57,7 +61,7 @@ public class UIGameOver : UISingletonMonobehaviour<UIGameOver>
     //cors
     IEnumerator DelaySceneSwitchingCor()
     {
-        yield return new WaitForSecondsRealtime(_forDemoEnd ? 4 : SwitchingDelayDuration);
+        yield return new WaitForSecondsRealtime(SwitchingDelayDuration);
 
         LoadingScene.Instance.OpenScene(SceneNameEnum.Menu);
     }

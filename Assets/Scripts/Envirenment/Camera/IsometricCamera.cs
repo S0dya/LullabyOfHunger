@@ -48,6 +48,8 @@ public class IsometricCamera : SingletonCamera<IsometricCamera>, ICamera
     {
         while (true)
         {
+            if (_enemiesDict.Count < 2) break;
+
             _curNearestKvp = _enemiesDict.OrderBy(kvp => Vector3.Distance(kvp.Key.position, _playerTrasnf.position)).First();
 
             MoveCamera(_curNearestKvp.Key);
@@ -88,9 +90,9 @@ public class IsometricCamera : SingletonCamera<IsometricCamera>, ICamera
         if (_enemiesDict.Count == 0)
         {
             _isFollowingEnemy = false;
-            if (_changeToNearestEnemyCor != null) StopCoroutine(_changeToNearestEnemyCor);
 
             MoveCamera();
         }
+        else if (_enemiesDict.Count == 1 && _changeToNearestEnemyCor != null) StopCoroutine(_changeToNearestEnemyCor);
     }
 }

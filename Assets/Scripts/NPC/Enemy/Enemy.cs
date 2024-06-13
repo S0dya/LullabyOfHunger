@@ -26,6 +26,8 @@ public class Enemy : Subject
     [SerializeField] bool PatrolsRandomly;
     [SerializeField] List<Transform> PatrolPointsTransfs;
 
+    [SerializeField] Transform TriggerTransf;
+
     [Header("animation & sound")]
     public float MinimumSpeedToPlayFootStepSound = 1;
 
@@ -182,6 +184,11 @@ public class Enemy : Subject
         _seesPlayer = false;
 
         IsometricCamera.Instance.RemoveEnemyFollow(CameraFollowTransf);
+    }
+
+    public void FollowTriggerTransf()
+    {
+        if (!_seesPlayer) _curDestination = TriggerTransf;
     }
 
     public void Scream()
