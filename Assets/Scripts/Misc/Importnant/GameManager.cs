@@ -1,14 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 [DefaultExecutionOrder(-1)]
 public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 {
     [SerializeField] PostProcessVolume Volume;
+
+    //local
+    UnityEngine.Localization.Tables.StringTable _table;
+    Locale _curLocale;
 
     //save
     public string ISaveableUniqueID { get; set; }
@@ -18,7 +23,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
         base.Awake();
 
         ISaveableUniqueID = GetComponent<GenerateGUID>().GUID;
-        
+        ChangeLocale();
     }
 
     void OnEnable()
@@ -32,6 +37,22 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 
     //outside methods
     public void DisableVolume() => Volume.weight = 0;
+
+    public string GetLocalizedString(string key)
+    {
+        var entry = _table.GetEntry(key);
+
+        if (entry == null) Debug.Log(key + " not found");
+
+        return entry == null ? "key" : entry.LocalizedValue;
+    }
+
+    public void ChangeLocale()
+    {
+        _curLocale = LocalizationSettings.SelectedLocale;
+
+        _table = LocalizationSettings.StringDatabase.GetTable("Table", _curLocale);
+    }
 
     //save
     public void ISaveableRegister() => SaveManager.Instance.AddISaveable(this);

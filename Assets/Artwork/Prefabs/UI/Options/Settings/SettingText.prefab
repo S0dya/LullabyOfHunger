@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8168800634332479358}
   - component: {fileID: 2142941147773934168}
   - component: {fileID: 6416895878421309260}
+  - component: {fileID: 4587107061206717873}
   m_Layer: 5
   m_Name: SettingText
   m_TagString: Untagged
@@ -59,6 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b94d62565964146a7b663ce8bb894f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SetsKey: 0
   _optionText: {fileID: 0}
   _optionName: 
 --- !u!114 &2142941147773934168
@@ -194,3 +196,43 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4587107061206717873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4290836204555793907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8168800634332479358}
+        m_TargetAssemblyTypeName: UIOption, Assembly-CSharp
+        m_MethodName: SetOptionLine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []

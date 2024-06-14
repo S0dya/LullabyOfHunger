@@ -92,6 +92,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettingToggle
       objectReference: {fileID: 0}
+    - target: {fileID: 4587107061206717873, guid: bca6690f7618a234a8f8272a9eb447b0, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3944671943617309411}
+    - target: {fileID: 4587107061206717873, guid: bca6690f7618a234a8f8272a9eb447b0, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetOptionLine
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8168800634332479358, guid: bca6690f7618a234a8f8272a9eb447b0, type: 3}
     m_RemovedGameObjects: []
@@ -118,5 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0d83572ba9f72644923eb3f49b1c1ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SetsKey: 0
   _optionText: {fileID: 0}
   _optionName: 
+  DefaultVal: 0

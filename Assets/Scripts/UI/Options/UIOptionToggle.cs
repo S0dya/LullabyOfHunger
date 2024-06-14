@@ -14,7 +14,7 @@ public class UIOptionToggle : UIOption
     bool _curToggle;
 
     //props 
-    bool Toggle { get { return _curToggle; } set { _curToggle = value; SetOptionLine(_curToggle ? "On" : "Off" ); } }
+    bool Toggle { get { return _curToggle; } set { _curToggle = value; SetOptionLine(GameManager.Instance.GetLocalizedString(_curToggle ? "OnKey" : "OffKey") ); } }
 
     protected override void Awake()
     {

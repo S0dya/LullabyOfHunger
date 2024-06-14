@@ -1,0 +1,207 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Table_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 7cf94607d82f8934c9d2e0fdd480d237, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 401445081088
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8498179854336
+    m_Localized: Full Screen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8890120785920
+    m_Localized: Window Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8917341818880
+    m_Localized: Windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21136867708928
+    m_Localized: ShowBloodKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21176688431104
+    m_Localized: OnKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21526405304320
+    m_Localized: OffKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36105642430464
+    m_Localized: New Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36193580208128
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36229198237696
+    m_Localized: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37422385451008
+    m_Localized: Graphics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37480744996864
+    m_Localized: Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37587569725440
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37917388820480
+    m_Localized: Apply & Return
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38267629981696
+    m_Localized: Scale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38318536249344
+    m_Localized: Quality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38425792991232
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38477173215232
+    m_Localized: High
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38518403223552
+    m_Localized: Low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38598703173632
+    m_Localized: Medium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40824121184256
+    m_Localized: Window
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40858371870720
+    m_Localized: Rendering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41025158369280
+    m_Localized: Controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41057320292352
+    m_Localized: In Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41146017239040
+    m_Localized: Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43448023240704
+    m_Localized: Brigthness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43480231301120
+    m_Localized: Contrast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43515048218624
+    m_Localized: Gamma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43558148886528
+    m_Localized: First person sensitivity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43630492241920
+    m_Localized: Reloading sensitivity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43711236788224
+    m_Localized: Field of view
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43788927881216
+    m_Localized: Ambient
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43828832489472
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43859547377664
+    m_Localized: Sound effects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51113210269696
+    m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92708051734528
+    m_Localized: Move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92963484848128
+    m_Localized: Run
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93053725298688
+    m_Localized: Interact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93149649031168
+    m_Localized: Reload
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93251537063936
+    m_Localized: Start aiming/ shoot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93563224182784
+    m_Localized: Look/ Grab/ release
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93766434017280
+    m_Localized: Paused
+    m_Metadata:
+      m_Items: []
+  - m_Id: 94314856042496
+    m_Localized: Equip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 94397437693952
+    m_Localized: Gameover
+    m_Metadata:
+      m_Items: []
+  - m_Id: 94463586062336
+    m_Localized: Victory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 95503295303680
+    m_Localized: Rotate
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

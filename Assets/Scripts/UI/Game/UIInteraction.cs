@@ -92,7 +92,7 @@ public class UIInteraction : UISingletonMonobehaviour<UIInteraction>
         _curInteractionitemObjTransf.DOScale(_curItemTargetScale, ScaleSpeed).SetUpdate(true).SetEase(Ease.OutQuad).OnComplete(OnScaledUp);
         _rotateObjCor = StartCoroutine(RotateObjCor());
 
-        ContinueButtonText.text = (_curInteractionItemDestroyable != null ? "Equip" : "Continue");
+        ContinueButtonText.text = GameManager.Instance.GetLocalizedString(_curInteractionItemDestroyable != null ? "EquipKey" : "ContinueKey");
 
         AudioManager.Instance.PlayOneShot("InteractionItem");
 

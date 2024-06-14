@@ -1,18 +1,20 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
+
 
 public class UIOption : MonoBehaviour
 {
+    [Header("option")]
+    [SerializeField] bool SetsKey;
+
     //local
     [HideInInspector] public TextMeshProUGUI _optionText;
 
     //threshold
     [HideInInspector] public string _optionName;
-
+    
+    string _settingName;
 
     protected virtual void Awake()
     {
@@ -25,5 +27,11 @@ public class UIOption : MonoBehaviour
         _optionName = name;
     }
 
-    public void SetOptionLine(string secondPart) => _optionText.text = _optionName + " : " + secondPart;
+    public void SetOptionLine(string secondPart)
+    {
+        _settingName = secondPart; SetOptionLine();
+    }
+
+    public void SetOptionLine() => _optionText.text = GameManager.Instance.GetLocalizedString(_optionName) + " : " 
+        + (SetsKey ? GameManager.Instance.GetLocalizedString(_settingName) : _settingName);
 }

@@ -1,0 +1,207 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Table_es
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: 7cf94607d82f8934c9d2e0fdd480d237, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 401445081088
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8498179854336
+    m_Localized: Pantalla Completa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8890120785920
+    m_Localized: Modo Ventana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8917341818880
+    m_Localized: Ventana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21136867708928
+    m_Localized: Mostrar Sangre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21176688431104
+    m_Localized: Activado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21526405304320
+    m_Localized: Desactivado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36193580208128
+    m_Localized: Opciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36105642430464
+    m_Localized: Nuevo Juego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36229198237696
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51113210269696
+    m_Localized: Reanudar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37422385451008
+    m_Localized: "Gr\xE1ficos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37480744996864
+    m_Localized: Juego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37587569725440
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40824121184256
+    m_Localized: Ventana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40858371870720
+    m_Localized: Renderizado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41025158369280
+    m_Localized: Controles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41057320292352
+    m_Localized: En Juego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43448023240704
+    m_Localized: Brillo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43480231301120
+    m_Localized: Contraste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43515048218624
+    m_Localized: Gamma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41146017239040
+    m_Localized: Volumen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43828832489472
+    m_Localized: "M\xFAsica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43859547377664
+    m_Localized: Efectos De Sonido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43788927881216
+    m_Localized: Ambiente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43558148886528
+    m_Localized: Sensibilidad En Primera Persona
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43630492241920
+    m_Localized: Sensibilidad De Recarga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43711236788224
+    m_Localized: "Campo De Visi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37917388820480
+    m_Localized: Aplicar Y Volver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38477173215232
+    m_Localized: Alto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38598703173632
+    m_Localized: Medio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38518403223552
+    m_Localized: Bajo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38425792991232
+    m_Localized: Idioma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38267629981696
+    m_Localized: "resoluci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38318536249344
+    m_Localized: Calidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92708051734528
+    m_Localized: Mover
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92963484848128
+    m_Localized: Correr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93053725298688
+    m_Localized: Interactuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93149649031168
+    m_Localized: Recargar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93251537063936
+    m_Localized: Apuntar / Disparar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93563224182784
+    m_Localized: Mirar / Agarrar / Soltar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93766434017280
+    m_Localized: Pausado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 94314856042496
+    m_Localized: Equipar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 94397437693952
+    m_Localized: Fin del juego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 94463586062336
+    m_Localized: Victoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 95503295303680
+    m_Localized: Girar
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

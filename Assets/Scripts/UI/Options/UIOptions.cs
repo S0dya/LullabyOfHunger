@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
@@ -25,6 +26,8 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
     Dictionary<string, OptionSettingToggle> _optionsSettingsTogglesDict = new Dictionary<string, OptionSettingToggle>();
     Dictionary<string, OptionSettingSlider> _optionsSettingsSlidersDict = new Dictionary<string, OptionSettingSlider>();
 
+    List<UIOption> _options = new List<UIOption>();
+
     PostProcessVolume _postProcessVol;
 
     protected override void Awake()
@@ -36,18 +39,21 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
             _optionsSettingsTextsDict.Add(option.Name, option);
 
             option.UiOption.AssignOption(option.Name, option.Options);
+            _options.Add(option.UiOption);
         }
         foreach (var option in OptionSettingsToggles)
         {
             _optionsSettingsTogglesDict.Add(option.Name, option);
 
             option.UiOption.AssignOption(option.Name);
+            _options.Add(option.UiOption);
         }
         foreach (var option in OptionSettingsSliders)
         {
             _optionsSettingsSlidersDict.Add(option.Name, option);
 
             option.UiOption.AssignOption(option.Name);
+            _options.Add(option.UiOption);
         }
 
         _postProcessVol = FindObjectOfType<PostProcessVolume>();
@@ -102,15 +108,17 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
         QualitySettings.SetQualityLevel(str == "Low" ? 0 : str == "Medium" ? 1 : 2);
     }
 
-    //toggle
-    public void ShowBlood(bool toggle)
+    public void SetLanguage(int id)
     {
-        Settings.showBlood = toggle;
+        StartCoroutine(SetLocale(id));
     }
+
+    //toggle
+    public void ShowBlood(bool toggle) => Settings.showBlood = toggle;
 
     //slider
     public void ChangeAmbientVol(float val) => ChangeVol(0, val);
-    public void ChangeMusicVol(float val) =>ChangeVol(1, val);
+    public void ChangeMusicVol(float val) => ChangeVol(1, val);
     public void ChangeSFXVol(float val) => ChangeVol(2, val);
     public void ChangeFov(float val)
     {
@@ -158,6 +166,15 @@ public class UIOptions : UISingletonMonobehaviour<UIOptions>
         _postProcessVol.profile.TryGetSettings(out colorGrading);
 
         return colorGrading;
+    }
+
+    IEnumerator SetLocale(int id)
+    {
+        yield return LocalizationSettings.InitializationOperation;
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[id];
+
+        GameManager.Instance.ChangeLocale();
+        foreach (var option in _options) option.SetOptionLine();
     }
 
     //save
