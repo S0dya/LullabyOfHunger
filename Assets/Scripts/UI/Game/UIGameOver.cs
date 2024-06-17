@@ -44,7 +44,7 @@ public class UIGameOver : UISingletonMonobehaviour<UIGameOver>
     public void VictoryOpenTab()
     {
         _textText.text = GameManager.Instance.GetLocalizedString("VictoryKey") + "!"; _textText.color = VictoryTextColor;
-        BgImage.color = Color.white;
+        BgImage.color = Color.gray;
 
         AudioManager.Instance.PlayOneShot("Victory");
 
